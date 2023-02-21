@@ -29,10 +29,12 @@ const Navbar = () => {
                         <Link to='/student/signup'>Signup</Link>
                     </div>
                     )}
+                    {!user && (
                     <div>
                         <Link to='/prof/login'>Prof Login</Link>
                         <Link to='/prof/signup'>Prof Signup</Link>
                     </div>
+                    )}
                 </nav>
             </div>
         </header>

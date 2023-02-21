@@ -12,7 +12,7 @@ import ProfLogin from './pages/ProfLogin';
 import ProfSignup from './pages/ProfSignup';
 
 function App() {
-  const { student } = useAuthContext() //
+  const { user } = useAuthContext() //
 
   return (
     <div className="App">
@@ -22,27 +22,27 @@ function App() {
           <Routes>
             <Route 
             path="/"
-            element={student ? <Home /> : <Navigate to='/student/login' />}
+            element={user ? <Home /> : <Navigate to='/student/login' />}
             />
 
             <Route
               path="/student/login"
-              element={!student ? <StudentLogin /> : <Navigate to='/' />}
+              element={!user ? <StudentLogin /> : <Navigate to='/' />}
             />
 
             <Route
               path="/student/signup"
-              element={!student ? <StudentSignup /> : <Navigate to='/' />}
+              element={!user ? <StudentSignup /> : <Navigate to='/' />}
             />
 
             <Route
               path="prof/login"
-              element={<ProfLogin />}
+              element={!user ? <ProfLogin /> : <Navigate to='/' />}
             />
 
             <Route
               path="prof/signup"
-              element={<ProfSignup />}
+              element={!user ? <ProfSignup /> : <Navigate to='/' />}
             />
           </Routes>
         </div>

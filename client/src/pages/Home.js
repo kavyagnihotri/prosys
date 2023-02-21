@@ -7,15 +7,13 @@ import ProjectDetails from '../components/ProjectDetails'
 import ProjectForm from '../components/ProjectForm'
 
 const Home = () => {
-    const {projects, dispatch} = useProjectsContext()
-    const {student} = useAuthContext()
+    const { projects, dispatch } = useProjectsContext()
+    const { user } = useAuthContext()
 
     useEffect(() => {
         const fetchProjects = async () => {
             const response = await fetch('/projects', {
-                headers: {
-                    'Authorization': `Bearer ${student.token}`
-                }
+                headers: { 'Authorization': `Bearer ${user.token}` }
             })
             const json = await response.json()
 
@@ -24,11 +22,11 @@ const Home = () => {
             }
         }
 
-        if(student) {
+        if(user) {
             fetchProjects()
         }
 
-    }, [])
+    }, [dispatch, user])
 
     return (
         <div className="home">
