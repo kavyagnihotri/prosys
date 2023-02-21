@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const projectRoutes = require('./routes/projects')
 const studentRoutes = require('./routes/student')
+const profRoutes = require('./routes/prof')
 
 // middleware
 app.use(express.json())
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/projects', projectRoutes)
 app.use('/student', studentRoutes)
+app.use('/prof', profRoutes)
 
 // db connect and listen for reqs
 mongoose.set("strictQuery", false);
