@@ -16,7 +16,7 @@ const ProfLogin = () => {
 
     return (
         <form className="login" onSubmit={handleSubmit}>
-            <h3>Login</h3>
+            <h3>Faculty Login</h3>
             <label>Email</label>
             <input 
                 type="email"
