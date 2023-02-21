@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 // bodyParser.urlencoded({ extended: false })
 
 // routes
+// app.use('./test', )
 app.use('/projects', projectRoutes)
 app.use('/student', studentRoutes)
 app.use('/prof', profRoutes)

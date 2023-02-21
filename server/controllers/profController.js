@@ -6,7 +6,18 @@ const createToken = (_id) => {
 }
 
 const loginProf = async (req, res) => {
-    res.json({mssg : "login"})
+    const { email, password } = req.body
+
+    try {
+        const prof = await Prof.login(email, password)
+
+        // token 
+        const token = createToken(prof._id)
+
+        res.status(200).json({ email, token })
+    } catch(error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
 const signupProf = async (req, res) => {

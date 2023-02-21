@@ -37,4 +37,24 @@ profSchema.statics.signup = async function (email, password, name, dept, chamber
     return prof    
 }
 
+// static login
+profSchema.statics.login = async function(email, password) {
+  if(!email || !password) {
+    throw Error("All fields must be filled")
+  }
+
+  const prof = await this.findOne({ email })
+
+  if(!prof) {
+    throw Error("No such email")
+  }
+
+  const match = await bcrypt.compare(password, prof.password) 
+
+  if(!match) {
+    throw Error("Incorrect password")
+  }
+
+  return prof
+}
 module.exports = mongoose.model('Prof', profSchema)
