@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useProfSignup } from "../hooks/useProfSignup"
 // import { useStudentSignup } from "../hooks/useStudentSignup"
 
 // email, password, name, dept, chamber, researchInterest, websites, hod
@@ -12,13 +13,13 @@ const ProfSignup = () => {
     const [researchInterest, setRI] = useState('') 
     const [websites, setWebsites] = useState('')
     const [hod, setHOD] = useState('')
-    // const {signup, error, isLoading} = useStudentSignup()
+    const {signup, error, isLoading} = useProfSignup()
 
     const handleSubmit = async (e) => {
         e.preventDefault() // prevents default refresh of page
-        console.log(email, password, name, dept, chamber, researchInterest, websites, hod);
+        // console.log(email, password, name, dept, chamber, researchInterest, websites, hod);
 
-        // await signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi)
+        await signup(email, password, name, dept, chamber, researchInterest, websites, hod)
 
     }
 
@@ -74,8 +75,8 @@ const ProfSignup = () => {
                 value={setHOD}
             /> */}
 
-            <button>Sign Up</button>
-            {/* {error && <div className="error">{error}</div>} */}
+            <button disabled={isLoading}>Sign Up</button>
+            {error && <div className="error">{error}</div>}
 
         </form>
     )
