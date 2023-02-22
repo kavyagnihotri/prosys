@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const bcrpyt = require('bcrypt')
+const bcrpyt = require('bcryptjs')
 
 const Schema = mongoose.Schema
 
@@ -35,17 +35,15 @@ augsdSchema.statics.login = async function(email, password) {
         throw Error('Incorrect email')
     }
 
-    
-    // const salt = await bcrpyt.genSalt(10)
-    // const hash = await bcrpyt.hash(password, salt)
     console.log("KUCH TOH HUA HAI ")
     match = await bcrpyt.compare(password, augsd.password)
-    console.log(password)
+    console.log(match)
     if(!match) {
+        console.log("oops")
         throw Error('Incorrect password')
     }
     else
-        console('Found match')
+        console.log('Found match')
     return augsd
 }
 

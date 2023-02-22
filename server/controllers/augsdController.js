@@ -11,7 +11,7 @@ const loginAugsd = async (req, res) => {
     console.log({email,password})
     try {
         const augsd = await Augsd.login(email, password) 
-
+        console.log({augsd})
         // create a token 
         const token = createToken(augsd._id)
 
