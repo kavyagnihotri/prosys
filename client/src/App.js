@@ -17,6 +17,23 @@ import StudentDashboard from "./pages/StudentDashboard";
 import ProfDashboard from './pages/ProfDashboard';
 function App() {
   const { user } = useAuthContext() //
+  console.log(user)
+  var studentregex = new RegExp("[fFhHpP][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*");
+  var profregex = new RegExp("[a-zA-Z]*@.*com")
+  var role = 0;
+  if(user!=null){
+  if(user.email==="augsd@gmail.com"){
+    role = 1;
+  }  
+  else if(studentregex.test(user.email)){
+    role = 2;
+  } 
+  else if(profregex.test(user.email)) {
+    role = 3;
+  }
+  console.log(role);
+}
+
 
   return (
     <div className="App">
@@ -32,12 +49,12 @@ function App() {
 
             <Route
             path="/augsd/login"
-            element={!user ? <AugsdLogin /> : <Navigate to='/' />}
+            element={!user ? <AugsdLogin /> : <Navigate to='/augsd/dashboard' />}
             />
 
             <Route
             path="/augsd/dashboard"
-            element={user ? <AugsdDashboard /> : <Navigate to='/augsd/login' />}
+            element={user&&role===1 ? <AugsdDashboard /> : <Navigate to='/augsd/login' />}
             />
 
             <Route
@@ -46,7 +63,7 @@ function App() {
             />
             <Route
             path="/student/dashboard"
-            element={user ? <StudentDashboard /> : <Navigate to='/student/login' />}
+            element={user&&role===2 ? <StudentDashboard /> : <Navigate to='/student/login' />}
             />
 
             <Route
@@ -66,7 +83,7 @@ function App() {
             />
              <Route
             path="/prof/dashboard"
-            element={user ? <ProfDashboard /> : <Navigate to='/prof/login' />}
+            element={user&&role===3 ? <ProfDashboard /> : <Navigate to='/prof/login' />}
             />
           </Routes>
         </div>
