@@ -12,7 +12,9 @@ import AugsdLogin from './pages/AugsdLogin';
 import AugsdDashboard from './pages/AugsdDashboard';
 import ProfLogin from './pages/ProfLogin';
 import ProfSignup from './pages/ProfSignup';
-import HomePage from './components/muiButton'
+import HomePage from './components/muiButton';
+import StudentDashboard from "./pages/StudentDashboard";
+import ProfDashboard from './pages/ProfDashboard';
 function App() {
   const { user } = useAuthContext() //
 
@@ -25,12 +27,7 @@ function App() {
 
             <Route 
             path="/"
-            element={user ? <Home /> :  <Navigate to='/student/login' /> }
-            />
-
-<Route 
-            path="/test"
-            element={<HomePage /> }
+            element={user ? <Home /> :  <HomePage /> }
             />
 
             <Route
@@ -45,22 +42,31 @@ function App() {
 
             <Route
               path="/student/login"
-              element={!user ? <StudentLogin /> : <Navigate to='/' />}
+              element={!user ? <StudentLogin /> : <Navigate to='/student/dashboard' />}
+            />
+            <Route
+            path="/student/dashboard"
+            element={user ? <StudentDashboard /> : <Navigate to='/student/login' />}
             />
 
             <Route
               path="/student/signup"
-              element={!user ? <StudentSignup /> : <Navigate to='/' />}
+              element={!user ? <StudentSignup /> : <Navigate to='/student/dashboard' />}
             />
+
 
             <Route
               path="prof/login"
-              element={!user ? <ProfLogin /> : <Navigate to='/' />}
+              element={!user ? <ProfLogin /> : <Navigate to='/prof/dashboard' />}
             />
 
             <Route
               path="prof/signup"
-              element={!user ? <ProfSignup /> : <Navigate to='/' />}
+              element={!user ? <ProfSignup /> : <Navigate to='/prof/dashboard' />}
+            />
+             <Route
+            path="/prof/dashboard"
+            element={user ? <ProfDashboard /> : <Navigate to='/prof/login' />}
             />
           </Routes>
         </div>
