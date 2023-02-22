@@ -25,12 +25,13 @@ export const useAugsdLogin = () => {
 
         if(response.ok) {
             
-            localStorage.setItem('user', JSON.stringify(res))
+            localStorage.setItem('user', JSON.stringify(response))
 
             // update the auth context
             dispatch({type: 'LOGIN', payload: json})
 
             setIsLoading(false)
+            window.location.href = "./augsd/dashboard";
         }
     }
     return { login, error, isLoading }
