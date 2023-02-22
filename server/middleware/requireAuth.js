@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const Student = require('../models/studentModel')
+const Augsd = require('../models/augsdModel')
 
 const requireAuth = async (req, res, next) => {
     // verify
@@ -15,6 +16,7 @@ const requireAuth = async (req, res, next) => {
         const {_id} = jwt.verify(token, process.env.SECRET)
         
         req.student = await Student.findOne({ _id }).select('_id')
+        req.augsd = await Augsd.findOne({_id }).select('_id')
         next()
 
     } catch (error) {
