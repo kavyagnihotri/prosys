@@ -12,7 +12,7 @@ import AugsdLogin from './pages/AugsdLogin';
 import AugsdDashboard from './pages/AugsdDashboard';
 import ProfLogin from './pages/ProfLogin';
 import ProfSignup from './pages/ProfSignup';
-
+import HomePage from './components/muiButton'
 function App() {
   const { user } = useAuthContext() //
 
@@ -22,9 +22,15 @@ function App() {
         <Navbar /> 
         <div className='pages'>
           <Routes>
+
             <Route 
             path="/"
             element={user ? <Home /> :  <Navigate to='/student/login' /> }
+            />
+
+<Route 
+            path="/test"
+            element={<HomePage /> }
             />
 
             <Route
