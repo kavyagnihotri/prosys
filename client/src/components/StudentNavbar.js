@@ -3,7 +3,7 @@ import { useLogout } from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const Navbar = () => {
-    const { logout } = useStudentLogout()
+    const { logout } = useLogout()
     const { student } = useAuthContext()
 
     const handleClick = () => {
