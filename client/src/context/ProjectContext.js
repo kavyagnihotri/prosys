@@ -14,10 +14,10 @@ export const projectsReducer = (state, action) => {
             }
         case 'DELETE_PROJECT':
             return {
-                projects: state.projects.filter((p) => {
-                    p._id != action.payload._id
-                })
-            }
+                projects: state.projects.filter((p) => 
+                    p._id !== action.payload._id
+                )
+        }
         default:
             return state
     }
