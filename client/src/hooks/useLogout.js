@@ -1,11 +1,11 @@
 import { useAuthContext } from "./useAuthContext"
 
-export const useStudentLogout = () => {
+export const useLogout = () => {
     const { dispatch } = useAuthContext()
 
     const logout = () => {
         // remove student from storage
-        localStorage.removeItem('student')
+        localStorage.removeItem('user')
 
         dispatch({type: 'LOGOUT'})
     }
