@@ -1,20 +1,22 @@
 import { useState } from "react"
-import { useStudentLogin } from "../hooks/useStudentLogin"
+import { useProfLogin } from "../hooks/useProfLogin"
 
-const StudentLogin = () => {
+// email, password, name, dept, chamber, researchInterest, websites, hod
+
+const ProfLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { login, error, isLoading } = useStudentLogin()
+    const {login, error, isLoading} = useProfLogin()
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-        
+    const handleSubmit = async (e) => {
+        e.preventDefault() // prevents default refresh of page
+
         await login(email, password)
     }
 
     return (
         <form className="login" onSubmit={handleSubmit}>
-            <h3>Student Login</h3>
+            <h3>Faculty Login</h3>
             <label>Email</label>
             <input 
                 type="email"
@@ -31,8 +33,9 @@ const StudentLogin = () => {
 
             <button disabled={isLoading}>Login</button>
             {error && <div className="error">{error}</div>}
+
         </form>
     )
 }
 
-export default StudentLogin
+export default ProfLogin

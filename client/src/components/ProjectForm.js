@@ -4,7 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 const ProjectForm = () => {
     const { dispatch } = useProjectsContext()
-    const { student } = useAuthContext()
+    const { user } = useAuthContext()
 
     const [title, setTitle] = useState('')
     const [projectID, setProjectID] = useState('')
@@ -15,7 +15,7 @@ const ProjectForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if(!student) {
+        if(!user) {
             setError('You must be logged in')
             return 
         }
@@ -26,7 +26,7 @@ const ProjectForm = () => {
             body: JSON.stringify(project), 
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${student.token}`
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

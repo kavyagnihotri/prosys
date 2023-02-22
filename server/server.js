@@ -9,7 +9,7 @@ const app = express();
 const projectRoutes = require('./routes/projects')
 const studentRoutes = require('./routes/student')
 const augsdRoutes = require('./routes/augsd')
-
+const profRoutes = require('./routes/prof')
 // middleware
 app.use(express.json())
 app.use(cors());
@@ -21,9 +21,11 @@ app.use((req, res, next) => {
 // bodyParser.urlencoded({ extended: false })
 
 // routes
+// app.use('./test', )
 app.use('/projects', projectRoutes)
 app.use('/student', studentRoutes)
 app.use('/augsd',augsdRoutes)
+app.use('/prof', profRoutes)
 
 // db connect and listen for reqs
 mongoose.set("strictQuery", false);

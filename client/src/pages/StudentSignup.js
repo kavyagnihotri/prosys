@@ -14,7 +14,7 @@ const StudentSignup = () => {
     const {signup, error, isLoading} = useStudentSignup()
 
     const handleSubmit = async(e) => {
-        e.preventDefault()
+        e.preventDefault() // prevents default refresh of page
 
         await signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi)
 
@@ -22,7 +22,7 @@ const StudentSignup = () => {
 
     return (
         <form className="signup" onSubmit={handleSubmit}>
-            <h3>SignUp</h3>
+            <h3>Student SignUp</h3>
             <label>Email</label>
             <input 
                 type="email"
