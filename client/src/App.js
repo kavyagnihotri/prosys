@@ -3,32 +3,44 @@ import { useAuthContext } from './hooks/useAuthContext';
 
 // pages and components
 import Home from './pages/Home'
-import Navbar from './components/Navbar';
+import Navbar from './components/StudentNavbar';
 import StudentLogin from './pages/StudentLogin';
 import StudentSignup from './pages/StudentSignup';
+import AugsdLogin from './pages/AugsdLogin';
+import AugsdDashboard from './pages/AugsdDashboard';
 
 function App() {
-  const { student } = useAuthContext()
+  const { user } = useAuthContext()
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className='pages'>
           <Routes>
             <Route 
             path="/"
-            element={student ? <Home /> : <Navigate to='/student/login' />}
+            element={user ? <Home /> :  <Navigate to='/student/login' /> }
+            />
+
+            <Route
+            path="/augsd/login"
+            element={!user ? <AugsdLogin /> : <Navigate to='/' />}
+            />
+
+            <Route
+            path="/augsd/dashboard"
+            element={user ? <AugsdDashboard /> : <Navigate to='/augsd/login' />}
             />
 
             <Route
               path="/student/login"
-              element={!student ? <StudentLogin /> : <Navigate to='/' />}
+              element={!user ? <StudentLogin /> : <Navigate to='/' />}
             />
 
             <Route
               path="/student/signup"
-              element={!student ? <StudentSignup /> : <Navigate to='/' />}
+              element={!user ? <StudentSignup /> : <Navigate to='/' />}
             />
           </Routes>
         </div>
