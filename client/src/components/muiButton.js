@@ -104,7 +104,7 @@ export default function Album() {
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "center" }}>
-                    <Button size="small">Sign-In</Button>
+                    <Button size="small" href='/augsd/dashboard'>Sign-In</Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -131,7 +131,7 @@ export default function Album() {
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "center" }}>
-                    <Button size="small">Sign-In</Button>
+                    <Button size="small" href='/prof/dashboard'>Sign-In</Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -158,7 +158,7 @@ export default function Album() {
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "center" }}>
-                    <Button size="small">Sign-In</Button>
+                    <Button size="small" href='/student/dashboard'>Sign-In</Button>
                   </CardActions>
                 </Card>
               </Grid>

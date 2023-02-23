@@ -31,7 +31,6 @@ export const useAugsdLogin = () => {
             dispatch({type: 'LOGIN', payload: json})
 
             setIsLoading(false)
-            window.location.href = "./augsd/dashboard";
         }
     }
     return { login, error, isLoading }
