@@ -11,11 +11,12 @@ export const useProfSignup = () => {
     const signup = async (email, password, name, dept, chamber, researchInterest, websites, hod) => {
         setIsLoading(true)
         setError(null)
+        hod = false // by default
 
         const response = await fetch('/prof/signup', {
             method: 'POST', 
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({email, password, name, dept, chamber, researchInterest, websites, hod})
         })
 
         const json = await response.json()
