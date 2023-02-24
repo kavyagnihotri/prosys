@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { useLogout } from '../hooks/useLogout'
 import CssBaseline from '@mui/material/CssBaseline';
+import Button from '@mui/material/Button';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
@@ -22,12 +23,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 240;
 
-
-const handleClick = () => {
-  const { logout } = useLogout()
-  console.log('logging out')
-  logout()
-}
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -80,6 +75,13 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const { logout } = useLogout()
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    logout()
+  }
   
   return (
     <ThemeProvider theme={mdTheme}>
@@ -112,10 +114,12 @@ function DashboardContent() {
             >
               AUGSD Dashboard
             </Typography>
-            <IconButton color="inherit" onClick={handleClick}>
+            <Box component="form" noValidate onSubmit={handleSubmit}>
+              {/* <IconButton color="inherit">
                 <LogoutIcon />
-            </IconButton>
-            {/* <Button color="primary" size="large" startIcon={<LogoutIcon />} onClick={handleClick}></Button> */}
+              </IconButton> */}
+              <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">LogOut</Button>
+            </Box>
           </Toolbar>
         </AppBar>
         {/* <Drawer variant="permanent" open={open}>
@@ -148,6 +152,7 @@ function DashboardContent() {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
+            marginTop: 5,
           }}
         >
           {/* <Toolbar /> */}
