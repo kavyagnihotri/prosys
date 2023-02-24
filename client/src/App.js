@@ -17,7 +17,6 @@ function App() {
   const { user } = useAuthContext() 
 
   console.log(user)
-
   var studentregex = new RegExp("[fhp][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*");
   var profregex = new RegExp("[a-zA-Z]*@.*com")
   var role = 0;
@@ -56,7 +55,8 @@ function App() {
 
             <Route
             path="/augsd/dashboard"
-            element={user && role === 1 ? <AugsdDashboard /> : <Navigate to='/augsd/login' />}
+            element={user&&user.email==="augsd@gmail.com" ? <AugsdDashboard /> : <Navigate to='/augsd/login' />}
+
             />
 
             <Route
@@ -66,7 +66,7 @@ function App() {
 
             <Route
             path="/student/dashboard"
-            element={user && role === 2 ? <StudentDashboard /> : <Navigate to='/student/login' />}
+            element={user? <StudentDashboard /> : <Navigate to='/student/login' />}
             />
 
             <Route
@@ -87,7 +87,7 @@ function App() {
 
              <Route
             path="/prof/dashboard"
-            element={user&&role===3 ? <ProfDashboard /> : <Navigate to='/prof/login' />}
+            element={user? <ProfDashboard /> : <Navigate to='/prof/login' />}
             />
           </Routes>
         </div>
