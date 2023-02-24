@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext';
 
 // pages and components
-import Home from './pages/Home'
+import Home from './pages/ProjectAdd'
 import Navbar from './components/StudentNavbar';
 import StudentLogin from './pages/StudentLogin';
 import StudentSignup from './pages/StudentSignup';
@@ -45,7 +45,7 @@ function App() {
 
             <Route 
             path="/"
-            element={user ? <Home /> :  <HomePage /> }
+            element={<HomePage /> }
             />
 
             <Route
@@ -89,6 +89,11 @@ function App() {
             path="/prof/dashboard"
             element={user? <ProfDashboard /> : <Navigate to='/prof/login' />}
             />
+             <Route
+            path="/prof/project/add"
+            element={<Home/>}
+            />
+            
           </Routes>
         </div>
       </BrowserRouter>

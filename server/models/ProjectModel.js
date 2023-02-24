@@ -15,6 +15,25 @@ const projectSchema = new Schema({
         type: String, 
         required: true
     }, 
+    prerequisite: {
+        type: String
+    },
+    projectType: {
+        type: String,
+        required: true
+    },
+    professorEmail: {
+        type: String,
+        required: true
+    },
+    numberOfStudents: {
+        type: Number,
+        required: true
+    },
+    approved: {
+        type: Number,
+        default: 0
+    }
 }, {timestamps: true})
 
-module.exports = mongoose.model('Project', projectSchema)
+module.exports = mongoose.model('Project Details', projectSchema)
