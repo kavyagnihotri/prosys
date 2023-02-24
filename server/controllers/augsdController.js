@@ -11,13 +11,12 @@ const loginAugsd = async (req, res) => {
     console.log({email,password})
     try {
         const augsd = await Augsd.login(email, password) 
-        console.log({augsd})
+        
         // create a token 
         const token = createToken(augsd._id)
 
         res.status(200).json({email, token})
     } catch (error) {
-        console.log("here");
         res.status(400).json({error: error.message})
     }
 
