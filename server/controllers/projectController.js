@@ -27,8 +27,8 @@ const getProject = async (req, res) => {
 
 // create a project
 const createProject = async (req, res) => {
-    const {title, projectID, description} = req.body
-
+    const {title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved } = req.body
+    console.log(req.body)
     let emptyfields = []
 
     if(!title) {
@@ -49,8 +49,8 @@ const createProject = async (req, res) => {
 
 
     try {
-       const project = await Project.create({title, projectID, description})
-        res.status(200).json(project)
+       const project = await Project.create({title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved })
+        res.status(200).json({title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved })
     } catch (error) {
         res.status(400).json({error: error.message}) 
     }
