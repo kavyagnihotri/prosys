@@ -64,6 +64,11 @@ studentSchema.statics.signup = async function(email, password, name, studentID, 
         throw Error('Email is not valid')
     }
 
+    const regex = new RegExp("[fhp][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*")
+    if(!regex.test(email)) {
+      throw Error("Email must belong to a student. Hint: starts with f, h, or p")
+    }
+
     if(!validator.isStrongPassword(password)) {
         throw Error('Password not strong enough')
     }
