@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -66,7 +67,7 @@ const ProfLogin = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                       Log in
+                        Faculty Log in
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                         <TextField
@@ -99,6 +100,13 @@ const ProfLogin = () => {
                         </Button>
                         {error && <div className="error">{error}</div>}
                 </Box>
+                <Grid container justifyContent="center">
+                    <Grid item>
+                        <Link href="/student/signup" variant="body2">
+                            Don't have an account? Sign Up
+                        </Link>
+                    </Grid>
+                </Grid>
             </Box>
             </Grid>
         </Grid>
