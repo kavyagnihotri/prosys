@@ -25,12 +25,9 @@ augsdSchema.statics.login = async function(email, password) {
         throw Error('Incorrect email')
     }
     match = await bcrpyt.compare(password, augsd.password)
-    console.log(match)
     if(!match) {
         throw Error('Incorrect password')
     }
-    else
-        console.log('Found match')
     return augsd
 }
 module.exports = mongoose.model('augsd', augsdSchema)
