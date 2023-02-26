@@ -5,53 +5,40 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import Button from '@mui/material/Button';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import { useState,useEffect } from 'react';
+import { useProjectsContext } from '../hooks/useProjectsContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
 export default function NewProjectTable() {
+
+  const { projects, dispatch } = useProjectsContext()
+  const { user } = useAuthContext()
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/pendingprojects', {
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+    }
+
+  }, [dispatch, user])
+
   return (
     <React.Fragment>
       <Title>New Projects</Title>
@@ -65,17 +52,23 @@ export default function NewProjectTable() {
             <TableCell>Description</TableCell>
             <TableCell>Pre-requisites</TableCell>
             <TableCell>No. of Formal Students</TableCell>
-            <TableCell>No. of Informal Students</TableCell>
+            <TableCell>Operations</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+          {projects && projects.map((project) => (
+            <TableRow key={project._id}>
+              <TableCell>{project.title}</TableCell>
+              <TableCell>{project.projectID}</TableCell>
+              <TableCell>{project.projectType}</TableCell>
+              <TableCell>{project.professorEmail}</TableCell>
+              <TableCell>{project.description}</TableCell>
+              <TableCell>{project.prerequisite}</TableCell>
+              <TableCell>{project.numberOfStudents}</TableCell>
+              <TableCell>
+                <Button size="large" startIcon={<CheckCircleOutlineOutlinedIcon />} type="submit">ACCEPT</Button>
+                <Button size="large" startIcon={<CancelOutlinedIcon />} type="submit" >REJECT</Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

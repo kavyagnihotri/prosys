@@ -4,6 +4,8 @@ const {
     getProjects, 
     getProject, 
     deleteProject, 
+    getApprovedProjects,
+    getPendingProjects,
     updateProject
 } = require('../controllers/projectController')
 const requireAuth = require('../middleware/requireAuth')
@@ -12,6 +14,10 @@ const requireAuth = require('../middleware/requireAuth')
 const router = express.Router()
 
 router.use(requireAuth)
+
+router.get('/approvedprojects',getApprovedProjects)
+
+router.get('/pendingprojects',getPendingProjects)
 
 // GET all posts
 router.get('/', getProjects)
