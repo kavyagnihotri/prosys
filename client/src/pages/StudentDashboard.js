@@ -23,7 +23,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
-import Orders from '../components/Orders';
+import Projects from '../components/StudentProjects';
 
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
@@ -173,7 +173,7 @@ function DashboardContent() {
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                                    <Orders />
+                                    <Projects />
                                 </Paper>
                             </Grid>
                         </Grid>

@@ -37,5 +37,4 @@ const projectSchema = new Schema({
     }
 }, {timestamps: true})
 
-// module.exports = mongoose.model('Project Details', projectSchema)
 module.exports = mongoose.model('Project', projectSchema)

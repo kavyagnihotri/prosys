@@ -27,6 +27,9 @@ const getProject = async (req, res) => {
 
 // GET approved projects
 
+
+
+
 // Create a project
 const createProject = async (req, res) => {
     const {title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved } = req.body

@@ -10,17 +10,16 @@ const {
     updateProject
 } = require('../controllers/projectController')
 
-// const requireAuth = require('../middleware/requireAuth')
-
 const router = express.Router()
-
-// router.use(requireAuth)
 
 // login route
 router.post('/login', loginStudent)
 
 // singup route
 router.post('/signup', signupStudent)
+
+const requireAuth = require('../middleware/requireAuth')
+router.use(requireAuth)
 
 router.post('/projects', getProjects)
 
