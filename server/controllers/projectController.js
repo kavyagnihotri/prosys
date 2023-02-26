@@ -25,7 +25,9 @@ const getProject = async (req, res) => {
     res.status(200).json(project)
 }
 
-// create a project
+// GET approved projects
+
+// Create a project
 const createProject = async (req, res) => {
     const {title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved } = req.body
     console.log(req.body)

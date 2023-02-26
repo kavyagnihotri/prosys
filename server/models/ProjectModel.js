@@ -9,7 +9,8 @@ const projectSchema = new Schema({
     }, 
     projectID: {
         type: Number, 
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String, 
