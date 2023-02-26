@@ -26,8 +26,21 @@ const getProject = async (req, res) => {
 }
 
 // GET approved projects
+const getApprovedProjects = async (req, res) =>{
+    const approvedProjects = await Project.find({approved:1})
+    if(!approvedProjects){
+        return res.status(404).json({error: 'No such approved projects'})
+    }
+    res.status(200).json(approvedProjects)
+}
 
-
+const getPendingProjects = async (req, res) =>{
+    const pendingProjects = await Project.find({approved:0})
+    if(!pendingProjects){
+        return res.status(404).json({error: 'No such pending projects'})
+    }
+    res.status(200).json(pendingProjects)
+}
 
 
 // Create a project
@@ -104,5 +117,7 @@ module.exports = {
     getProjects,
     getProject, 
     deleteProject,
-    updateProject
+    updateProject,
+    getApprovedProjects,
+    getPendingProjects
 }
