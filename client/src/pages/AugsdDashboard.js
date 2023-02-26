@@ -20,6 +20,7 @@ import NewProjectTable from '../components/NewProjectTable';
 import ApprovedProjectTable from '../components/ApprovedProjectTable';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { maxWidth } from '@mui/system';
+import { useEffect , useState } from 'react';
 
 
 const drawerWidth = 240;
@@ -76,6 +77,18 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [projects, setProjects]=useState(null)
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const response = await fetch('/augsd/')
+      const json = await response.json()
+
+      if(response.ok){
+        setProjects(json)
+      }
+    }
+    fetchProjects()
+  },[])
 
   const { logout } = useLogout()
 
