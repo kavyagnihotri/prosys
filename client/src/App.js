@@ -13,6 +13,8 @@ import ProfSignup from './pages/ProfSignup';
 import HomePage from './components/muiButton';
 import StudentDashboard from "./pages/StudentDashboard";
 import ProfDashboard from './pages/ProfDashboard';
+// import Try from './components/Dashboard';
+
 function App() {
   const { user } = useAuthContext() 
 
@@ -39,7 +41,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar /> 
         <div className='pages'>
           <Routes>
 
@@ -89,6 +90,7 @@ function App() {
             path="/prof/dashboard"
             element={user? <ProfDashboard /> : <Navigate to='/prof/login' />}
             />
+
              <Route
             path="/prof/project/add"
             element={<Home/>}

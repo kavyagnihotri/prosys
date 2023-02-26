@@ -1,14 +1,14 @@
-const Project = require('../models/ProjectModel')
+const Application = require('../models/projectApplicationModel')
 const mongoose = require('mongoose')
 
 // GET all projects
-const getProjects = async(req, res) => {
-    const projects = await Project.find({}).sort({createdAt: -1})
-    res.status(200).json(projects)
+const getApplications = async(req, res) => {
+    const applications = await Application.find({}).sort({createdAt: -1})
+    res.status(200).json(applications)
 }
 
 // GET a single project
-const getProject = async (req, res) => {
+const getApplication = async (req, res) => {
     // gets the id at the address
     const {id} = req.params
 
@@ -16,21 +16,16 @@ const getProject = async (req, res) => {
         return res.status(404).json({error: "No such project"})
     }
 
-    const project = await Project.findById(id)
+    const applications = await Application.findById(id)
 
-    if(!project) {
+    if(!applications) {
         return res.status(404).json({error: "No such project"})
     }
 
-    res.status(200).json(project)
+    res.status(200).json(applications)
 }
 
-// GET approved projects
-
-
-
-
-// Create a project
+// create a project
 const createProject = async (req, res) => {
     const {title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved } = req.body
     console.log(req.body)
@@ -62,47 +57,43 @@ const createProject = async (req, res) => {
 }
 
 // delete a project
-const deleteProject = async (req, res) => {
-    const { id } = req.params
+// const deleteProject = async (req, res) => {
+//     const { id } = req.params
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: "No such project"})
-    }
+//     if(!mongoose.Types.ObjectId.isValid(id)) {
+//         return res.status(404).json({error: "No such project"})
+//     }
 
-    const project = await Project.findOneAndDelete({_id: id})
+//     const project = await Project.findOneAndDelete({_id: id})
 
-    if(!project) {
-        return res.status(404).json({error: "No such project"})
-    }
+//     if(!project) {
+//         return res.status(404).json({error: "No such project"})
+//     }
 
-    res.status(200).json(project)
-}
+//     res.status(200).json(project)
+// }
 
 // update a project
-const updateProject = async (req, res) => {
-    const { id } = req.params
+// const updateProject = async (req, res) => {
+//     const { id } = req.params
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: "No such project"})
-    }
+//     if(!mongoose.Types.ObjectId.isValid(id)) {
+//         return res.status(404).json({error: "No such project"})
+//     }
 
-    const project = await Project.findOneAndUpdate({_id: id}, {
-        ...req.body
-        // title: 'monkeys'
-    })
+//     const project = await Project.findOneAndUpdate({_id: id}, {
+//         ...req.body
+//         // title: 'monkeys'
+//     })
 
-    if(!project) {
-        return res.status(404).json({error: "No such project"})
-    }
+//     if(!project) {
+//         return res.status(404).json({error: "No such project"})
+//     }
 
-    res.status(200).json(project)
-}
+//     res.status(200).json(project)
+// }
 
 
 module.exports = {
-    createProject, 
-    getProjects,
-    getProject, 
-    deleteProject,
-    updateProject
+    
 }

@@ -64,7 +64,7 @@ export default function Album() {
               color="text.primary"
               gutterBottom
             >
-              Project Portal
+              ProSys
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Welcome to Project Approval & Registration Portal

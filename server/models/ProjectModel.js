@@ -9,7 +9,8 @@ const projectSchema = new Schema({
     }, 
     projectID: {
         type: Number, 
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String, 
@@ -36,4 +37,4 @@ const projectSchema = new Schema({
     }
 }, {timestamps: true})
 
-module.exports = mongoose.model('Project Details', projectSchema)
+module.exports = mongoose.model('Project', projectSchema)
