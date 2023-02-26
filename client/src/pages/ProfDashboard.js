@@ -134,6 +134,15 @@ function DashboardContent() {
             >
               ProSys - Professor
             </Typography>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              {user.email}
+            </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit}>
               <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">LogOut</Button>
             </Box>
