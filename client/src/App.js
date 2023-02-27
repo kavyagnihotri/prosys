@@ -13,6 +13,7 @@ import ProfSignup from './pages/ProfSignup';
 import HomePage from './components/muiButton';
 import StudentDashboard from "./pages/StudentDashboard";
 import ProfDashboard from './pages/ProfDashboard';
+import Form from './components/application/ApplicationForm'
 // import Try from './components/Dashboard';
 
 function App() {
@@ -43,6 +44,11 @@ function App() {
       <BrowserRouter>
         <div className='pages'>
           <Routes>
+
+            <Route 
+            path='/form'
+            element={<Form />}
+            />
 
             <Route 
             path="/"

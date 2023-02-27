@@ -1,4 +1,3 @@
-
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
@@ -38,14 +37,6 @@ const Project = ({ project }) => {
               <TableCell>{project.numberOfStudents}</TableCell>
               <TableCell onClick={handleClick}>Apply</TableCell>
         </TableRow>
-
-        // <div className="project-details">
-        //     <h4>{project.title}</h4>
-        //     <p><strong>{project.projectID}</strong></p>
-        //     <p><strong>Description</strong></p>
-        //     <p>{project.description}</p>
-        //     {/* <span className="material-symbols-outlined " onClick={handleClick}>Delete</span> */}
-        // </div>
     )
 } 
 

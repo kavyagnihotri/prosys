@@ -14,7 +14,6 @@ const ProjectForm = () => {
   const [numberOfStudents, setProjectNumber] = useState("");
   const [error, setError] = useState(null);
   const [emptyfields, setEmptyFields] = useState([]);
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,7 +84,7 @@ const ProjectForm = () => {
         className={emptyfields.includes("description") ? "error" : ""}
       />
 
-<label>Project Prerequisite</label>
+      <label>Project Prerequisite</label>
       <input
         type="text"
         onChange={(e) => setPrerquisite(e.target.value)}

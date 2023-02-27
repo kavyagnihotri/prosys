@@ -15,18 +15,18 @@ const router = express.Router()
 // router.use(requireAuth)
 
 // GET all applications
-router.get('/', getApplications)
+router.get('/applications', getApplications)
 
 // GET applications by email (student)
 // student id?
-router.get('/applications/:id', getApplicationsByEmail)
+// router.get('/applications/:id', getApplicationsByEmail)
 
-// POST (create) application 
-router.post('/createApplication', createApplication)
+// POST (create) application -> shifted to student.js
+// router.post('/createApplication', createApplication)
 
-// DELETE a post
+// DELETE
 // :id is the _id of the applicaiton
-router.delete('/applications/:id', deleteApplication)
+// router.delete('/applications/:id', deleteApplication)
 
 // // UPDATE a post
 // router.patch('/:id', updateProject)

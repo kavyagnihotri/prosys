@@ -2,7 +2,8 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 
-// projectID, studentEmail, professorEmail, type, sop, status
+// projectID(num), profEmail, studentEmail, type(num), sop, status(num)
+// projectID, profEmail, studentEmail, type, sop, status
 
 const applicationSchema = new Schema({
     projectID: {
@@ -14,7 +15,7 @@ const applicationSchema = new Schema({
         required: true
     }, 
     studentEmail: {
-        type: Number, 
+        type: String, 
         required: true
     },
     type: {
