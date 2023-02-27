@@ -30,13 +30,13 @@ const Project = ({ project }) => {
 
     return (
         <TableRow key={project._id}>
-              <TableCell>{project.title}</TableCell>
-              <TableCell>{project.projectType}</TableCell>
-              <TableCell>{project.description}</TableCell>
-              <TableCell>{project.prerequisite}</TableCell>
-              <TableCell>{project.professorEmail}</TableCell>
-              <TableCell>{project.numberOfStudents}</TableCell>
-              <TableCell>{project.approved}</TableCell>
+              <TableCell align="center" component="th" scope="row" style={{ width: "25%" }}>{project.title}</TableCell>
+              <TableCell align="center" style={{ width: "20%" }}>{project.projectType}</TableCell>
+              <TableCell align="center" style={{ width: "27%" }}>{project.description}</TableCell>
+              <TableCell align="center" style={{ width: "20%" }}>{project.prerequisite}</TableCell>
+              {/* <TableCell align="center" style={{ width: "100%" }}>{project.professorEmail}</TableCell> */}
+              <TableCell align="center" style={{ width: "100%" }}>{project.numberOfStudents}</TableCell>
+              {/* <TableCell align="right">{project.approved}</TableCell> */}
               {/* <TableCell onClick={handleClick}>Apply</TableCell> */}
         </TableRow>
 
