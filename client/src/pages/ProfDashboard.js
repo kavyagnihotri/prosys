@@ -107,13 +107,13 @@ function DashboardContent() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
             }}
           >
-            <IconButton
+            {/* <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
@@ -124,7 +124,7 @@ function DashboardContent() {
               }}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography
               component="h1"
               variant="h6"
@@ -158,7 +158,7 @@ function DashboardContent() {
 
           <Divider />
 
-          <List >
+          <List>
             {mainListItems}
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
