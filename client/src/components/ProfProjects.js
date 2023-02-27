@@ -4,13 +4,17 @@ import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import Paper from '@mui/material/Paper';
 
 import { useProjectsContext } from '../hooks/useProjectsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 import Projects from './ProfProjectDetails';
+
+const tables = [0, 1, 2]
 
 // Generate Order Data
 // function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -81,41 +85,39 @@ export default function Orders() {
 
 
   return (
-    <React.Fragment>
-      <Title>Projects</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Project Type</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Prerequisite</TableCell>
-            <TableCell>Offered By</TableCell>
-            <TableCell>Number of Students</TableCell>
-            <TableCell>Status</TableCell>
-
-            {/* <TableCell align="right">Sale Amount</TableCell> */}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {/* {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
-            </TableRow>
-          ))} */}
-          {projects && projects.map((project) => (
-            <Projects key={project._id} project={project} />
-          ))}
-        </TableBody>
-      </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more
-      </Link>
-    </React.Fragment>
+    <div>
+        {projects && tables.map((table) => (
+          <TableContainer component={Paper}>
+              <React.Fragment>
+                <Title>{table}</Title>
+                    <TableHead>
+                    <TableRow>
+                      <TableCell align="center" style={{ width: "25%" }}>Title</TableCell>
+                      <TableCell align="center" style={{ width: "25%" }}>Project Type</TableCell>
+                      <TableCell align="center" style={{ width: "25%" }}>Description</TableCell>
+                      <TableCell align="center" style={{ width: "20%" }}>Prerequisite(s)</TableCell>
+                      {/* <TableCell align="center" style={{ width: "50%" }}>Offered By</TableCell> */}
+                      <TableCell align="center" style={{ width: "100%" }}>Number of Students</TableCell>
+                      {/* <TableCell align="right" style={{ width: 200 }}>Status</TableCell> */}
+                        {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+                    </TableRow>
+                    </TableHead>
+                <Table aria-label="simple table">
+                    <TableBody>
+                    {projects.map((project) => (
+                    <div>
+                      {project.professorEmail === user.email && table === project.approved && <Projects key={project._id} project={project}/>}
+                    </div>
+                    ))}
+                    </TableBody>
+                </Table>
+              {/* {error && <div className="error">{error}</div>} */}
+              {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>See more</Link> */}
+              </React.Fragment>
+            </TableContainer>
+        ))}
+        {/* <ProjectForm /> */}
+    </div>
   );
 }
 
