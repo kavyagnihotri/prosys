@@ -87,9 +87,9 @@ export default function Orders() {
   return (
     <div>
         {projects && tables.map((table) => (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{height: "50%"}}>
               <React.Fragment>
-                <Title>{table}</Title>
+                <Title sx={{align: "center"}}>{table}</Title>
                     <TableHead>
                     <TableRow>
                       <TableCell align="center" style={{ width: "25%" }}>Title</TableCell>
@@ -97,7 +97,7 @@ export default function Orders() {
                       <TableCell align="center" style={{ width: "25%" }}>Description</TableCell>
                       <TableCell align="center" style={{ width: "20%" }}>Prerequisite(s)</TableCell>
                       {/* <TableCell align="center" style={{ width: "50%" }}>Offered By</TableCell> */}
-                      <TableCell align="center" style={{ width: "100%" }}>Number of Students</TableCell>
+                      <TableCell align="center" style={{ width: "50%" }}>Number of Students</TableCell>
                       {/* <TableCell align="right" style={{ width: 200 }}>Status</TableCell> */}
                         {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
                     </TableRow>
@@ -113,8 +113,8 @@ export default function Orders() {
                 </Table>
               {/* {error && <div className="error">{error}</div>} */}
               {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>See more</Link> */}
-              </React.Fragment>
-            </TableContainer>
+            </React.Fragment>
+          </TableContainer>
         ))}
         {/* <ProjectForm /> */}
     </div>
