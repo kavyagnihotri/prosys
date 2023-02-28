@@ -12,14 +12,16 @@ const augsdRoutes = require('./routes/augsd')
 const profRoutes = require('./routes/prof')
 
 // middleware
+// app.use(bodyParser())
 app.use(express.json())
 app.use(cors());
 app.use((req, res, next) => {
     console.log(req.path, req.method)
     next()
 })
+// app.use(bodyParser.json())
 
-// bodyParser.urlencoded({ extended: false })
+// app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes
 app.use('/projects', projectRoutes)

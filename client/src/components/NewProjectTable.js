@@ -40,8 +40,25 @@ export default function NewProjectTable() {
 
   }, [dispatch, user])
 
-  // const pendingprojects=projects
-  // console.log({pendingprojects})
+  const onAccept = async (id) => {
+    // e.preventDefault()s
+    console.log({id})
+    await fetch('/augsd/accept',{
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id})
+  })
+  }
+
+  const onReject = async (id) => {
+    // e.preventDefault()s
+    console.log({id})
+    await fetch('/augsd/reject',{
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id})
+  })
+  }
 
   return (
     <React.Fragment>
@@ -71,8 +88,8 @@ export default function NewProjectTable() {
               <TableCell>{project.prerequisite}</TableCell>
               <TableCell>{project.numberOfStudents}</TableCell>
               <TableCell>
-                <Button size="large" startIcon={<CheckCircleOutlineOutlinedIcon />} type="submit">ACCEPT</Button>
-                <Button size="large" startIcon={<CancelOutlinedIcon />} type="submit" >REJECT</Button>
+                <Button size="large" startIcon={<CheckCircleOutlineOutlinedIcon />} type="submit" onClick={(e)=> onAccept(project._id)}>ACCEPT</Button>
+                <Button size="large" startIcon={<CancelOutlinedIcon />} type="submit" onClick={(e)=> onReject(project._id)}>REJECT</Button>
               </TableCell>
             </TableRow>
           ))}
