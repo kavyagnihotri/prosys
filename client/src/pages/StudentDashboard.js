@@ -16,17 +16,36 @@ import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { mainListItems, secondaryListItems } from "../components/ListItems";
-// import Chart from './Chart';
-// import Deposits from './Deposits';
 import Projects from "../components/StudentProjects";
+import Applications from '../components/StudentApplications';
 
+import { mainListItems, secondaryListItems } from "../components/listItems";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
+
+// stepper function like in checkout
+// const steps = ['Dashboard', 'Applications', 'Profile', 'Projects']
+// function getStepContent(step) {
+//   switch (step) {
+//     case 'Dashboard': {
+//       return <Projects />
+//     }
+//     case 'Applications': {
+//       return <Applications />
+//     }
+//     case 'Profile': {
+//       return <Projects />
+//     }
+//     case 'Projects': {
+//       return <Projects />
+//     }
+//     default:
+//       return <Projects />
+//   }
+// }
 
 function Copyright() {
   return (
@@ -102,6 +121,23 @@ function DashboardContent() {
     logout();
   };
   const { user } = useAuthContext();
+
+  // const [activeStep, setActiveStep] = React.useState('Dashboard');
+  // const handleProfileClick = () => {
+  //   setActiveStep('Profile')
+  // };
+
+  // const handleDashboardClick = () => {
+  //   setActiveStep('Dashboard')
+  // };
+
+  // const handleApplicationsClick = () => {
+  //   setActiveStep('Applications')
+  // };
+
+  // const handleProjectsClick = () => {
+  //   setActiveStep('Projects')
+  // };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -199,6 +235,15 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <Applications />      
+                </Paper>
+              </Grid>
+            </Grid>
+
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

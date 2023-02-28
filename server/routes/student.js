@@ -3,7 +3,7 @@ const express = require('express')
 // controller fucntion
 const { signupStudent, loginStudent } = require('../controllers/studentController')
 const { getProjects } = require('../controllers/projectController')
-const { createApplication } = require('../controllers/applicationController')
+const { createApplication, getApplications } = require('../controllers/applicationController')
 
 
 const router = express.Router()
@@ -26,15 +26,16 @@ router.post('/signup', signupStudent)
 
 // // UPDATE a post
 // router.patch('/:id', updateProject)
-// router.post('/createApplication', createApplication)
+router.post('/createApplication', createApplication)
 
 const requireAuth = require('../middleware/requireAuth')
 router.use(requireAuth)
 
 // Projects
 router.post('/projects', getProjects)
+router.post('./applications', getApplications)
 
 // Applications
-router.post('/createApplication', createApplication)
+// router.post('/createApplication', createApplication)
 
 module.exports = router

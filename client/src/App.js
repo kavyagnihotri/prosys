@@ -14,28 +14,29 @@ import HomePage from './components/muiButton';
 import StudentDashboard from "./pages/StudentDashboard";
 import ProfDashboard from './pages/ProfDashboard';
 import Form from './components/application/ApplicationForm'
+// import WithoutMui from './pages/Home'
 // import Try from './components/Dashboard';
 
 function App() {
-  const { user } = useAuthContext() 
+  const { user } = useAuthContext()
 
   console.log(user)
   var studentregex = new RegExp("[fhp][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*");
   var profregex = new RegExp("[a-zA-Z]*@.*com")
   var role = 0;
-  
-  if(user!=null) {
-    if(user.email==="augsd@gmail.com") {
+
+  if (user != null) {
+    if (user.email === "augsd@gmail.com") {
       role = 1;
-    }  
-    else if(studentregex.test(user.email)) {
+    }
+    else if (studentregex.test(user.email)) {
       role = 2;
-    } 
-    else if(profregex.test(user.email)) {
+    }
+    else if (profregex.test(user.email)) {
       role = 3;
     }
 
-  console.log(role);
+    console.log(role);
 
   }
 
@@ -45,24 +46,29 @@ function App() {
         <div className='pages'>
           <Routes>
 
-            <Route 
-            path='/form'
-            element={<Form />}
+            <Route
+              path='/form'
+              element={<Form />}
             />
 
-            <Route 
-            path="/"
-            element={<HomePage /> }
+            {/* <Route
+              path='/try'
+              element={<WithoutMui />}
+            /> */}
+
+            <Route
+              path="/"
+              element={<HomePage />}
             />
 
             <Route
-            path="/augsd/login"
-            element={!user ? <AugsdLogin /> : <Navigate to='/augsd/dashboard' />}
+              path="/augsd/login"
+              element={!user ? <AugsdLogin /> : <Navigate to='/augsd/dashboard' />}
             />
 
             <Route
-            path="/augsd/dashboard"
-            element={user&&user.email==="augsd@gmail.com" ? <AugsdDashboard /> : <Navigate to='/augsd/login' />}
+              path="/augsd/dashboard"
+              element={user && user.email === "augsd@gmail.com" ? <AugsdDashboard /> : <Navigate to='/augsd/login' />}
 
             />
 
@@ -72,8 +78,8 @@ function App() {
             />
 
             <Route
-            path="/student/dashboard"
-            element={user? <StudentDashboard /> : <Navigate to='/student/login' />}
+              path="/student/dashboard"
+              element={user ? <StudentDashboard /> : <Navigate to='/student/login' />}
             />
 
             <Route
@@ -92,20 +98,20 @@ function App() {
               element={!user ? <ProfSignup /> : <Navigate to='/prof/dashboard' />}
             />
 
-             <Route
-            path="/prof/dashboard"
-            element={user? <ProfDashboard /> : <Navigate to='/prof/login' />}
+            <Route
+              path="/prof/dashboard"
+              element={user ? <ProfDashboard /> : <Navigate to='/prof/login' />}
             />
 
-             <Route
-            path="/prof/project/add"
-            element={<Home/>}
+            <Route
+              path="/prof/project/add"
+              element={<Home />}
             />
-            
+
           </Routes>
         </div>
       </BrowserRouter>
-      </div>
+    </div>
   );
 }
 

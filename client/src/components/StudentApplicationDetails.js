@@ -1,12 +1,12 @@
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
-import { useProjectsContext } from '../hooks/useProjectsContext'
+import { useApplicationContext } from '../hooks/useApplicationContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { Button } from '@mui/material';
 
-const Project = ({ project }) => {
-    const { dispatch } = useProjectsContext()
+const Application = ({ application }) => {
+    const { dispatch } = useApplicationContext()
     const { user } = useAuthContext()
 
     const handleClick = async () => {
@@ -29,16 +29,17 @@ const Project = ({ project }) => {
     }
 
     return (
-        <TableRow key={project._id}>
-              <TableCell>{project.title}</TableCell>
-              <TableCell>{project.projectType}</TableCell>
-              <TableCell>{project.description}</TableCell>
-              <TableCell>{project.prerequisite}</TableCell>
-              <TableCell>{project.professorEmail}</TableCell>
-              <TableCell>{project.numberOfStudents}</TableCell>
-              <TableCell><Button onClick={handleClick}>Apply</Button></TableCell>
+        <TableRow key={application._id}>
+              <TableCell>{application.projectID}</TableCell>
+              <TableCell>{application.title}</TableCell>
+              <TableCell>{application.studentEmail}</TableCell>
+              <TableCell>{application.profEmail}</TableCell>
+              <TableCell>{application.sop}</TableCell>
+              <TableCell>{application.type}</TableCell>
+              <TableCell>{application.status}</TableCell>
+              {/* <TableCell><Button onClick={handleClick}>Apply</Button></TableCell> */}
         </TableRow>
     )
 } 
 
-export default Project
+export default Application
