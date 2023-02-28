@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 
-import { useApplicationContext } from '../hooks/useApplicationContext'
+import { useApplicationsContext } from '../hooks/useApplicationsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 import Applications from './StudentApplicationDetails';
 
@@ -17,12 +17,12 @@ function preventDefault(event) {
 }
 
 export default function Orders() {
-  const { applications, dispatch } = useApplicationContext()
+  const { applications, dispatch } = useApplicationsContext()
   const { user } = useAuthContext()
 
   useEffect(() => {
     const fetchApplications = async () => {
-      const response = await fetch('/applications', {
+      const response = await fetch('/student/applications', {
         headers: { 'Authorization': `Bearer ${user.token}` }
       })
       const json = await response.json()
@@ -45,7 +45,7 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>Project ID</TableCell>
-            <TableCell>Title</TableCell>
+            {/* <TableCell>Title</TableCell> */}
             <TableCell>Student Email</TableCell>
             <TableCell>Professor Email</TableCell>
             <TableCell>Statement of Purpose</TableCell>

@@ -15,8 +15,6 @@ export const applicationReducer = (state, action) => {
                 // adding the new application to the start of old list 
                 applications: [action.payload, ...state.applications]
             }
-        case 'DELETE_APPLICATION':
-            return state
         default:
             return state
     }

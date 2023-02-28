@@ -22,7 +22,7 @@ export default function Orders() {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const response = await fetch('/projects', {
+      const response = await fetch('/student/projects', {
         headers: { 'Authorization': `Bearer ${user.token}` }
       })
       const json = await response.json()

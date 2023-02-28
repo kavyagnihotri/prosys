@@ -14,7 +14,6 @@ import HomePage from './components/muiButton';
 import StudentDashboard from "./pages/StudentDashboard";
 import ProfDashboard from './pages/ProfDashboard';
 import Form from './components/application/ApplicationForm'
-// import WithoutMui from './pages/Home'
 // import Try from './components/Dashboard';
 
 function App() {
@@ -50,11 +49,6 @@ function App() {
               path='/form'
               element={<Form />}
             />
-
-            {/* <Route
-              path='/try'
-              element={<WithoutMui />}
-            /> */}
 
             <Route
               path="/"

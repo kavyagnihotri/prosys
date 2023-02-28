@@ -16,8 +16,6 @@ const getApplications = async(req, res) => {
 const getApplicationsByEmail = async (req, res) => {
 
     // get student email
-
-
     // const { id } = req.params
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
@@ -99,7 +97,6 @@ const deleteApplication = async (req, res) => {
 
 
 module.exports = {
-    createApplication,
     getApplications,
     getApplicationsByEmail,
     createApplication,

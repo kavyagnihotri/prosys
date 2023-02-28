@@ -3,7 +3,12 @@ const express = require('express')
 // controller fucntion
 const { signupStudent, loginStudent } = require('../controllers/studentController')
 const { getProjects } = require('../controllers/projectController')
-const { createApplication, getApplications } = require('../controllers/applicationController')
+const {
+    getApplications,
+    getApplicationsByEmail,
+    createApplication,
+    deleteApplication 
+} = require('../controllers/applicationController')
 
 
 const router = express.Router()
@@ -32,10 +37,11 @@ const requireAuth = require('../middleware/requireAuth')
 router.use(requireAuth)
 
 // Projects
-router.post('/projects', getProjects)
-router.post('./applications', getApplications)
+router.get('/projects', getProjects)
 
 // Applications
+router.get('/applications', getApplications)
+// router.get('/myapplications', getApplicationsByEmail)
 // router.post('/createApplication', createApplication)
 
 module.exports = router

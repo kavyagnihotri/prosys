@@ -19,6 +19,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
+
 import Projects from "../components/StudentProjects";
 import Applications from '../components/StudentApplications';
 
@@ -239,7 +240,7 @@ function DashboardContent() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <Applications />      
+                  <Applications />
                 </Paper>
               </Grid>
             </Grid>
