@@ -38,17 +38,6 @@ export default function NewProjectTable() {
 
   }, [dispatch, user])
 
-  // function usePrevious(value) {
-  //   const ref = useRef();
-  //   useEffect(() => {
-  //     ref.current = value;
-  //   }, [value]);
-  //   return ref.current;
-  // }
-
-  // const approvedprojects=projects
-  // console.log({approvedprojects})
-
   return (
     <React.Fragment>
       <Title>Approved Projects</Title>

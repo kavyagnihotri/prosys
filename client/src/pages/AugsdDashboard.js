@@ -20,7 +20,11 @@ import NewProjectTable from '../components/NewProjectTable';
 import ApprovedProjectTable from '../components/ApprovedProjectTable';
 import RejectedProjectTable from '../components/RejectedProjectTable'
 import LogoutIcon from '@mui/icons-material/Logout';
-import { maxWidth } from '@mui/system';
+import { borderRight, maxWidth } from '@mui/system';
+import HomeIcon from '@mui/icons-material/Home';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import { redirect } from 'react-router-dom';
+import AugsdLogin from './AugsdLogin';
 
 
 const drawerWidth = 240;
@@ -84,6 +88,17 @@ function DashboardContent() {
     e.preventDefault()
     logout()
   }
+
+  const goHome = async(e) => {
+    e.preventDefault()
+    window.location.assign('/augsd/dashboard')
+    return(<redirect to = {AugsdLogin}/>);
+  }
+
+  const goHOD = async(e) => {
+    e.preventDefault()
+    window.location.assign('/augsd/hod')
+  }
   
   return (
     <ThemeProvider theme={mdTheme}>
@@ -92,22 +107,30 @@ function DashboardContent() {
         <AppBar position="absolute" >
           <Toolbar
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              justifyContent:"space-between"
             }}
           >
-           
-            <Typography
+            {/* <Box component="form" noValidate onSubmit={handleSubmit}> */}
+              <Button color="inherit" size="large" startIcon={<HomeIcon />} type="submit"
+              variant="h6"
+              noWrap
+              // sx={{ flexGrow: 1 }}
+              onClick={goHome}>
+                <Typography
               component="h1"
               variant="h6"
               color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
+              // noWrap
+              // sx={{ flexGrow: 1 }}
             >
               AUGSD Dashboard
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit}>
-              <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">LogOut</Button>
-            </Box>
+              </Button>
+            {/* </Box> */}
+            {/* <Box component="form" noValidate align="right"> */}
+              <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit" onClick={goHOD}>Mark HOD</Button>
+            {/* </Box> */}
+              <Button color="inherit" size="large" startIcon={<LogoutIcon />} onClick={handleSubmit} type="submit" >LogOut</Button>
           </Toolbar>
         </AppBar>
         <Box
