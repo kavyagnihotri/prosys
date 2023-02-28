@@ -14,7 +14,8 @@ import { useProjectsContext } from '../hooks/useProjectsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 import Projects from './ProfProjectDetails';
 
-const tables = [0, 1, 2]
+const tables = [-1, 0, 1]
+const status = ['Rejected', 'Yet to Approve', 'Approved']
 
 // Generate Order Data
 // function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -87,17 +88,17 @@ export default function Orders() {
   return (
     <div>
         {projects && tables.map((table) => (
-          <TableContainer component={Paper} sx={{height: "50%"}}>
+          <TableContainer component={Paper}>
+                <Title sx={{align: "center", width: "10%", height: "50%"}}>{status[table+1]}</Title>
               <React.Fragment>
-                <Title sx={{align: "center"}}>{table}</Title>
                     <TableHead>
-                    <TableRow>
-                      <TableCell align="center" style={{ width: "25%" }}>Title</TableCell>
-                      <TableCell align="center" style={{ width: "25%" }}>Project Type</TableCell>
-                      <TableCell align="center" style={{ width: "25%" }}>Description</TableCell>
-                      <TableCell align="center" style={{ width: "20%" }}>Prerequisite(s)</TableCell>
+                    <TableRow sx={{height: "50"}}>
+                      <TableCell align="center" style={{ width: "25%"}}>Title</TableCell>
+                      <TableCell align="center" style={{ width: "25%"}}>Project Type</TableCell>
+                      <TableCell align="center" style={{ width: "25%"}}>Description</TableCell>
+                      <TableCell align="center" style={{ width: "20%"}}>Prerequisite(s)</TableCell>
                       {/* <TableCell align="center" style={{ width: "50%" }}>Offered By</TableCell> */}
-                      <TableCell align="center" style={{ width: "50%" }}>Number of Students</TableCell>
+                      <TableCell align="center" style={{ width: "50%"}}>Number of Students</TableCell>
                       {/* <TableCell align="right" style={{ width: 200 }}>Status</TableCell> */}
                         {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
                     </TableRow>
@@ -116,6 +117,7 @@ export default function Orders() {
             </React.Fragment>
           </TableContainer>
         ))}
+        <span sx={{height: "100%"}}></span>
         {/* <ProjectForm /> */}
     </div>
   );
