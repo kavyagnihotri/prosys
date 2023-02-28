@@ -1,5 +1,6 @@
 const Application = require('../models/applicationModel')
 const Student = require('../models/studentModel')
+const Project = require('../models/ProjectModel')
 const mongoose = require('mongoose')
 
 // projectTitle, 
@@ -36,20 +37,23 @@ const getApplicationsByEmail = async (req, res) => {
 
 // Create an application
 const createApplication = async (req, res) => {
-
-    const { projectID, profEmail, studentEmail, type, sop, status } = req.body
-
-    // console.log(req.body)
-
-    // projectID, profEmail from the project
-    // studentEmail from the studentLogged in
+    const { projectID, studentEmail, type, sop, status } = req.body
 
     try {
+        // projectID, profEmail from the project
+        const project = await Project.findOne({projectID: projectID})
+        const profEmail = project['professorEmail']
+        const projectTitle = project['title']
+        console.log(project['title']);
+        // console.log(req);
+        
+
+        // studentEmail from the studentLogged in
         // const studentEmail = req.student._id
         // const student_id = req.user._id
         // const studentEmail = Student.findById(student_id).select('email')
 
-        const applicaiton = await Application.create({ projectID, profEmail, studentEmail, type, sop, status })
+        const applicaiton = await Application.create({ projectID, projectTitle, profEmail, studentEmail, type, sop, status })
         res.status(200).json(applicaiton)
     } catch (error) {
         res.status(400).json({ error: error.message })

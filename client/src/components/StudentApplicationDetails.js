@@ -7,6 +7,8 @@ import { useAuthContext } from '../hooks/useAuthContext'
 const Application = ({ application }) => {
     const { dispatch } = useApplicationsContext()
     const { user } = useAuthContext()
+    
+    // console.log(user.email);
 
     return (
         <TableRow key={application._id}>
