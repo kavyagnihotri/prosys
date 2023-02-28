@@ -15,7 +15,7 @@ const Application = ({ application }) => {
               <TableCell>{application.studentEmail}</TableCell>
               <TableCell>{application.profEmail}</TableCell>
               <TableCell>{application.sop}</TableCell>
-              <TableCell>{application.type}</TableCell>
+              <TableCell>{application.type == 1 ? "Formal" : "Informal"}</TableCell>
               <TableCell>{application.status}</TableCell>
         </TableRow>
     )

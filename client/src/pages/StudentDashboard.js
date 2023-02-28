@@ -236,17 +236,17 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid>
-
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <Applications />
-                </Paper>
+            </Container>
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                    <Applications />
+                  </Paper>
+                </Grid>
               </Grid>
-            </Grid>
-
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
+              <Copyright sx={{ pt: 4 }} />
+            </Container>
         </Box>
       </Box>
     </ThemeProvider>

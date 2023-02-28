@@ -42,6 +42,6 @@ router.get('/projects', getProjects)
 // Applications
 router.get('/applications', getApplications)
 // router.get('/myapplications', getApplicationsByEmail)
-// router.post('/createApplication', createApplication)
+router.post('/createApplication', createApplication)
 
 module.exports = router

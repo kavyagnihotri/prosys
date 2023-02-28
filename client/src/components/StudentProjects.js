@@ -59,9 +59,6 @@ export default function Orders() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more
-      </Link>
     </React.Fragment>
   );
 }

@@ -7,8 +7,8 @@ const mongoose = require('mongoose')
 // { projectID, profEmail, studentEmail, type, sop, status }
 
 // GET all applications
-const getApplications = async(req, res) => {
-    const applications = await Application.find({}).sort({createdAt: -1})
+const getApplications = async (req, res) => {
+    const applications = await Application.find({}).sort({ createdAt: -1 })
     res.status(200).json(applications)
 }
 
@@ -17,15 +17,18 @@ const getApplicationsByEmail = async (req, res) => {
 
     // get student email
     // const { id } = req.params
+    // const student_id = req.student._id
+    // const student = await Student.find({ student_id })
+    const studentEmail = student.email
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: "No such project"})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "No such project" })
     }
 
     const applications = await Application.findById(id)
 
-    if(!applications) {
-        return res.status(404).json({error: "No such Application"})
+    if (!applications) {
+        return res.status(404).json({ error: "No such Application" })
     }
 
     res.status(200).json(applications)
@@ -40,15 +43,16 @@ const createApplication = async (req, res) => {
 
     // projectID, profEmail from the project
     // studentEmail from the studentLogged in
-    // studentEmail
-    // const student_id = req.student._id 
-    // const studentEmail = Student.findById(student_id)
 
     try {
+        // const studentEmail = req.student._id
+        // const student_id = req.user._id
+        // const studentEmail = Student.findById(student_id).select('email')
+
         const applicaiton = await Application.create({ projectID, profEmail, studentEmail, type, sop, status })
         res.status(200).json(applicaiton)
     } catch (error) {
-        res.status(400).json({error: error.message}) 
+        res.status(400).json({ error: error.message })
     }
 }
 
@@ -100,5 +104,5 @@ module.exports = {
     getApplications,
     getApplicationsByEmail,
     createApplication,
-    deleteApplication 
+    deleteApplication
 }
