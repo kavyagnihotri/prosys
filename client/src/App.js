@@ -81,6 +81,10 @@ function App() {
               element={!user ? <StudentSignup /> : <Navigate to='/student/dashboard' />}
             />
 
+            <Route
+            path='/student/createApplication'
+            element={<Form />}
+            />
 
             <Route
               path="prof/login"

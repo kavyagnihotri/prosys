@@ -10,7 +10,7 @@ const getProjects = async(req, res) => {
 // GET a single project
 const getProject = async (req, res) => {
     // gets the id at the address
-    const {id} = req.params
+    const { id } = req.params
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({error: "No such project"})

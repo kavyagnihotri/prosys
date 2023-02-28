@@ -26,7 +26,9 @@ const ProjectForm = () => {
     const approved = 0;
 
     const project = { title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved };
+
     console.log(project)
+
     const response = await fetch("/projects", {
       method: "POST",
       body: JSON.stringify({ title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved }),
@@ -35,8 +37,11 @@ const ProjectForm = () => {
         Authorization: `Bearer ${user.token}`,
       },
     });
+
     const json = await response.json();
+
     console.log(json)
+    
     if (!response.ok) {
       setError(json.error);
       setEmptyFields(json.emptyfields);

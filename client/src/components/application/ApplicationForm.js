@@ -11,7 +11,10 @@ import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
+import { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useApplicationsContext } from '../../hooks/useApplicationsContext';
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 // import Form from './Form';
 
@@ -46,18 +49,53 @@ export default function Checkout() {
     setActiveStep(activeStep + 1);
   };
 
+  const { dispatch } = useApplicationsContext();
+  const { user } = useAuthContext();
+  const [error, setError] = useState(null);
   const handleSubmit = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
 
-    // const data = new FormData(event.currentTarget);
-    // const projectID = data.get('projectID')
+    const studentregex = new RegExp("[fhp][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*");
+
+    if (!user || !studentregex.test(user.email)) {
+      setError("Student must be logged in");
+      return;
+    }
+
+    const data = new FormData(event.currentTarget);
+    const projectID = data.get('projectID')
+    const studentEmail = data.get('studentEmail')
+    const type = data.get('type')
+    const sop = data.get('sop')
     // const profEmail = data.get('profEmail')
-    // const studentEmail = data.get('studentEmail')
-    // const type = data.get('type')
-    // const sop = data.get('sop')
     // const status = data.get('status')
 
-    // await checkout(projectID, profEmail, studentEmail, type, sop, status)
+    const application = { projectID, studentEmail, type, sop }
+    console.log(application);
+
+    const response = await fetch("/student/createApplication", {
+      method: "POST",
+      body: JSON.stringify({ projectID, studentEmail, type, sop }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+
+    const json = await response.json()
+
+    console.log(json);
+
+    if (!response.ok) {
+      setError(json.error);
+    }
+
+    if (response.ok) {
+      setError(null);
+      console.log("New application added", json);
+      dispatch({ type: "CREATE_APPLICATION", payload: json });
+    }
+    // await checkout(projectID, profEmail, studentEmail, type, sop)
   };
 
   return (
@@ -78,14 +116,15 @@ export default function Checkout() {
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography> */}
-              <Button
-                variant="contained"
-                onClick={handleHome}
-                sx={{ mt: 3, ml: 1 }}
-              >
-                Go to Home
-              </Button>
-
+              <Link to='/student/dashboard'>
+                <Button
+                  variant="contained"
+                  // onClick={handleHome}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  Go to Home
+                </Button>
+              </Link>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -94,7 +133,7 @@ export default function Checkout() {
                   Details
                 </Typography>
                 <Grid container spacing={3}>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <TextField
                       required
                       id="title"
@@ -105,7 +144,7 @@ export default function Checkout() {
                       variant="standard"
                       disabled="true"
                     />
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item xs={12} sm={6}>
                     <ToggleButtonGroup
@@ -114,10 +153,10 @@ export default function Checkout() {
                       onChange={handleToggle}
                       aria-label="project-type"
                     >
-                      <ToggleButton value="formal">
+                      <ToggleButton value='1'>
                         Formal
                       </ToggleButton>
-                      <ToggleButton value="informal">
+                      <ToggleButton value='0'>
                         Informal
                       </ToggleButton>
                     </ToggleButtonGroup>
@@ -127,11 +166,11 @@ export default function Checkout() {
                       required
                       id="projectID"
                       name="projectID"
-                      value="projectID"
+                      // value="projectID"
                       label="Project ID"
                       fullWidth
                       variant="standard"
-                      disabled="true"
+                    // disabled="true"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -144,7 +183,7 @@ export default function Checkout() {
                       variant="standard"
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <TextField
                       required
                       id="profEmail"
@@ -154,6 +193,16 @@ export default function Checkout() {
                       fullWidth
                       variant="standard"
                       disabled="true"
+                    />
+                  </Grid> */}
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      id="studentEmail"
+                      name="studentEmail"
+                      label="Your Email"
+                      fullWidth
+                      variant="standard"
                     />
                   </Grid>
                 </Grid>

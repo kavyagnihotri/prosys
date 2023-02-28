@@ -15,7 +15,7 @@ const getApplications = async (req, res) => {
 
 // Create an application
 const createApplication = async (req, res) => {
-    const { projectID, studentEmail, type, sop, status } = req.body
+    const { projectID, studentEmail, type, sop } = req.body
 
     try {
         // projectID, profEmail from the project
@@ -27,7 +27,7 @@ const createApplication = async (req, res) => {
         // const student_id = req.user._id
         // const studentEmail = Student.findById(student_id).select('email')
 
-        const applicaiton = await Application.create({ projectID, projectTitle, profEmail, studentEmail, type, sop, status })
+        const applicaiton = await Application.create({ projectID, projectTitle, profEmail, studentEmail, type, sop })
         res.status(200).json(applicaiton)
     } catch (error) {
         res.status(400).json({ error: error.message })

@@ -2,7 +2,7 @@ const express = require('express')
 
 // controller fucntion
 const { signupStudent, loginStudent } = require('../controllers/studentController')
-const { getProjects } = require('../controllers/projectController')
+const { getProjects, getProject } = require('../controllers/projectController')
 const { getApplications, createApplication, deleteApplication } = require('../controllers/applicationController')
 
 const router = express.Router()
@@ -18,6 +18,7 @@ router.use(requireAuth)
 
 // Projects
 router.get('/projects', getProjects)
+router.get('/projects/:id', getProject)
 
 // Applications
 router.get('/applications', getApplications)
