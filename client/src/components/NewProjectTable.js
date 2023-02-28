@@ -23,7 +23,8 @@ export default function NewProjectTable() {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const response = await fetch('/projects/pendingprojects', {
+      const response = await fetch('/projects/', {
+        method: "GET",
         headers: { 'Authorization': `Bearer ${user.token}` }
       })
       const json = await response.json()
@@ -39,6 +40,9 @@ export default function NewProjectTable() {
 
   }, [dispatch, user])
 
+  // const pendingprojects=projects
+  // console.log({pendingprojects})
+
   return (
     <React.Fragment>
       <Title>New Projects</Title>
@@ -51,12 +55,13 @@ export default function NewProjectTable() {
             <TableCell>Professor Name</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Pre-requisites</TableCell>
-            <TableCell>No. of Formal Students</TableCell>
+            <TableCell>No. of Students</TableCell>
             <TableCell>Operations</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {projects && projects.map((project) => (
+            project.approved==0 &&
             <TableRow key={project._id}>
               <TableCell>{project.title}</TableCell>
               <TableCell>{project.projectID}</TableCell>

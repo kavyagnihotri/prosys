@@ -18,6 +18,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NewProjectTable from '../components/NewProjectTable';
 import ApprovedProjectTable from '../components/ApprovedProjectTable';
+import RejectedProjectTable from '../components/RejectedProjectTable'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { maxWidth } from '@mui/system';
 
@@ -135,6 +136,15 @@ function DashboardContent() {
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <ApprovedProjectTable /> 
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <RejectedProjectTable /> 
                 </Paper>
               </Grid>
             </Grid>
