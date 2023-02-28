@@ -40,14 +40,14 @@ export default function Orders() {
 
   return (
     <React.Fragment>
-      <Title>Applications</Title>
+      <Title>Your Applications</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Project ID</TableCell>
             {/* <TableCell>Title</TableCell> */}
-            <TableCell>Student Email</TableCell>
-            <TableCell>Professor Email</TableCell>
+            <TableCell>Title</TableCell>
+            <TableCell>Offered By</TableCell>
             <TableCell>Statement of Purpose</TableCell>
             <TableCell>Type</TableCell>
             <TableCell>Status</TableCell>
@@ -55,6 +55,7 @@ export default function Orders() {
         </TableHead>
         <TableBody>
           {applications && applications.map((application) => (
+            application.studentEmail === user.email &&
             <Applications key={application._id} application={application} />
           ))}
         </TableBody>
