@@ -3,7 +3,7 @@ import TableRow from '@mui/material/TableRow';
 
 import { useProjectsContext } from '../hooks/useProjectsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
-import { Button } from '@mui/material';
+import { Button, TableBody } from '@mui/material';
 
 const Project = ({ project }) => {
     const { dispatch } = useProjectsContext()
@@ -29,16 +29,16 @@ const Project = ({ project }) => {
     }
 
     return (
-        <TableRow key={project._id}>
-              <TableCell>{project.title}</TableCell>
-              <TableCell>{project.projectType}</TableCell>
-              <TableCell>{project.description}</TableCell>
-              <TableCell>{project.prerequisite}</TableCell>
-              <TableCell>{project.professorEmail}</TableCell>
-              <TableCell>{project.numberOfStudents}</TableCell>
-              <TableCell><Button onClick={handleClick}>Apply</Button></TableCell>
-        </TableRow>
+            <TableRow key={project._id}>
+                <TableCell>{project.title}</TableCell>
+                <TableCell>{project.projectType}</TableCell>
+                <TableCell>{project.description}</TableCell>
+                <TableCell>{project.prerequisite}</TableCell>
+                <TableCell>{project.professorEmail}</TableCell>
+                <TableCell>{project.numberOfStudents}</TableCell>
+                <TableCell><Button onClick={handleClick}>Apply</Button></TableCell>
+            </TableRow>
     )
-} 
+}
 
 export default Project

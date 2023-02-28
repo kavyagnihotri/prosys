@@ -55,6 +55,7 @@ export default function Orders() {
         </TableHead>
         <TableBody>
           {projects && projects.map((project) => (
+            project.approved === 1 && 
             <Projects key={project._id} project={project} />
           ))}
         </TableBody>
