@@ -23,7 +23,8 @@ export default function NewProjectTable() {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const response = await fetch('/projects/pendingprojects', {
+      const response = await fetch('/projects/', {
+        method: "GET",
         headers: { 'Authorization': `Bearer ${user.token}` }
       })
       const json = await response.json()
@@ -39,6 +40,54 @@ export default function NewProjectTable() {
 
   }, [dispatch, user])
 
+  const onAccept = async (id) => {
+    await fetch('/augsd/accept',{
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id})
+    })
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
+        method: "GET",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+    }
+  }
+
+  const onReject = async (id) => {
+    // e.preventDefault()s
+    console.log({id})
+    await fetch('/augsd/reject',{
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id})
+    })
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
+        method: "GET",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+    }
+  }
+
   return (
     <React.Fragment>
       <Title>New Projects</Title>
@@ -51,12 +100,13 @@ export default function NewProjectTable() {
             <TableCell>Professor Name</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Pre-requisites</TableCell>
-            <TableCell>No. of Formal Students</TableCell>
+            <TableCell>No. of Students</TableCell>
             <TableCell>Operations</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {projects && projects.map((project) => (
+            project.approved==0 &&
             <TableRow key={project._id}>
               <TableCell>{project.title}</TableCell>
               <TableCell>{project.projectID}</TableCell>
@@ -66,8 +116,8 @@ export default function NewProjectTable() {
               <TableCell>{project.prerequisite}</TableCell>
               <TableCell>{project.numberOfStudents}</TableCell>
               <TableCell>
-                <Button size="large" startIcon={<CheckCircleOutlineOutlinedIcon />} type="submit">ACCEPT</Button>
-                <Button size="large" startIcon={<CancelOutlinedIcon />} type="submit" >REJECT</Button>
+                <Button size="large" startIcon={<CheckCircleOutlineOutlinedIcon />} type="submit" onClick={(e)=> onAccept(project._id)}>ACCEPT</Button>
+                <Button size="large" startIcon={<CancelOutlinedIcon />} type="submit" onClick={(e)=> onReject(project._id)}>REJECT</Button>
               </TableCell>
             </TableRow>
           ))}
