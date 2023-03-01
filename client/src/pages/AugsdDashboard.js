@@ -28,7 +28,6 @@ import AugsdLogin from './AugsdLogin';
 
 
 const drawerWidth = 240;
-// const navigate = useNavigate()
 
 
 const AppBar = styled(MuiAppBar, {
@@ -106,26 +105,19 @@ function DashboardContent() {
               justifyContent:"space-between"
             }}
           >
-            {/* <Box component="form" noValidate onSubmit={handleSubmit}> */}
               <Button color="inherit" size="large" startIcon={<HomeIcon />} type="submit"
               variant="h6"
               noWrap
-              // sx={{ flexGrow: 1 }}
               onClick={goHome}>
                 <Typography
               component="h1"
               variant="h6"
               color="inherit"
-              // noWrap
-              // sx={{ flexGrow: 1 }}
             >
               AUGSD Dashboard
             </Typography>
               </Button>
-            {/* </Box> */}
-            {/* <Box component="form" noValidate align="right"> */}
               <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit"onClick={goHOD} >Mark HOD</Button>
-            {/* </Box> */}
               <Button color="inherit" size="large" startIcon={<LogoutIcon />} onClick={handleSubmit} type="submit" >LogOut</Button>
           </Toolbar>
         </AppBar>

@@ -13,6 +13,7 @@ import ProfSignup from './pages/ProfSignup';
 import HomePage from './components/muiButton';
 import StudentDashboard from "./pages/StudentDashboard";
 import ProfDashboard from './pages/ProfDashboard';
+import AugsdHod from './pages/AugsdHod'
 // import Try from './components/Dashboard';
 
 function App() {
@@ -57,6 +58,11 @@ function App() {
             <Route
             path="/augsd/dashboard"
             element={user&&user.email==="augsd@gmail.com" ? <AugsdDashboard /> : <Navigate to='/augsd/login' />}
+            />
+
+            <Route
+            path="/augsd/hod"
+            element={user&&user.email==="augsd@gmail.com" ? <AugsdHod /> : <Navigate to='/augsd/login' />}
             />
 
             <Route
