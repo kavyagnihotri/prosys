@@ -10,11 +10,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <AuthContextProvider>
-            <ApplicationsContextProvider>
+            
                 <ProjectsContextProvider>
+                <ApplicationsContextProvider>
                     <App />
+                    </ApplicationsContextProvider>
                 </ProjectsContextProvider>
-            </ApplicationsContextProvider>
+            
         </AuthContextProvider>
     </React.StrictMode>
 );

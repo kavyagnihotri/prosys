@@ -1,16 +1,17 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react'
-import Link from '@mui/material/Link';
+import { useEffect } from 'react'
+// import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import { Button } from '@mui/material';
 
 import { useProjectsContext } from '../hooks/useProjectsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
-import Projects from './StudentProjectDetails';
+// import Projects from './StudentProjectDetails';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -38,6 +39,24 @@ export default function Orders() {
 
   }, [dispatch, user])
 
+  // const handleClick = async () => {
+  //   if (!user) {
+  //     return
+  //   }
+  //   // apply to project
+  //   const response = await fetch('/projects/' + project._id, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Authorization': `Bearer ${user.token}`
+  //     }
+  //   })
+  //   const json = await response.json()
+
+  //   if (response.ok) {
+  //     dispatch({ type: 'APPLY_PROJECT', payload: json })
+  //   }
+  // }
+
   return (
     <React.Fragment>
       <Title>Projects</Title>
@@ -55,8 +74,16 @@ export default function Orders() {
         </TableHead>
         <TableBody>
           {projects && projects.map((project) => (
-            project.approved === 1 && 
-            <Projects key={project._id} project={project} />
+            project.approved === 1 &&
+            <TableRow key={project._id}>
+              <TableCell>{project.title}</TableCell>
+              <TableCell>{project.projectType}</TableCell>
+              <TableCell>{project.description}</TableCell>
+              <TableCell>{project.prerequisite}</TableCell>
+              <TableCell>{project.professorEmail}</TableCell>
+              <TableCell>{project.numberOfStudents}</TableCell>
+              <TableCell><Button type='submit'>Apply</Button></TableCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

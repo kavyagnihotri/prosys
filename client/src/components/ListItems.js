@@ -7,7 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Link} from 'react-router-dom'
+import Link from "@mui/material/Link";
 
 export const mainListItems = (
   <React.Fragment>
@@ -23,7 +23,7 @@ export const secondaryListItems = (
     <ListSubheader component="div" inset>
       Personal
     </ListSubheader>
-    <ListItemButton><ListItemIcon><AssignmentIcon /></ListItemIcon><ListItemText primary="Applications" href="/applications"/></ListItemButton>
+    <ListItemButton><ListItemIcon><AssignmentIcon /></ListItemIcon><ListItemText primary="Applications"/></ListItemButton>
     <ListItemButton><ListItemIcon><PeopleIcon /></ListItemIcon><ListItemText primary="Profile" /></ListItemButton>
     {/* <ListItemButton><ListItemIcon><LogoutIcon /></ListItemIcon><ListItemText primary="Logout" /></ListItemButton> */}
   </React.Fragment>

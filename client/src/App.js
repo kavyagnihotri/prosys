@@ -13,8 +13,7 @@ import ProfSignup from './pages/ProfSignup';
 import HomePage from './components/muiButton';
 import StudentDashboard from "./pages/StudentDashboard";
 import ProfDashboard from './pages/ProfDashboard';
-import Form from './components/application/ApplicationForm'
-// import Try from './components/Dashboard';
+import ApplicationForm from './components/application/ApplicationForm'
 
 function App() {
   const { user } = useAuthContext()
@@ -23,6 +22,10 @@ function App() {
   var studentregex = new RegExp("[fhp][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*");
   var profregex = new RegExp("[a-zA-Z]*@.*com")
   var role = 0;
+
+  // localstorage fetch
+  // const data = window.localStorage
+  // console.log(data);
 
   if (user != null) {
     if (user.email === "augsd@gmail.com") {
@@ -34,7 +37,6 @@ function App() {
     else if (profregex.test(user.email)) {
       role = 3;
     }
-
     console.log(role);
 
   }
@@ -44,11 +46,6 @@ function App() {
       <BrowserRouter>
         <div className='pages'>
           <Routes>
-
-            <Route
-              path='/form'
-              element={<Form />}
-            />
 
             <Route
               path="/"
@@ -83,7 +80,7 @@ function App() {
 
             <Route
             path='/student/createApplication'
-            element={<Form />}
+            element={<ApplicationForm />}
             />
 
             <Route

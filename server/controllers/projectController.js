@@ -46,7 +46,6 @@ const getPendingProjects = async (req, res) =>{
 // Create a project
 const createProject = async (req, res) => {
     const {title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved } = req.body
-    console.log(req.body)
     let emptyfields = []
 
     if(!title) {

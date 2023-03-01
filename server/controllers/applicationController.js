@@ -3,9 +3,7 @@ const Student = require('../models/studentModel')
 const Project = require('../models/ProjectModel')
 const mongoose = require('mongoose')
 
-// projectTitle, 
-// projectID(num), profEmail, studentEmail, type(num), sop, status(num)
-// { projectID, profEmail, studentEmail, type, sop, status }
+// projectTitle, projectID(num), profEmail, studentEmail, type(num), sop, status(num)
 
 // GET all applications
 const getApplications = async (req, res) => {
@@ -16,6 +14,28 @@ const getApplications = async (req, res) => {
 // Create an application
 const createApplication = async (req, res) => {
     const { projectID, studentEmail, type, sop } = req.body
+
+    if(!projectID) {
+        return res.status(400).json({error: 'Please fill the Project ID'})
+    }
+
+    if(!studentEmail) {
+        return res.status(400).json({error: 'Please fill the Student Email'})
+    }
+
+    // if(parseInt(type) !== 1 || parseInt(type) !== 0) {
+    //     return res.status(400).json({error: 'Please select Application Type: Formal or Informal'})
+    // }
+
+    const student = await Student.findOne({email: studentEmail})
+    if(!student) {
+        return res.status(400).json({error: 'Not a valid Student Email'})
+    }
+
+    const proj = await Project.findOne({projectID: projectID})
+    if(!proj || proj['approved'] != 1) {
+        return res.status(400).json({error: 'Not a valid Project ID'})
+    }
 
     try {
         // projectID, profEmail from the project

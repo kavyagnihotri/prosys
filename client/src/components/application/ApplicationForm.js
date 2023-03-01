@@ -1,5 +1,4 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -12,46 +11,34 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useApplicationsContext } from '../../hooks/useApplicationsContext';
 import { useAuthContext } from "../../hooks/useAuthContext";
-
-// import Form from './Form';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="">
-        ProSys
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../Copyright';
 
 const theme = createTheme();
 
-export default function Checkout() {
+const ApplicationForm = () => {
+  const navigate = useNavigate();
+  const { dispatch } = useApplicationsContext();
+  const { user } = useAuthContext();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [alignment, setType] = React.useState('formal');
+  const [alignment, setType] = React.useState("1");
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null)
 
   const handleToggle = (event, newAlignment) => {
     setType(newAlignment);
   };
 
-  const handleHome = () => {
+  const handleClick = (event) => {
+    // we need to refresh to see the student dashboard -> fix it!!!!
+    // return (<Dashboard />)
+    event.preventDefault();
+    navigate('/student/dashboard');
+  }
 
-  };
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const { dispatch } = useApplicationsContext();
-  const { user } = useAuthContext();
-  const [error, setError] = useState(null);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -65,17 +52,14 @@ export default function Checkout() {
     const data = new FormData(event.currentTarget);
     const projectID = data.get('projectID')
     const studentEmail = data.get('studentEmail')
-    const type = data.get('type')
     const sop = data.get('sop')
-    // const profEmail = data.get('profEmail')
-    // const status = data.get('status')
+    const type = parseInt(alignment)
 
     const application = { projectID, studentEmail, type, sop }
-    console.log(application);
 
     const response = await fetch("/student/createApplication", {
       method: "POST",
-      body: JSON.stringify({ projectID, studentEmail, type, sop }),
+      body: JSON.stringify(application),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
@@ -84,23 +68,22 @@ export default function Checkout() {
 
     const json = await response.json()
 
-    console.log(json);
-
     if (!response.ok) {
-      setError(json.error);
+      setError(json.error)
+      setIsLoading(false)
     }
 
     if (response.ok) {
-      setError(null);
-      console.log("New application added", json);
+      setError(null)
+      console.log("New application added");
       dispatch({ type: "CREATE_APPLICATION", payload: json });
+      setIsLoading(false)
+      setActiveStep(1);
     }
-    // await checkout(projectID, profEmail, studentEmail, type, sop)
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
@@ -108,23 +91,19 @@ export default function Checkout() {
           </Typography>
           {activeStep === 1 ? (
             <React.Fragment>
+              <p></p>
               <Typography variant="h5" gutterBottom>
                 Your Application is Submitted.
               </Typography>
-              {/* <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
-              </Typography> */}
-              <Link to='/student/dashboard'>
-                <Button
-                  variant="contained"
-                  // onClick={handleHome}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  Go to Home
-                </Button>
-              </Link>
+              <Button
+                component={Link}
+                to='/student/dashboard'
+                variant="contained"
+                sx={{ mt: 3, ml: 1 }}
+                onClick={handleClick}
+              >
+                Go to Home
+              </Button>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -145,20 +124,10 @@ export default function Checkout() {
                       disabled="true"
                     />
                   </Grid> */}
-
                   <Grid item xs={12} sm={6}>
-                    <ToggleButtonGroup
-                      value={alignment}
-                      exclusive
-                      onChange={handleToggle}
-                      aria-label="project-type"
-                    >
-                      <ToggleButton value='1'>
-                        Formal
-                      </ToggleButton>
-                      <ToggleButton value='0'>
-                        Informal
-                      </ToggleButton>
+                    <ToggleButtonGroup value={alignment} exclusive onChange={handleToggle} aria-label="project-type" >
+                      <ToggleButton value='1'>Formal</ToggleButton>
+                      <ToggleButton value='0'>Informal</ToggleButton>
                     </ToggleButtonGroup>
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -179,7 +148,6 @@ export default function Checkout() {
                       name="sop"
                       label="Statement of Purpose"
                       fullWidth
-                      autoComplete="shipping address-line2"
                       variant="standard"
                     />
                   </Grid>
@@ -206,16 +174,17 @@ export default function Checkout() {
                     />
                   </Grid>
                 </Grid>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Grid item xs={12} justifyContent="center" alignItems="center">
                   <Button
-                    variant="contained"
-                    onClick={handleNext}
                     type="submit"
+                    variant="contained"
                     sx={{ mt: 3, ml: 1 }}
+                    disabled={isLoading}
                   >
                     Submit
                   </Button>
-                </Box>
+                  {error && <div className="error">{error}</div>}
+                </Grid>
               </Box>
             </React.Fragment>
           )}
@@ -225,3 +194,5 @@ export default function Checkout() {
     </ThemeProvider>
   );
 }
+
+export default ApplicationForm

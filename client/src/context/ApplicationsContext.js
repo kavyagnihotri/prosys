@@ -13,7 +13,8 @@ export const applicationReducer = (state, action) => {
         case 'CREATE_APPLICATION':
             return {
                 // adding the new application to the start of old list 
-                applications: [action.payload, ...state.applications]
+                // ...state.applications makes it iteratable, we don't want that
+                applications: [action.payload, state.applications]
             }
         default:
             return state

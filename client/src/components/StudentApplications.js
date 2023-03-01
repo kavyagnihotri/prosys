@@ -10,7 +10,6 @@ import Title from './Title';
 
 import { useApplicationsContext } from '../hooks/useApplicationsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
-import Applications from './StudentApplicationDetails';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -45,7 +44,6 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>Project ID</TableCell>
-            {/* <TableCell>Title</TableCell> */}
             <TableCell>Title</TableCell>
             <TableCell>Offered By</TableCell>
             <TableCell>Statement of Purpose</TableCell>
@@ -56,7 +54,19 @@ export default function Orders() {
         <TableBody>
           {applications && applications.map((application) => (
             application.studentEmail === user.email &&
-            <Applications key={application._id} application={application} />
+            <TableRow key={application._id}>
+              <TableCell>{application.projectID}</TableCell>
+              <TableCell>{application.projectTitle}</TableCell>
+              <TableCell>{application.profEmail}</TableCell>
+              <TableCell>{application.sop}</TableCell>
+              <TableCell>{application.type == 1 ? "Formal" : "Informal"}</TableCell>
+              {/* 0-> undetermined; 1-> accepted, 2-> rejected, 3-> hod approval */}
+              <TableCell>
+                {application.status == 0 ? "Applied" :
+                  application.status === 1 ? "Accepted" :
+                    application.status === 2 ? "Rejected" : "Sent for HOD Approval"}
+              </TableCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
