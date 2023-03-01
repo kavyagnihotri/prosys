@@ -11,7 +11,7 @@ export const authReducer = (state, action) => {
             return { user: null }
         default:
             // changed here so that student can go to applicationForm 
-            return { user: action.payload }
+            return state
     }
 }
 
