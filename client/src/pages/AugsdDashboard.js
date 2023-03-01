@@ -23,11 +23,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { borderRight, maxWidth } from '@mui/system';
 import HomeIcon from '@mui/icons-material/Home';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import AugsdLogin from './AugsdLogin';
 
 
 const drawerWidth = 240;
+// const navigate = useNavigate()
 
 
 const AppBar = styled(MuiAppBar, {
@@ -77,12 +78,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  // const [open, setOpen] = React.useState(true);
-  // const toggleDrawer = () => {
-  //   setOpen(!open);
-  // };
-
   const { logout } = useLogout()
+  const navigate = useNavigate()
 
   const handleSubmit = async(e) => {
     e.preventDefault()
@@ -91,13 +88,12 @@ function DashboardContent() {
 
   const goHome = async(e) => {
     e.preventDefault()
-    window.location.assign('/augsd/dashboard')
-    return(<redirect to = {AugsdLogin}/>);
+    navigate("/augsd/dashboard");
   }
 
   const goHOD = async(e) => {
     e.preventDefault()
-    window.location.assign('/augsd/hod')
+    navigate("/augsd/hod");
   }
   
   return (
@@ -128,7 +124,7 @@ function DashboardContent() {
               </Button>
             {/* </Box> */}
             {/* <Box component="form" noValidate align="right"> */}
-              <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit" onClick={goHOD}>Mark HOD</Button>
+              <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit"onClick={goHOD} >Mark HOD</Button>
             {/* </Box> */}
               <Button color="inherit" size="large" startIcon={<LogoutIcon />} onClick={handleSubmit} type="submit" >LogOut</Button>
           </Toolbar>
