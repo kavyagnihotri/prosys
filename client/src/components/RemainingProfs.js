@@ -39,6 +39,30 @@ export default function RemainingProfs() {
 
   }, [dispatch, user])
 
+  const Appoint = async (id) => {
+    // console.log({id})
+    await fetch('/prof/appoint',{
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id})
+    })
+    const fetchProjects = async () => {
+      const response = await fetch('/prof/', {
+        method: "POST",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+    }
+  }
+
   return (
     <React.Fragment>
       <Title>Other Faculties</Title>
@@ -56,7 +80,7 @@ export default function RemainingProfs() {
             <TableRow key={project._id}>
               <TableCell>{project.name}</TableCell>
               <TableCell>{project.dept}</TableCell>
-              <TableCell><Button size="large" startIcon={<PersonAddAlt1Icon />} type="submit" >APPOINT AS HOD</Button>
+              <TableCell><Button size="large" startIcon={<PersonAddAlt1Icon />} type="submit" onClick={(e) => Appoint(project._id)}>APPOINT AS HOD</Button>
               </TableCell>
             </TableRow>
           ))}

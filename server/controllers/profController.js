@@ -10,6 +10,33 @@ const getProfs = async(req, res) => {
     res.status(200).json(profs)
 }
 
+const dissmissProf = async(req,res) =>{
+    const id=req.body.id
+    try{
+        profToUpdate = await Prof.findById(id)
+        profToUpdate.hod=false;
+        profToUpdate.save()
+        res.send("Updated")
+    }
+    catch(error){
+        res.status(400).json({error: error.message})
+    }
+}
+
+const appointHOD = async(req,res) =>{
+    const id=req.body.id
+    console.log({id})
+    try{
+        profToUpdate = await Prof.findById(id)
+        profToUpdate.hod=true;
+        profToUpdate.save()
+        res.send("Updated")
+    }
+    catch(error){
+        res.status(400).json({error: error.message})
+    }
+}
+
 const loginProf = async (req, res) => {
     const { email, password } = req.body
 
@@ -41,4 +68,4 @@ const signupProf = async (req, res) => {
     }
 }
 
-module.exports = { signupProf, loginProf , getProfs }
+module.exports = { signupProf, loginProf , getProfs , dissmissProf , appointHOD }

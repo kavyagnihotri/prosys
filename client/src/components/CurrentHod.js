@@ -39,6 +39,29 @@ export default function CurrentHod() {
 
   }, [dispatch, user])
 
+  const Dissmiss = async (id) => {
+    await fetch('/prof/dissmiss',{
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id})
+    })
+    const fetchProjects = async () => {
+      const response = await fetch('/prof/', {
+        method: "POST",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+    }
+  }
+
   return (
     <React.Fragment>
       <Title>Current HODs</Title>
@@ -56,7 +79,7 @@ export default function CurrentHod() {
             <TableRow key={project._id}>
               <TableCell>{project.name}</TableCell>
               <TableCell>{project.dept}</TableCell>
-              <TableCell><Button size="large" startIcon={<PersonRemoveIcon />} type="submit" >DISMISS AS HOD</Button>
+              <TableCell><Button size="large" startIcon={<PersonRemoveIcon />} type="submit" onClick={(e) => Dissmiss(project._id)}>DISMISS AS HOD</Button>
               </TableCell>
             </TableRow>
           ))}
