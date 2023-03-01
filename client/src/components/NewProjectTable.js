@@ -41,13 +41,26 @@ export default function NewProjectTable() {
   }, [dispatch, user])
 
   const onAccept = async (id) => {
-    // e.preventDefault()s
-    console.log({id})
     await fetch('/augsd/accept',{
       method: 'POST', 
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({id: id})
-  })
+    })
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
+        method: "GET",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+    }
   }
 
   const onReject = async (id) => {
@@ -57,7 +70,22 @@ export default function NewProjectTable() {
       method: 'POST', 
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({id: id})
-  })
+    })
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
+        method: "GET",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+    }
   }
 
   return (
