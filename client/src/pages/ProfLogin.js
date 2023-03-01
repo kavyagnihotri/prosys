@@ -102,7 +102,7 @@ const ProfLogin = () => {
                 </Box>
                 <Grid container justifyContent="center">
                     <Grid item>
-                        <Link href="/student/signup" variant="body2">
+                        <Link href="/prof/signup" variant="body2">
                             Don't have an account? Sign Up
                         </Link>
                     </Grid>
