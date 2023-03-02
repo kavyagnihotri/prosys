@@ -21,7 +21,7 @@ import Projects from "../components/StudentProjects";
 import Applications from '../components/StudentApplications';
 import Copyright from "../components/Copyright";
 
-import { mainListItems, secondaryListItems } from "../components/listItems";
+import { mainListItems, secondaryListItems } from "../components/ListItems";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
 import { useNavigate } from "react-router-dom";
