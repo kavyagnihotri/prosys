@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { useLogout } from '../hooks/useLogout'
+import { useLogout } from '../../hooks/useLogout'
 import CssBaseline from '@mui/material/CssBaseline';
 import Button from '@mui/material/Button';
 import MuiDrawer from '@mui/material/Drawer';
@@ -11,8 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import CurrentHod from '../components/CurrentHod';
-import RemainingProfs from '../components/RemainingProfs';
+import CurrentHod from '../../components/CurrentHod';
+import RemainingProfs from '../../components/RemainingProfs';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import HowToRegIcon from '@mui/icons-material/HowToReg';

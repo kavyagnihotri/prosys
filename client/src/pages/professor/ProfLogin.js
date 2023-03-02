@@ -1,4 +1,4 @@
-import { useStudentLogin } from "../hooks/useStudentLogin"
+import { useProfLogin } from "../../hooks/useProfLogin"
 import * as React from 'react';
 
 import Avatar from '@mui/material/Avatar';
@@ -16,10 +16,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-const StudentLogin = () => {
+const ProfLogin = () => {
     // const [email, setEmail] = useState('')
     // const [password, setPassword] = useState('')
-    const { login, error, isLoading } = useStudentLogin()
+    const { login, error, isLoading } = useProfLogin()
 
     const handleSubmit = async(e) => {
       e.preventDefault()
@@ -67,7 +67,7 @@ const StudentLogin = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                       Student Log in
+                        Faculty Log in
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                         <TextField
@@ -102,7 +102,7 @@ const StudentLogin = () => {
                 </Box>
                 <Grid container justifyContent="center">
                     <Grid item>
-                        <Link href="/student/signup" variant="body2">
+                        <Link href="/prof/signup" variant="body2">
                             Don't have an account? Sign Up
                         </Link>
                     </Grid>
@@ -114,4 +114,4 @@ const StudentLogin = () => {
     )
 }
 
-export default StudentLogin
+export default ProfLogin

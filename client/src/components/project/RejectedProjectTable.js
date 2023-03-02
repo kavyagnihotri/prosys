@@ -1,35 +1,27 @@
 import * as React from 'react';
-import { useEffect } from 'react'
-// import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from './Title';
-import { Button } from '@mui/material';
-
-import { useProjectsContext } from '../hooks/useProjectsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
-import { useNavigate } from 'react-router-dom';
-// import Projects from './StudentProjectDetails';
+import Title from '../Title';
+import { useState,useEffect,useRef } from 'react';
+import { useProjectsContext } from '../../hooks/useProjectsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Orders() {
+export default function NewProjectTable() {
+
   const { projects, dispatch } = useProjectsContext()
   const { user } = useAuthContext()
-  const navigate = useNavigate()
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    navigate('/student/createApplication');
-  }
   useEffect(() => {
     const fetchProjects = async () => {
-      const response = await fetch('/student/projects', {
+      const response = await fetch('/projects/', {
+        method: "GET",
         headers: { 'Authorization': `Bearer ${user.token}` }
       })
       const json = await response.json()
@@ -45,50 +37,34 @@ export default function Orders() {
 
   }, [dispatch, user])
 
-  // const handleClick = async () => {
-  //   if (!user) {
-  //     return
-  //   }
-  //   // apply to project
-  //   const response = await fetch('/projects/' + project._id, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Authorization': `Bearer ${user.token}`
-  //     }
-  //   })
-  //   const json = await response.json()
 
-  //   if (response.ok) {
-  //     dispatch({ type: 'APPLY_PROJECT', payload: json })
-  //   }
-  // }
 
   return (
     <React.Fragment>
-      <Title>Projects</Title>
+      <Title>Rejected Projects</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Title</TableCell>
+            <TableCell>Project Title</TableCell>
+            <TableCell>Project ID</TableCell>
             <TableCell>Project Type</TableCell>
+            <TableCell>Professor Email</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell>Prerequisite</TableCell>
-            <TableCell>Offered By</TableCell>
-            <TableCell>Number of Students</TableCell>
-            {/* <TableCell>Status</TableCell> */}
+            <TableCell>Pre-requisites</TableCell>
+            <TableCell>No. of Students</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {projects && projects.map((project) => (
-            project.approved === 1 &&
+            project.approved===-1 &&
             <TableRow key={project._id}>
               <TableCell>{project.title}</TableCell>
+              <TableCell>{project.projectID}</TableCell>
               <TableCell>{project.projectType}</TableCell>
+              <TableCell>{project.professorEmail}</TableCell>
               <TableCell>{project.description}</TableCell>
               <TableCell>{project.prerequisite}</TableCell>
-              <TableCell>{project.professorEmail}</TableCell>
               <TableCell>{project.numberOfStudents}</TableCell>
-              {/* <TableCell><Button onClick={handleClick}>Apply</Button></TableCell> */}
             </TableRow>
           ))}
         </TableBody>

@@ -4,13 +4,13 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from './Title';
+import Title from '../Title';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import Button from '@mui/material/Button';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { useState,useEffect } from 'react';
-import { useProjectsContext } from '../hooks/useProjectsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useProjectsContext } from '../../hooks/useProjectsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 function preventDefault(event) {
   event.preventDefault();
