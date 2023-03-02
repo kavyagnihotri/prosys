@@ -25,7 +25,8 @@ export const projectsReducer = (state, action) => {
 
 export const ProjectsContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(projectsReducer, {
-        projects: null
+        projects: null,
+        approvedprojects: null
     })
 
     // dispatch({type: 'CREATE_PROJECTS', payload: [{}, {}]})

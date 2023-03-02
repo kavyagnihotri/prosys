@@ -30,11 +30,6 @@ const Home = () => {
 
     return (
         <div className="home">
-            <div className='projects'>
-                {projects && projects.map((project) => (
-                    <ProjectDetails key={project._id} project={project} />
-                ))}
-            </div>
             <ProjectForm />
         </div>
     )

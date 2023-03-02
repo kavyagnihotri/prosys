@@ -23,7 +23,7 @@ export const secondaryListItems = (
     <ListSubheader component="div" inset>
       Personal
     </ListSubheader>
-    <ListItemButton><ListItemIcon><AssignmentIcon /></ListItemIcon><ListItemText primary="Projects" /></ListItemButton>
+    <ListItemButton href="/prof/project/add"><ListItemIcon><AssignmentIcon /></ListItemIcon><ListItemText primary="Projects" /></ListItemButton>
     <ListItemButton><ListItemIcon><PeopleIcon /></ListItemIcon><ListItemText primary="Profile" /></ListItemButton>
     {/* <ListItemButton><ListItemIcon><LogoutIcon /></ListItemIcon><ListItemText primary="Logout" /></ListItemButton> */}
   </React.Fragment>
