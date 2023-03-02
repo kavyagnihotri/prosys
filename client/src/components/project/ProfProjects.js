@@ -7,11 +7,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from './Title';
+import Title from '../Title';
 import Paper from '@mui/material/Paper';
 
-import { useProjectsContext } from '../hooks/useProjectsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useProjectsContext } from '../../hooks/useProjectsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
 import Projects from './ProfProjectDetails';
 
 const tables = [-1, 0, 1]

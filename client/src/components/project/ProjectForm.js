@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useProjectsContext } from "../hooks/useProjectsContext";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useProjectsContext } from "../../hooks/useProjectsContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import * as React from "react";
 
 import Avatar from "@mui/material/Avatar";

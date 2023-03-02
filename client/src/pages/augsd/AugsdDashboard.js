@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { useLogout } from '../hooks/useLogout'
+import { useLogout } from '../../hooks/useLogout'
 import CssBaseline from '@mui/material/CssBaseline';
 import Button from '@mui/material/Button';
 import MuiDrawer from '@mui/material/Drawer';
@@ -16,63 +16,17 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import NewProjectTable from '../components/NewProjectTable';
-import ApprovedProjectTable from '../components/ApprovedProjectTable';
-import RejectedProjectTable from '../components/RejectedProjectTable'
+import NewProjectTable from '../../components/project/NewProjectTable';
+import ApprovedProjectTable from '../../components/project/ApprovedProjectTable';
+import RejectedProjectTable from '../../components/project/RejectedProjectTable'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { borderRight, maxWidth } from '@mui/system';
 import HomeIcon from '@mui/icons-material/Home';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { useNavigate } from 'react-router-dom'
+import { AppBar } from "../../components/dashboard/AppBar"
+import { Drawer } from "../../components/dashboard/Drawer"
 import AugsdLogin from './AugsdLogin';
-
-
-const drawerWidth = 240;
-
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
 
 const mdTheme = createTheme();
 

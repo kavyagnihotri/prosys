@@ -3,8 +3,8 @@ import { useProjectsContext } from '../hooks/useProjectsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 // components
-import ProjectDetails from '../components/ProjectDetails'
-import ProjectForm from '../components/ProjectForm'
+import ProjectDetails from '../components/project/ProjectDetails'
+import ProjectForm from '../components/project/ProjectForm'
 
 const Home = () => {
     const { projects, dispatch } = useProjectsContext()

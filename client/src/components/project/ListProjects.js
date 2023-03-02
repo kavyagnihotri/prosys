@@ -8,8 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import { useState, useEffect } from "react";
-import { useProjectsContext } from "../hooks/useProjectsContext";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useProjectsContext } from "../../hooks/useProjectsContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const tables = [0, 1, 2]
 

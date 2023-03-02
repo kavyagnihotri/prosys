@@ -4,10 +4,11 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from './Title';
+import Title from '../Title';
 import { useState,useEffect,useRef } from 'react';
-import { useProjectsContext } from '../hooks/useProjectsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useProjectsContext } from '../../hooks/useProjectsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
+// import {approvedprojects} from '../context/ProjectContext'
 
 function preventDefault(event) {
   event.preventDefault();
@@ -37,11 +38,9 @@ export default function NewProjectTable() {
 
   }, [dispatch, user])
 
-
-
   return (
     <React.Fragment>
-      <Title>Rejected Projects</Title>
+      <Title>Approved Projects</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -56,7 +55,7 @@ export default function NewProjectTable() {
         </TableHead>
         <TableBody>
           {projects && projects.map((project) => (
-            project.approved===-1 &&
+            project.approved===1 &&
             <TableRow key={project._id}>
               <TableCell>{project.title}</TableCell>
               <TableCell>{project.projectID}</TableCell>

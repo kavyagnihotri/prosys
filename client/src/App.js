@@ -3,17 +3,17 @@ import { useAuthContext } from "./hooks/useAuthContext";
 
 // pages and components
 import Home from "./pages/ProjectAdd";
-import StudentLogin from "./pages/StudentLogin";
-import StudentSignup from "./pages/StudentSignup";
-import AugsdLogin from "./pages/AugsdLogin";
-import AugsdDashboard from "./pages/AugsdDashboard";
-import ProfLogin from "./pages/ProfLogin";
-import ProfSignup from "./pages/ProfSignup";
+import StudentLogin from "./pages/student/StudentLogin";
+import StudentSignup from "./pages/student/StudentSignup";
+import AugsdLogin from "./pages/augsd/AugsdLogin";
+import AugsdDashboard from "./pages/augsd/AugsdDashboard";
+import ProfLogin from "./pages/professor/ProfLogin";
+import ProfSignup from "./pages/professor/ProfSignup";
 import HomePage from "./components/muiButton";
-import StudentDashboard from "./pages/StudentDashboard";
-import ProfDashboard from "./pages/ProfDashboard";
+import StudentDashboard from "./pages/student/StudentDashboard";
+import ProfDashboard from "./pages/professor/ProfDashboard";
 import ApplicationForm from "./components/application/ApplicationForm";
-import AugsdHod from "./pages/AugsdHod";
+import AugsdHod from "./pages/augsd/AugsdHod";
 
 function App() {
   const { user } = useAuthContext();

@@ -2,8 +2,8 @@
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
-import { useProjectsContext } from '../hooks/useProjectsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useProjectsContext } from '../../hooks/useProjectsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 const Project = ({ project }) => {
     const { dispatch } = useProjectsContext()
