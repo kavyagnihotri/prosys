@@ -11,8 +11,8 @@ import Link from "@mui/material/Link";
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton><ListItemIcon><DashboardIcon /></ListItemIcon><ListItemText primary="Dashboard" /></ListItemButton>
-    <ListItemButton><ListItemIcon><LayersIcon /></ListItemIcon><ListItemText primary="Projects" /></ListItemButton>
+    {/* <ListItemButton><ListItemIcon><DashboardIcon /></ListItemIcon><ListItemText primary="Dashboard" /></ListItemButton> */}
+    {/* <ListItemButton><ListItemIcon><LayersIcon /></ListItemIcon><ListItemText primary="Projects" /></ListItemButton> */}
   </React.Fragment>
 );
 
@@ -22,7 +22,7 @@ export const secondaryListItems = (
       Personal
     </ListSubheader>
     <ListItemButton component={Link} to="/student/createApplication"><ListItemIcon><AssignmentIcon /></ListItemIcon><ListItemText primary="Create Application"/></ListItemButton>
-    <ListItemButton><ListItemIcon><PeopleIcon /></ListItemIcon><ListItemText primary="Profile" /></ListItemButton>
+    {/* <ListItemButton><ListItemIcon><PeopleIcon /></ListItemIcon><ListItemText primary="Profile" /></ListItemButton> */}
   </React.Fragment>
 );
 

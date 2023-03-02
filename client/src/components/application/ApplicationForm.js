@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useApplicationsContext } from '../../hooks/useApplicationsContext';
@@ -33,11 +33,40 @@ const ApplicationForm = () => {
   };
 
   const handleClick = (event) => {
-    // we need to refresh to see the student dashboard -> fix it!!!!
-    // return (<Dashboard />)
     event.preventDefault();
     navigate('/student/dashboard');
   }
+
+  // fetching cuz once you go back to the dashboard we need the projects and the applications
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const response = await fetch('/student/projects', {
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    const fetchApplications = async () => {
+      const response = await fetch('/student/applications', {
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_APPLICATIONS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+      fetchApplications()
+    }
+
+  }, [dispatch, user])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -51,9 +80,11 @@ const ApplicationForm = () => {
 
     const data = new FormData(event.currentTarget);
     const projectID = data.get('projectID')
-    const studentEmail = data.get('studentEmail')
+    const studentEmail = user.email
     const sop = data.get('sop')
     const type = parseInt(alignment)
+
+    // console.log(user.email);
 
     const application = { projectID, studentEmail, type, sop }
 
@@ -151,25 +182,15 @@ const ApplicationForm = () => {
                       variant="standard"
                     />
                   </Grid>
-                  {/* <Grid item xs={12}>
-                    <TextField
-                      required
-                      id="profEmail"
-                      name="profEmail"
-                      label="Professor Email"
-                      value="xyz@gmail.com"
-                      fullWidth
-                      variant="standard"
-                      disabled="true"
-                    />
-                  </Grid> */}
                   <Grid item xs={12}>
                     <TextField
-                      required
+                      // required
                       id="studentEmail"
                       name="studentEmail"
                       label="Your Email"
                       fullWidth
+                      value={(JSON.parse(localStorage.getItem('user'))).email}
+                      disabled="true"
                       variant="standard"
                     />
                   </Grid>
