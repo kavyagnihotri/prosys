@@ -11,28 +11,16 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Copyright from "../components/Copyright";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright() {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://www.bits-pilani.ac.in/">
-          Birla Institute of Technology & Science, Pilani
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
 
 const theme = createTheme();
 
 const StudentSignup = () => {
-  const {signup, error, isLoading} = useStudentSignup()
+  const { signup, error, isLoading } = useStudentSignup()
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);

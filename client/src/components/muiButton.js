@@ -15,22 +15,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Copyright from '../components/Copyright'
 import Logo from '../img/bitsimage.webp'
 import Prof from '../img/professorimage.jpeg'
 import Student from '../img/studentimage.jpg'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://www.bits-pilani.ac.in/">
-        Birla Institute of Technology & Science, Pilani
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 // const cards = [1, 2, 3];
 

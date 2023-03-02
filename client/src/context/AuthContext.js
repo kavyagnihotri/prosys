@@ -10,7 +10,8 @@ export const authReducer = (state, action) => {
         case 'LOGOUT': 
             return { user: null }
         default:
-            return false
+            // changed here so that student can go to applicationForm 
+            return state
     }
 }
 
@@ -21,10 +22,15 @@ export const AuthContextProvider = ({ children }) => {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
+        // const student = JSON.parse(localStorage.getItem('student'))
         
         if(user) {
             dispatch({type: 'LOGIN', payload: user})
         }
+
+        // if(student) {
+        //     dispatch({type: 'LOGIN', payload: student})
+        // }
 
     }, [])
 

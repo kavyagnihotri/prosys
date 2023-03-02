@@ -18,8 +18,6 @@ export const projectsReducer = (state, action) => {
                     p._id !== action.payload._id
                 )
         }
-        case 'APPLY_PROJECT':
-            return state
         default:
             return state
     }

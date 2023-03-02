@@ -9,37 +9,22 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { mainListItems, secondaryListItems } from "../components/ListItems";
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-import Projects from "../components/StudentProjects";
 
+import Projects from "../components/StudentProjects";
+import Applications from '../components/StudentApplications';
+import Copyright from "../components/Copyright";
+
+import { mainListItems, secondaryListItems } from "../components/listItems";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="">
-        ProSys
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -91,17 +76,40 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const { user } = useAuthContext();
+  const { logout } = useLogout();
+  const navigate = useNavigate();
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
-  const { logout } = useLogout();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     logout();
   };
-  const { user } = useAuthContext();
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    navigate('/student/dashboard');
+  }
+
+  // const [activeStep, setActiveStep] = React.useState('Dashboard');
+  // const handleProfileClick = () => {
+  //   setActiveStep('Profile')
+  // };
+
+  // const handleDashboardClick = () => {
+  //   setActiveStep('Dashboard')
+  // };
+
+  // const handleApplicationsClick = () => {
+  //   setActiveStep('Applications')
+  // };
+
+  // const handleProjectsClick = () => {
+  //   setActiveStep('Projects')
+  // };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -125,19 +133,21 @@ function DashboardContent() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
+            <Button
+              onClick={handleClick}
               component="h1"
               variant="h6"
-              color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              color="inherit"
+              size="large"
             >
               ProSys - Student
-            </Typography>
+            </Button>
             <Typography
               component="h1"
               variant="h6"
               color="inherit"
+              align="center"
               noWrap
               sx={{ flexGrow: 1 }}
             >
@@ -199,6 +209,15 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid>
+          </Container>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <Applications />
+                </Paper>
+              </Grid>
+            </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
@@ -207,6 +226,25 @@ function DashboardContent() {
   );
 }
 
-export default function Dashboard() {
-  return <DashboardContent />;
-}
+// stepper function like in checkout
+// const steps = ['Dashboard', 'Applications', 'Profile', 'Projects']
+// function getStepContent(step) {
+//   switch (step) {
+//     case 'Dashboard': {
+//       return <Projects />
+//     }
+//     case 'Applications': {
+//       return <Applications />
+//     }
+//     case 'Profile': {
+//       return <Projects />
+//     }
+//     case 'Projects': {
+//       return <Projects />
+//     }
+//     default:
+//       return <Projects />
+//   }
+// }
+
+export default DashboardContent

@@ -10,7 +10,7 @@ const getProjects = async(req, res) => {
 // GET a single project
 const getProject = async (req, res) => {
     // gets the id at the address
-    const {id} = req.params
+    const { id } = req.params
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({error: "No such project"})
@@ -46,7 +46,6 @@ const getPendingProjects = async (req, res) =>{
 // Create a project
 const createProject = async (req, res) => {
     const {title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved } = req.body
-    console.log(req.body)
     let emptyfields = []
 
     if(!title) {
