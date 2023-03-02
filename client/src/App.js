@@ -3,7 +3,6 @@ import { useAuthContext } from './hooks/useAuthContext';
 
 // pages and components
 import Home from './pages/ProjectAdd'
-import Navbar from './components/StudentNavbar';
 import StudentLogin from './pages/StudentLogin';
 import StudentSignup from './pages/StudentSignup';
 import AugsdLogin from './pages/AugsdLogin';

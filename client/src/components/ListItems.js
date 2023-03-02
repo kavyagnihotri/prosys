@@ -13,8 +13,6 @@ export const mainListItems = (
   <React.Fragment>
     <ListItemButton><ListItemIcon><DashboardIcon /></ListItemIcon><ListItemText primary="Dashboard" /></ListItemButton>
     <ListItemButton><ListItemIcon><LayersIcon /></ListItemIcon><ListItemText primary="Projects" /></ListItemButton>
-    {/* <ListItemButton><Link to='/projects'><ListItemIcon><LayersIcon /></ListItemIcon><ListItemText primary="Projects" /></Link></ListItemButton> */}
-    {/* <ListItemButton><ListItemIcon><BarChartIcon /></ListItemIcon><ListItemText primary="Projects" /></ListItemButton> */}
   </React.Fragment>
 );
 
@@ -23,8 +21,9 @@ export const secondaryListItems = (
     <ListSubheader component="div" inset>
       Personal
     </ListSubheader>
-    <ListItemButton><ListItemIcon><AssignmentIcon /></ListItemIcon><ListItemText primary="Applications"/></ListItemButton>
+    <ListItemButton component={Link} to="/student/createApplication"><ListItemIcon><AssignmentIcon /></ListItemIcon><ListItemText primary="Create Application"/></ListItemButton>
     <ListItemButton><ListItemIcon><PeopleIcon /></ListItemIcon><ListItemText primary="Profile" /></ListItemButton>
-    {/* <ListItemButton><ListItemIcon><LogoutIcon /></ListItemIcon><ListItemText primary="Logout" /></ListItemButton> */}
   </React.Fragment>
 );
+
+
