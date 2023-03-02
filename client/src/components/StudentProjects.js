@@ -11,6 +11,7 @@ import { Button } from '@mui/material';
 
 import { useProjectsContext } from '../hooks/useProjectsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useNavigate } from 'react-router-dom';
 // import Projects from './StudentProjectDetails';
 
 function preventDefault(event) {
@@ -20,7 +21,12 @@ function preventDefault(event) {
 export default function Orders() {
   const { projects, dispatch } = useProjectsContext()
   const { user } = useAuthContext()
+  const navigate = useNavigate()
 
+  const handleClick = (event) => {
+    event.preventDefault();
+    navigate('/student/createApplication');
+  }
   useEffect(() => {
     const fetchProjects = async () => {
       const response = await fetch('/student/projects', {
@@ -82,7 +88,7 @@ export default function Orders() {
               <TableCell>{project.prerequisite}</TableCell>
               <TableCell>{project.professorEmail}</TableCell>
               <TableCell>{project.numberOfStudents}</TableCell>
-              <TableCell><Button type='submit'>Apply</Button></TableCell>
+              <TableCell><Button onClick={handleClick}>Apply</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -24,6 +24,7 @@ import Copyright from "../components/Copyright";
 import { mainListItems, secondaryListItems } from "../components/listItems";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -75,17 +76,23 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const { user } = useAuthContext();
+  const { logout } = useLogout();
+  const navigate = useNavigate();
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
-  const { logout } = useLogout();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     logout();
   };
-  const { user } = useAuthContext();
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    navigate('/student/dashboard');
+  }
 
   // const [activeStep, setActiveStep] = React.useState('Dashboard');
   // const handleProfileClick = () => {
@@ -126,19 +133,21 @@ function DashboardContent() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
+            <Button
+              onClick={handleClick}
               component="h1"
               variant="h6"
-              color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              color="inherit"
+              size="large"
             >
               ProSys - Student
-            </Typography>
+            </Button>
             <Typography
               component="h1"
               variant="h6"
               color="inherit"
+              align="center"
               noWrap
               sx={{ flexGrow: 1 }}
             >
@@ -200,23 +209,22 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid>
-            </Container>
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                    <Applications />
-                  </Paper>
-                </Grid>
+          </Container>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <Applications />
+                </Paper>
               </Grid>
-              <Copyright sx={{ pt: 4 }} />
-            </Container>
+            </Grid>
+            <Copyright sx={{ pt: 4 }} />
+          </Container>
         </Box>
       </Box>
     </ThemeProvider>
   );
 }
-
 
 // stepper function like in checkout
 // const steps = ['Dashboard', 'Applications', 'Profile', 'Projects']
