@@ -75,7 +75,7 @@ export default function Orders() {
             <TableCell>Prerequisite</TableCell>
             <TableCell>Offered By</TableCell>
             <TableCell>Number of Students</TableCell>
-            <TableCell>Status</TableCell>
+            {/* <TableCell>Status</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -88,7 +88,7 @@ export default function Orders() {
               <TableCell>{project.prerequisite}</TableCell>
               <TableCell>{project.professorEmail}</TableCell>
               <TableCell>{project.numberOfStudents}</TableCell>
-              <TableCell><Button onClick={handleClick}>Apply</Button></TableCell>
+              {/* <TableCell><Button onClick={handleClick}>Apply</Button></TableCell> */}
             </TableRow>
           ))}
         </TableBody>
