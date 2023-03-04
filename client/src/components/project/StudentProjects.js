@@ -69,8 +69,9 @@ export default function Orders() {
       <Table size="small">
         <TableHead>
           <TableRow>
+            <TableCell>Project ID</TableCell>
             <TableCell>Title</TableCell>
-            <TableCell>Project Type</TableCell>
+            <TableCell>Type</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Prerequisite</TableCell>
             <TableCell>Offered By</TableCell>
@@ -82,6 +83,7 @@ export default function Orders() {
           {projects && projects.map((project) => (
             project.approved === 1 &&
             <TableRow key={project._id}>
+              <TableCell>{project.projectID}</TableCell>
               <TableCell>{project.title}</TableCell>
               <TableCell>{project.projectType}</TableCell>
               <TableCell>{project.description}</TableCell>
