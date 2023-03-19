@@ -18,7 +18,7 @@ import AugsdHod from "./pages/augsd/AugsdHod";
 function App() {
   const { user } = useAuthContext();
 
-  console.log(user);
+  
   var studentregex = new RegExp(
     "[fhp][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*"
   );
@@ -27,7 +27,7 @@ function App() {
 
   // localstorage fetch
   // const data = window.localStorage
-  // console.log(data);
+  // 
 
   if (user != null) {
     if (user.email === "augsd@gmail.com") {
@@ -37,7 +37,7 @@ function App() {
     } else if (profregex.test(user.email)) {
       role = 3;
     }
-    console.log(role);
+    
   }
 
   return (

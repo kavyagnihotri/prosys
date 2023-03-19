@@ -10,7 +10,7 @@ export const useAugsdLogin = () => {
     const login = async (email, password) => {
         setIsLoading(true)
         setError(null)
-        console.log({email,password})
+        
         const response = await fetch('/augsd/login', {
             method: 'POST', 
             headers: {'Content-Type': 'application/json'},

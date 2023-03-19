@@ -49,7 +49,7 @@ const ProfSignup = () => {
     const websites = data.get('websites')
     const hod = false
 
-    // console.log(email, password, name, dept, chamber, researchInterest, websites, hod);
+    // 
     await signup(email, password, name, dept, chamber, researchInterest, websites, hod)
   };
 

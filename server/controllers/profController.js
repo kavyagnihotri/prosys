@@ -25,7 +25,7 @@ const dissmissProf = async(req,res) =>{
 
 const appointHOD = async(req,res) =>{
     const id=req.body.id
-    console.log({id})
+    
     try{
         profToUpdate = await Prof.findById(id)
         profToUpdate.hod=true;

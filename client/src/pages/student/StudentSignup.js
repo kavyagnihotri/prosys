@@ -34,7 +34,7 @@ const StudentSignup = () => {
     const per_link = data.get('per_link')
     const aoi = data.get('aoi')
 
-    // console.log({email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi});
+    // 
     await signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi)
   };
 
