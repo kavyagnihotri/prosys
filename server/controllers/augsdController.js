@@ -9,7 +9,7 @@ const createToken = (_id) => {
 // login
 const loginAugsd = async (req, res) => {
     const {email, password} = req.body
-    console.log({email,password})
+    
     try {
         const augsd = await Augsd.login(email, password) 
         
@@ -25,7 +25,7 @@ const loginAugsd = async (req, res) => {
 
 const acceptProject = async(req,res) =>{
     const id=req.body.id
-    console.log({id})
+    
     try{
         projectToUpdate = await Project.findById(id)
         projectToUpdate.approved=1;
@@ -39,7 +39,7 @@ const acceptProject = async(req,res) =>{
 
 const rejectProject = async(req,res) =>{
     const id=req.body.id
-    console.log({id})
+    
     try{
         projectToUpdate = await Project.findById(id)
         projectToUpdate.approved=-1;

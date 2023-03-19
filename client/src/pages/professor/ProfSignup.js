@@ -78,18 +78,8 @@ const ProfSignup = () => {
     const researchInterest = data.get("researchInterest");
     const websites = data.get("websites");
     const hod = false;
+    await signup(email, password, name, dept, chamber, researchInterest, websites, hod)
 
-    // console.log(email, password, name, dept, chamber, researchInterest, websites, hod);
-    await signup(
-      email,
-      password,
-      name,
-      dept,
-      chamber,
-      researchInterest,
-      websites,
-      hod
-    );
   };
 
   return (
