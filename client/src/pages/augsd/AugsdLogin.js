@@ -36,7 +36,7 @@ const AugsdLogin = () => {
         if(id==='email')
           email = p[1];
       }
-      console.log({email,password});
+      
       await login(email, password)
     }
 

@@ -84,7 +84,7 @@ const ApplicationForm = () => {
     const sop = data.get('sop')
     const type = parseInt(alignment)
 
-    // console.log(user.email);
+    // 
 
     const application = { projectID, studentEmail, type, sop }
 
@@ -106,7 +106,7 @@ const ApplicationForm = () => {
 
     if (response.ok) {
       setError(null)
-      console.log("New application added");
+      
       dispatch({ type: "CREATE_APPLICATION", payload: json });
       setIsLoading(false)
       setActiveStep(1);

@@ -65,7 +65,7 @@ export default function NewProjectTable() {
 
   const onReject = async (id) => {
     // e.preventDefault()s
-    console.log({id})
+    
     await fetch('/augsd/reject',{
       method: 'POST', 
       headers: {'Content-Type': 'application/json'},

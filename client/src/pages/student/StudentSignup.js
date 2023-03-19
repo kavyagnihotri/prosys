@@ -12,14 +12,43 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from "../../components/dashboard/Copyright";
-
+import MenuItem from "@mui/material/MenuItem";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
+const branches = [
+  {
+    value: "CS",
+    label: "CS",
+  },
+  {
+    value: "ECE",
+    label: "ECE",
+  },
+  {
+    value: "ENI",
+    label: "ENI",
+  },
+  {
+    value: "EEE",
+    label: "EEE",
+  },
+  {
+    value: "Mech",
+    label: "Mech",
+  },
+  {
+    value: "Civil",
+    label: "Civil",
+  },
+];
 const StudentSignup = () => {
   const { signup, error, isLoading } = useStudentSignup()
-
+  const [age, setAge] = React.useState("");
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -34,7 +63,7 @@ const StudentSignup = () => {
     const per_link = data.get('per_link')
     const aoi = data.get('aoi')
 
-    // console.log({email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi});
+    // 
     await signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi)
   };
 
@@ -97,12 +126,20 @@ const StudentSignup = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
                   id="dept"
-                  label="Department"
                   name="dept"
-                //   autoComplete="email"
-                />
+                  select
+                  defaultValue=""
+                  required
+                  label="Department"
+                  fullWidth
+                >
+                  {branches.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -137,6 +174,7 @@ const StudentSignup = () => {
                   id="aoi"
                   label="Area of Interest"
                   name="aoi"
+                  multiline
                 //   autoComplete="email"
                 />
               </Grid>

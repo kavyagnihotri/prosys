@@ -29,7 +29,7 @@ const ListProjects = () => {
             const json = await response.json()
           
             if (response.ok) {
-                console.log(json)
+                
                 json.forEach((j) => {
                     if (user.email === j.professorEmail) {
                         // setProjects(j)

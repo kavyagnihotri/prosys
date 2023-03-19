@@ -40,7 +40,7 @@ export default function RemainingProfs() {
   }, [dispatch, user])
 
   const Appoint = async (id) => {
-    // console.log({id})
+    // 
     await fetch('/prof/appoint',{
       method: 'POST', 
       headers: {'Content-Type': 'application/json'},

@@ -39,10 +39,10 @@ export default function Album() {
       <main>
         {/* Hero unit */}
         <Box
-          sx={{
-            pt: 8,
-            pb: 6,
-          }}
+          // sx={{
+          //   pt: 8,
+          //   pb: 6,
+          // }}
         >
           <Container maxWidth="sm">
             <Typography
@@ -50,11 +50,11 @@ export default function Album() {
               variant="h2"
               align="center"
               color="text.primary"
-              gutterBottom
+              fontSize={35}
             >
               ProSys
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            <Typography variant="h5" align="center" color="text.secondary" fontSize={20} paragraph>
               Welcome to Project Approval & Registration Portal
             </Typography>
             <Stack
@@ -66,7 +66,7 @@ export default function Album() {
             </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
+        <Container maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
               <Grid item xs={1} sm={6} md={4}>
@@ -154,7 +154,7 @@ export default function Album() {
         </Container>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+      {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           All rights reserved
         </Typography>
@@ -166,7 +166,7 @@ export default function Album() {
         >
         </Typography>
         <Copyright />
-      </Box>
+      </Box> */}
       {/* End footer */}
     </ThemeProvider>
   );

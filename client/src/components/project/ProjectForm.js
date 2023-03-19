@@ -49,7 +49,7 @@ const ProjectForm = () => {
       numberOfStudents,
       approved,
     };
-    console.log(project);
+    
     const response = await fetch("/projects", {
       method: "POST",
       body: JSON.stringify({
@@ -68,7 +68,7 @@ const ProjectForm = () => {
       },
     });
     const json = await response.json();
-    console.log(json);
+    
     if (!response.ok) {
       setError(json.error);
       setEmptyFields(json.emptyfields);
@@ -83,7 +83,7 @@ const ProjectForm = () => {
       setPrerquisite("");
       setError(null);
       setEmptyFields([]);
-      console.log("new project added", json);
+      
       dispatch({ type: "CREATE_PROJECT", payload: json });
     }
   };

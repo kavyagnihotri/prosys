@@ -16,7 +16,7 @@ const profRoutes = require('./routes/prof')
 app.use(express.json())
 app.use(cors());
 app.use((req, res, next) => {
-    console.log(req.path, req.method)
+    
     next()
 })
 // app.use(bodyParser.json())
@@ -35,9 +35,9 @@ mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,}) 
     .then(() => {
         app.listen(process.env.PORT, () => {
-            console.log("Connected to DB\nListening on port", process.env.PORT);
+            
         })
     })
     .catch((error) => {
-        console.log(error);
+        
     })
