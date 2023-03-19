@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useApplicationsContext } from '../../hooks/useApplicationsContext';
 import { useAuthContext } from "../../hooks/useAuthContext";
-import Copyright from '../dashboard/Copyright';
 
 const theme = createTheme();
 
@@ -210,7 +209,6 @@ const ApplicationForm = () => {
             </React.Fragment>
           )}
         </Paper>
-        <Copyright />
       </Container>
     </ThemeProvider>
   );

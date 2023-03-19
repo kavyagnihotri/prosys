@@ -15,7 +15,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from '../components/dashboard/Copyright'
 import Logo from '../img/bitsimage.webp'
 import Prof from '../img/professorimage.jpeg'
 import Student from '../img/studentimage.jpg'
@@ -165,7 +164,6 @@ export default function Album() {
           component="p"
         >
         </Typography>
-        <Copyright />
       </Box> */}
       {/* End footer */}
     </ThemeProvider>

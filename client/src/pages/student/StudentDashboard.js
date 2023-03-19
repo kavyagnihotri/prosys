@@ -17,7 +17,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import Projects from "../../components/project/StudentProjects";
 import Applications from '../../components/application/Applications';
-import Copyright from "../../components/dashboard/Copyright";
 
 import { mainListItems, secondaryListItems } from "../../components/dashboard/ListItems";
 import { AppBar } from "../../components/dashboard/AppBar"
@@ -172,7 +171,6 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
       </Box>

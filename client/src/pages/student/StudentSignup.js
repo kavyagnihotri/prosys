@@ -11,7 +11,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Copyright from "../../components/dashboard/Copyright";
 import MenuItem from "@mui/material/MenuItem";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -201,7 +200,6 @@ const StudentSignup = () => {
             {error && <div className="error">{error}</div>}
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

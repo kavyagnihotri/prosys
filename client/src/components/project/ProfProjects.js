@@ -11,6 +11,8 @@ import Title from '../Title';
 import Paper from '@mui/material/Paper';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+
 
 import { useProjectsContext } from '../../hooks/useProjectsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
@@ -62,11 +64,12 @@ export default function Orders() {
                       <TableCell align="center" style={{ width: "25%" }}>Description</TableCell>
                       <TableCell align="center" style={{ width: "20%" }}>Prerequisite(s)</TableCell>
                       <TableCell align="center" style={{ width: "50%" }}>Number of Students</TableCell>
+                      {table===1 && <TableCell align="center" style={{ width: "50%" }}>View Applications</TableCell>}
                     </TableRow>
                   </TableHead>
                       {projects.map((project) => (
                         <Table aria-label="simple table">
-                          {project.professorEmail === user.email && table === project.approved && <Projects key={project._id} project={project} />}
+                          {project.professorEmail === user.email && table === project.approved && <Projects key={project._id} project={project} tab={table} />}
                         </Table>
                       ))}
                 </Paper>
