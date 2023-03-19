@@ -1,56 +1,95 @@
-import { useProfSignup } from "../../hooks/useProfSignup"
-import * as React from 'react';
+import { useProfSignup } from "../../hooks/useProfSignup";
+import * as React from "react";
 
 // email, password, name, dept, chamber, researchInterest, websites, hod
 
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import MenuItem from "@mui/material/MenuItem";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Copyright() {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://www.bits-pilani.ac.in/">
-          Birla Institute of Technology & Science, Pilani
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+  return (
+    <Typography variant="body2" color="text.secondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://www.bits-pilani.ac.in/">
+        Birla Institute of Technology & Science, Pilani
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
+const branches = [
+  {
+    value: "CS",
+    label: "CS",
+  },
+  {
+    value: "ECE",
+    label: "ECE",
+  },
+  {
+    value: "ENI",
+    label: "ENI",
+  },
+  {
+    value: "EEE",
+    label: "EEE",
+  },
+  {
+    value: "Mech",
+    label: "Mech",
+  },
+  {
+    value: "Civil",
+    label: "Civil",
+  },
+];
 
 const theme = createTheme();
 
 const ProfSignup = () => {
-  const {signup, error, isLoading} = useProfSignup()
-
-  const handleSubmit = async(event) => {
+  const { signup, error, isLoading } = useProfSignup();
+  const [age, setAge] = React.useState("");
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value);
+  };
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-    const email = data.get('email')
-    const password = data.get('password')
-    const name = data.get('name')
-    const dept = data.get('dept')
-    const chamber = data.get('chamber')
-    const researchInterest = data.get('researchInterest')
-    const websites = data.get('websites')
-    const hod = false
+    const email = data.get("email");
+    const password = data.get("password");
+    const name = data.get("name");
+    const dept = data.get("dept");
+    const chamber = data.get("chamber");
+    const researchInterest = data.get("researchInterest");
+    const websites = data.get("websites");
+    const hod = false;
 
     // console.log(email, password, name, dept, chamber, researchInterest, websites, hod);
-    await signup(email, password, name, dept, chamber, researchInterest, websites, hod)
+    await signup(
+      email,
+      password,
+      name,
+      dept,
+      chamber,
+      researchInterest,
+      websites,
+      hod
+    );
   };
 
   return (
@@ -60,12 +99,12 @@ const ProfSignup = () => {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: '#0e5ec7' }}>
+          <Avatar sx={{ m: 1, bgcolor: "#0e5ec7" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -80,7 +119,12 @@ const ProfSignup = () => {
               </Grid>
             </Grid>
           </Box>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -98,17 +142,25 @@ const ProfSignup = () => {
                   id="name"
                   label="Name"
                   name="name"
-                //   autoComplete="family-name"
+                  //   autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
                   id="dept"
-                  label="Department"
                   name="dept"
-                //   autoComplete="studentID"
-                />
+                  select
+                  defaultValue=""
+                  required
+                  label="Department"
+                  fullWidth
+                >
+                  {branches.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -116,24 +168,26 @@ const ProfSignup = () => {
                   id="chamber"
                   label="Chamber"
                   name="chamber"
-                //   autoComplete="email"
+                  //   autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
                   id="researchInterest"
-                  label="Research Interest"
+                  label="Research Interests (separate line by line)"
                   name="researchInterest"
-                //   autoComplete="cgpa"
+                  multiline
+                  //   autoComplete="cgpa"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
                   id="websites"
-                  label="LinkedIn, Google Scholar, etc"
+                  label="Social Profiles (separate line by line)"
                   name="websites"
+                  multiline
                 />
               </Grid>
               <Grid item xs={12}>
@@ -162,6 +216,6 @@ const ProfSignup = () => {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
-export default ProfSignup
+export default ProfSignup;
