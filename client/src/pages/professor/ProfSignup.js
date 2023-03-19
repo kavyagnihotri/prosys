@@ -19,19 +19,6 @@ import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.bits-pilani.ac.in/">
-        Birla Institute of Technology & Science, Pilani
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const branches = [
   {
     value: "CS",
@@ -203,7 +190,6 @@ const ProfSignup = () => {
             {error && <div className="error">{error}</div>}
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
