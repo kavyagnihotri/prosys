@@ -44,10 +44,10 @@ const StudentLogin = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Grid container component="main" sx={{ height: "90vh", mt: 2 }}>
+            <Grid container component="main" sx={{ height: "90vh", mt: 4 }}>
                 <CssBaseline />
                 <Grid xs={false} sm={4} md={7}>
-                    <AppBar position="absolute">
+                    <AppBar position="absolute" sx={{ bgcolor: "#0e5ec7" }}>
                         <Toolbar sx={{ pr: "10px" }}>
                             <Button
                                 fullWidth
@@ -126,8 +126,9 @@ const StudentLogin = () => {
                         </Box>
                         <Grid container justifyContent="center">
                             <Grid item>
+                                Don't have an account?
                                 <Link href="/student/signup" variant="body2">
-                                    Don't have an account? Sign Up
+                                    <center>Sign Up</center>
                                 </Link>
                             </Grid>
                         </Grid>
