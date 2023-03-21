@@ -100,7 +100,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {user.name}
+              {user.email}
             </Typography>
             <Box
               component="form"
