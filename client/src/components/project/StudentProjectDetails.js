@@ -20,7 +20,7 @@ const Project = ({ project }) => {
             <TableCell>{project.professorEmail}</TableCell>
             <TableCell>{project.numberOfStudents}</TableCell>
             <TableCell>
-                <Button onClick={(e) => handleApply(project.projectID)}>Apply</Button>
+                <Button onClick={(e) => handleApply(project._id)}>Apply</Button>
             </TableCell>
         </TableRow>
     )

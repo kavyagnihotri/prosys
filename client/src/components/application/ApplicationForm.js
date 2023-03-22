@@ -33,12 +33,9 @@ const ApplicationForm = () => {
     const [alignment, setType] = React.useState("1")
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
-
+    const [projectTitle, setProjectTitle] = useState("")
+    const [project_id, setProjectID] = useState("")
     const { id } = useParams()
-    // const location = useLocation()
-
-    // const project_id = new URLSearchParams(location.search).get("project_id")
-    // console.log(project_id)
 
     const handleToggle = (event, newAlignment) => {
         setType(newAlignment)
@@ -57,9 +54,20 @@ const ApplicationForm = () => {
 
     // fetching cuz once you go back to the dashboard we need the projects and the applications
     useEffect(() => {
-        // const fetchProjectTitle = async () => {
-        //     const response = await fetch("/stu")
-        // }
+        const fetchProject = async () => {
+            fetch(`/projects/${id}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Update project title state with fetched data
+                    setProjectID(data.projectID)
+                    setProjectTitle(data.title)
+                })
+                .catch((error) => {
+                    // Handle error
+                })
+        }
 
         const fetchProjects = async () => {
             const response = await fetch("/student/projects", {
@@ -86,8 +94,9 @@ const ApplicationForm = () => {
         if (user) {
             fetchProjects()
             fetchApplications()
+            fetchProject()
         }
-    }, [dispatch, user])
+    }, [dispatch, user, id])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -100,7 +109,7 @@ const ApplicationForm = () => {
         }
 
         const data = new FormData(event.currentTarget)
-        const projectID = id
+        const projectID = project_id
         const studentEmail = user.email
         const sop = data.get("sop")
         const type = parseInt(alignment)
@@ -223,13 +232,13 @@ const ApplicationForm = () => {
                                             <ToggleButton value="0">Informal</ToggleButton>
                                         </ToggleButtonGroup>
                                     </Grid>
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item xs={12}>
                                         <TextField
                                             required
-                                            id="projectID"
-                                            name="projectID"
-                                            value={id}
-                                            label="Project ID"
+                                            // id="projectID"
+                                            // name="projectID"
+                                            value={projectTitle}
+                                            label="Project Title"
                                             fullWidth
                                             variant="standard"
                                             disabled="true"
