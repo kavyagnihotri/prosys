@@ -23,7 +23,6 @@ import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
-
 const mdTheme = createTheme()
 
 function DashboardContent() {
@@ -31,7 +30,6 @@ function DashboardContent() {
     const toggleDrawer = () => {
         setOpen(!open)
     }
-
     const { logout } = useLogout()
     const navigate = useNavigate()
 

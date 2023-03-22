@@ -14,7 +14,6 @@ import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import Button from "@mui/material/Button"
 import LogoutIcon from "@mui/icons-material/Logout"
-
 import Projects from "../../components/project/StudentProjects"
 import Applications from "../../components/application/Applications"
 import axios from "axios"
@@ -75,11 +74,7 @@ function DashboardContent() {
             <Box sx={{ display: "flex" }}>
                 <CssBaseline />
                 <AppBar position="absolute" open={open}>
-                    <Toolbar
-                        sx={{
-                            pr: "24px", // keep right padding when drawer closed
-                        }}
-                    >
+                    <Toolbar sx={{ pr: "24px" }}>
                         <IconButton
                             edge="start"
                             color="inherit"
