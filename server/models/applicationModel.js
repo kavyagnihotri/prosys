@@ -10,6 +10,9 @@ const applicationSchema = new Schema(
         projectTitle: {
             type: String,
         },
+        projectID: {
+            type: Number,
+        },
         profEmail: {
             type: String,
             // required: true

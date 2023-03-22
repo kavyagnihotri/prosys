@@ -209,18 +209,6 @@ const ApplicationForm = () => {
                                     Details
                                 </Typography>
                                 <Grid container spacing={3}>
-                                    {/* <Grid item xs={12}>
-                    <TextField
-                      required
-                      id="title"
-                      name="title"
-                      value="title"
-                      label="Project Title"
-                      fullWidth
-                      variant="standard"
-                      disabled="true"
-                    />
-                  </Grid> */}
                                     <Grid item xs={12} sm={6}>
                                         <ToggleButtonGroup
                                             value={alignment}
@@ -235,8 +223,6 @@ const ApplicationForm = () => {
                                     <Grid item xs={12}>
                                         <TextField
                                             required
-                                            // id="projectID"
-                                            // name="projectID"
                                             value={projectTitle}
                                             label="Project Title"
                                             fullWidth
