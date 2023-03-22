@@ -33,7 +33,8 @@ const ApplicationForm = () => {
     const [alignment, setType] = React.useState("1")
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
-    const [open, setOpen] = React.useState(true)
+    const users = JSON.parse(localStorage.getItem("user"))
+    console.log(user)
 
     const handleToggle = (event, newAlignment) => {
         setType(newAlignment)
@@ -41,10 +42,11 @@ const ApplicationForm = () => {
 
     const handleLogout = async (e) => {
         e.preventDefault()
+        navigate("/student/login")
         logout()
     }
 
-    const handleClick = (event) => {
+    const handleHome = (event) => {
         event.preventDefault()
         navigate("/student/dashboard")
     }
@@ -95,8 +97,6 @@ const ApplicationForm = () => {
         const sop = data.get("sop")
         const type = parseInt(alignment)
 
-        //
-
         const application = { projectID, studentEmail, type, sop }
 
         const response = await fetch("/student/createApplication", {
@@ -137,19 +137,8 @@ const ApplicationForm = () => {
                 >
                     <AppBar position="absolute">
                         <Toolbar sx={{ pr: "24px" }}>
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                aria-label="open drawer"
-                                sx={{
-                                    marginRight: "36px",
-                                    ...(open && { display: "none" }),
-                                }}
-                            >
-                                <MenuIcon />
-                            </IconButton>
                             <Button
-                                onClick={handleClick}
+                                onClick={handleHome}
                                 component="h1"
                                 variant="h6"
                                 noWrap
@@ -166,7 +155,7 @@ const ApplicationForm = () => {
                                 noWrap
                                 sx={{ flexGrow: 1 }}
                             >
-                                {user.email}
+                                {JSON.parse(localStorage.getItem("user")).email}
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleLogout}>
                                 <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
@@ -191,7 +180,7 @@ const ApplicationForm = () => {
                                 to="/student/dashboard"
                                 variant="contained"
                                 sx={{ mt: 3, ml: 1 }}
-                                onClick={handleClick}
+                                onClick={handleHome}
                             >
                                 Go to Home
                             </Button>
