@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from 'react'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -13,12 +14,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import { TableContainer } from "@mui/material";
 import { mainListItems, secondaryListItems, } from "../../components/dashboard/profListItems";
-import Copyright from "../../components/dashboard/Copyright";
 import Projects from "../../components/project/ProfProjects";
 import { AppBar } from "../../components/dashboard/AppBar";
 import { Drawer } from "../../components/dashboard/Drawer";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLogout } from "../../hooks/useLogout";
+
+import { useProjectsContext } from '../../hooks/useProjectsContext'
 
 const mdTheme = createTheme();
 
@@ -34,7 +36,27 @@ function DashboardContent() {
     e.preventDefault();
     logout();
   };
+
+  const { dispatch } = useProjectsContext()
   const { user } = useAuthContext();
+
+  useEffect(() => {
+    const fetchProf = async () => {
+      const response = await fetch('/profs', {
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROF', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProf()
+    }
+
+  }, [dispatch, user])
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -78,7 +100,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {user.email}
+              {user.name}
             </Typography>
             <Box
               component="form"
@@ -135,7 +157,6 @@ function DashboardContent() {
           <TableContainer>
             <Projects />
           </TableContainer>
-          <Copyright sx={{ pt: 4 }} />
         </Box>
       </Box>
     </ThemeProvider>
