@@ -13,6 +13,7 @@ import Container from "@mui/material/Container"
 import MenuItem from "@mui/material/MenuItem"
 import Toolbar from "@mui/material/Toolbar"
 import Paper from "@mui/material/Paper"
+import HomeIcon from "@mui/icons-material/Home"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -90,6 +91,7 @@ const ProfSignup = () => {
                         <Toolbar sx={{ pr: "10px" }}>
                             <Button
                                 fullWidth
+                                startIcon={<HomeIcon />}
                                 onClick={handleClick}
                                 component="h1"
                                 variant="h1"

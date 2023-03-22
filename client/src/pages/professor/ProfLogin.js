@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Link from "@mui/material/Link"
 import Toolbar from "@mui/material/Toolbar"
+import HomeIcon from "@mui/icons-material/Home"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useProfLogin } from "../../hooks/useProfLogin"
 import { AppBar } from "../../components/dashboard/Objects"
@@ -51,6 +52,7 @@ const ProfLogin = () => {
                         <Toolbar sx={{ pr: "10px" }}>
                             <Button
                                 fullWidth
+                                startIcon={<HomeIcon />}
                                 onClick={handleClick}
                                 component="h1"
                                 variant="h6"
