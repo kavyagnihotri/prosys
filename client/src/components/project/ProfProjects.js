@@ -50,34 +50,36 @@ export default function Orders() {
 
 
   return (
-    <React.Fragment>
+      <React.Fragment>
       {projects && tables.map((table) => (
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <Title sx={{ align: "center", width: "10%", height: "50%" }}>{status[table + 1]}</Title>
-                  <TableHead>
-                    <TableRow sx={{ height: "50" }}>
-                      <TableCell align="center" style={{ width: "25%" }}>Title</TableCell>
-                      <TableCell align="center" style={{ width: "25%" }}>Project Type</TableCell>
-                      <TableCell align="center" style={{ width: "25%" }}>Description</TableCell>
-                      <TableCell align="center" style={{ width: "20%" }}>Prerequisite(s)</TableCell>
-                      <TableCell align="center" style={{ width: "50%" }}>Number of Students</TableCell>
-                      {table===1 && <TableCell align="center" style={{ width: "50%" }}>View Applications</TableCell>}
-                    </TableRow>
-                  </TableHead>
-                      {projects.map((project) => (
-                        <Table aria-label="simple table">
-                          {project.professorEmail === user.email && table === project.approved && <Projects key={project._id} project={project} tab={table} />}
-                        </Table>
-                      ))}
-                </Paper>
-              </Grid>
-            </Grid>
-          </Container>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Grid container spacing={3}>
+        <Grid item xs={12}>
+        <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+          <Title>{status[table + 1]}</Title>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align='center'>Title</TableCell>
+                <TableCell align='center'>Project Type</TableCell>
+                <TableCell align='center'>Description</TableCell>
+                <TableCell align='center'>Prerequisite(s)</TableCell>
+                <TableCell align='center'>Number of Students</TableCell>
+                {table===1 && <TableCell align='center'>View Application</TableCell>}
+              </TableRow>
+            </TableHead>
+            {projects.map((project) => (
+              <TableBody>
+                {project.professorEmail === user.email && table === project.approved && <Projects key={project._id} project={project} tab={table}/>}
+              </TableBody>
+            ))}
+          </Table>
+        </Paper>
+        </Grid>
+        </Grid>
+        </Container>
       ))}
-    </React.Fragment>
+      </React.Fragment>
   );
 }
 
