@@ -15,12 +15,14 @@ import Button from "@mui/material/Button"
 import { TableContainer } from "@mui/material"
 import { mainListItems, secondaryListItems } from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
-import { AppBar, Drawer } from "../../components/dashboard/Objects"
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
+import { AppBar } from "../../components/dashboard/AppBar"
+import { Drawer } from "../../components/dashboard/Drawer"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useLogout } from "../../hooks/useLogout"
-
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
-
 const mdTheme = createTheme()
 
 function DashboardContent() {
@@ -28,12 +30,17 @@ function DashboardContent() {
     const toggleDrawer = () => {
         setOpen(!open)
     }
-
     const { logout } = useLogout()
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         logout()
+    }
+    const goChat = async (e) => {
+        axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
+        e.preventDefault()
+        navigate("/chatPage")
     }
 
     const { dispatch } = useProjectsContext()
@@ -84,6 +91,12 @@ function DashboardContent() {
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                             {user.name}
                         </Typography>
+
+                        <Box component="form" noValidate onSubmit={goChat}>
+                            <Button color="inherit" size="large" startIcon={<MarkChatReadIcon />} type="submit">
+                                Chat Room
+                            </Button>
+                        </Box>
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
                                 LogOut

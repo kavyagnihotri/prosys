@@ -16,7 +16,6 @@ import Toolbar from "@mui/material/Toolbar"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useNavigate } from "react-router-dom"
-
 const theme = createTheme()
 
 const branches = [
@@ -72,7 +71,6 @@ const StudentSignup = () => {
         //
         await signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi)
     }
-
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -80,6 +78,7 @@ const StudentSignup = () => {
                 <Box
                     sx={{
                         marginTop: 10,
+
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",

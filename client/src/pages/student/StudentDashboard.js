@@ -14,12 +14,13 @@ import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import Button from "@mui/material/Button"
 import LogoutIcon from "@mui/icons-material/Logout"
-
 import Projects from "../../components/project/StudentProjects"
 import Applications from "../../components/application/Applications"
-
+import axios from "axios"
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import { mainListItems, secondaryListItems } from "../../components/dashboard/ListItems"
-import { AppBar, Drawer } from "../../components/dashboard/Objects"
+import { AppBar } from "../../components/dashboard/AppBar"
+import { Drawer } from "../../components/dashboard/Drawer"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
@@ -44,6 +45,11 @@ function DashboardContent() {
     const handleClick = (event) => {
         event.preventDefault()
         navigate("/student/dashboard")
+    }
+    const goChat = async (e) => {
+        axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
+        e.preventDefault()
+        navigate("/chatPage")
     }
 
     // const [activeStep, setActiveStep] = React.useState('Dashboard');
@@ -94,6 +100,11 @@ function DashboardContent() {
                         >
                             {user.email}
                         </Typography>
+                        <Box component="form" noValidate onSubmit={goChat}>
+                            <Button color="inherit" size="large" startIcon={<MarkChatReadIcon />} type="submit">
+                                Chat Room
+                            </Button>
+                        </Box>
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
                                 LogOut
