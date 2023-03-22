@@ -4,13 +4,12 @@ const ChatsPage = (props) => {
     const { user } = useAuthContext()
     console.log(user.email)
     return (
-        <div style={{ height: "90vh", width: "90vw" }}>
+        <div className="background" style={{ height: "93vh" }}>
             <PrettyChatWindow
-                Project
-                Id="aef9213a-e543-4c06-ad59-a7499365a4c3"
+                projectId={"d4c39480-3612-4e4c-8dd0-fef825748c8b"}
                 username={user.email}
                 secret={user.email}
-                style={{ height: "90%" }}
+                style={{ height: "100vh", width: "100vh" }}
             />
         </div>
     )
