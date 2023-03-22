@@ -98,7 +98,6 @@ function App() {
                         />
                         <Route path="/prof/project/add" element={<ProjectForm />} />
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
-                        <Route path="/prof/project/add" element={<Home />} />
                     </Routes>
                 </div>
             </BrowserRouter>
