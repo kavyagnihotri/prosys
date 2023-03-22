@@ -16,7 +16,6 @@ import ApplicationForm from "./components/application/ApplicationForm"
 import AugsdHod from "./pages/augsd/AugsdHod"
 import ChatPage from "./components/chatDirectory/chatPage"
 
-
 function App() {
     const { user } = useAuthContext()
 
@@ -83,7 +82,7 @@ function App() {
                             element={!user ? <StudentSignup /> : <Navigate to="/student/dashboard" />}
                         />
 
-                        <Route path="/student/createApplication" element={<ApplicationForm />} />
+                        <Route path="/student/createApplication/:id" element={<ApplicationForm />} />
 
                         <Route path="prof/login" element={!user ? <ProfLogin /> : <Navigate to="/prof/dashboard" />} />
 

@@ -15,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
 
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -33,8 +33,12 @@ const ApplicationForm = () => {
     const [alignment, setType] = React.useState("1")
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
-    const users = JSON.parse(localStorage.getItem("user"))
-    console.log(user)
+
+    const { id } = useParams()
+    // const location = useLocation()
+
+    // const project_id = new URLSearchParams(location.search).get("project_id")
+    // console.log(project_id)
 
     const handleToggle = (event, newAlignment) => {
         setType(newAlignment)
@@ -53,6 +57,10 @@ const ApplicationForm = () => {
 
     // fetching cuz once you go back to the dashboard we need the projects and the applications
     useEffect(() => {
+        // const fetchProjectTitle = async () => {
+        //     const response = await fetch("/stu")
+        // }
+
         const fetchProjects = async () => {
             const response = await fetch("/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
@@ -92,7 +100,7 @@ const ApplicationForm = () => {
         }
 
         const data = new FormData(event.currentTarget)
-        const projectID = data.get("projectID")
+        const projectID = id
         const studentEmail = user.email
         const sop = data.get("sop")
         const type = parseInt(alignment)
@@ -220,11 +228,11 @@ const ApplicationForm = () => {
                                             required
                                             id="projectID"
                                             name="projectID"
-                                            // value="projectID"
+                                            value={id}
                                             label="Project ID"
                                             fullWidth
                                             variant="standard"
-                                            // disabled="true"
+                                            disabled="true"
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
