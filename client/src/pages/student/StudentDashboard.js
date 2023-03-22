@@ -51,23 +51,6 @@ function DashboardContent() {
         navigate("/chatPage")
     }
 
-    // const [activeStep, setActiveStep] = React.useState('Dashboard');
-    // const handleProfileClick = () => {
-    //   setActiveStep('Profile')
-    // };
-
-    // const handleDashboardClick = () => {
-    //   setActiveStep('Dashboard')
-    // };
-
-    // const handleApplicationsClick = () => {
-    //   setActiveStep('Applications')
-    // };
-
-    // const handleProjectsClick = () => {
-    //   setActiveStep('Projects')
-    // };
-
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: "flex" }}>
@@ -168,26 +151,5 @@ function DashboardContent() {
         </ThemeProvider>
     )
 }
-
-// stepper function like in checkout
-// const steps = ['Dashboard', 'Applications', 'Profile', 'Projects']
-// function getStepContent(step) {
-//   switch (step) {
-//     case 'Dashboard': {
-//       return <Projects />
-//     }
-//     case 'Applications': {
-//       return <Applications />
-//     }
-//     case 'Profile': {
-//       return <Projects />
-//     }
-//     case 'Projects': {
-//       return <Projects />
-//     }
-//     default:
-//       return <Projects />
-//   }
-// }
 
 export default DashboardContent
