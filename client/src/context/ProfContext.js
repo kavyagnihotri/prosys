@@ -13,7 +13,7 @@ export const profReducer = (state, action) => {
     }
 }
 
-export const ProjectsContextProvider = ({ children }) => {
+export const ProfContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(profReducer, {
         projects: null,
         approvedprojects: null

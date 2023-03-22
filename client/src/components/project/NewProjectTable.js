@@ -106,7 +106,7 @@ export default function NewProjectTable() {
         </TableHead>
         <TableBody>
           {projects && projects.map((project) => (
-            project.approved==0 &&
+            project.approved===0 &&
             <TableRow key={project._id}>
               <TableCell>{project.title}</TableCell>
               <TableCell>{project.projectID}</TableCell>

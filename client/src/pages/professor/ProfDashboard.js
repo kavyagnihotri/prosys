@@ -48,22 +48,22 @@ function DashboardContent() {
     const { dispatch } = useProjectsContext()
     const { user } = useAuthContext()
 
-    useEffect(() => {
-        const fetchProf = async () => {
-            const response = await fetch("/profs", {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
 
-            if (response.ok) {
-                dispatch({ type: "SET_PROF", payload: json })
-            }
-        }
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
 
-        if (user) {
-            fetchProf()
-        }
-    }, [dispatch, user])
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
+    }
+
+    if (user) {
+      fetchProjects()
+    }
 
     return (
         <ThemeProvider theme={mdTheme}>
@@ -94,6 +94,66 @@ function DashboardContent() {
                             {user.name}
                         </Typography>
 
+  return (
+    <ThemeProvider theme={mdTheme}>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <Toolbar
+            sx={{
+              pr: "24px", // keep right padding when drawer closed
+            }}
+          >
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={toggleDrawer}
+              sx={{
+                marginRight: "36px",
+                ...(open && { display: "none" }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              ProSys - Professor
+            </Typography>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              {user.email}
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+            >
+              <Button
+                color="inherit"
+                size="large"
+                startIcon={<LogoutIcon />}
+                type="submit"
+              >
+                LogOut
+              </Button>
+            </Box>
+          </Toolbar>
+        </AppBar>
                         <Box component="form" noValidate onSubmit={goChat}>
                             <Button color="inherit" size="large" startIcon={<MarkChatReadIcon />} type="submit">
                                 Chat Room
