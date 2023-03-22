@@ -41,19 +41,19 @@ function DashboardContent() {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    const fetchProf = async () => {
-      const response = await fetch('/profs', {
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
         headers: { 'Authorization': `Bearer ${user.token}` }
       })
       const json = await response.json()
 
       if (response.ok) {
-        dispatch({ type: 'SET_PROF', payload: json })
+        dispatch({ type: 'SET_PROJECTS', payload: json })
       }
     }
 
     if (user) {
-      fetchProf()
+      fetchProjects()
     }
 
   }, [dispatch, user])
