@@ -15,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
 
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -33,8 +33,9 @@ const ApplicationForm = () => {
     const [alignment, setType] = React.useState("1")
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
-    const users = JSON.parse(localStorage.getItem("user"))
-    console.log(user)
+    const [projectTitle, setProjectTitle] = useState("")
+    const [project_id, setProjectID] = useState("")
+    const { id } = useParams()
 
     const handleToggle = (event, newAlignment) => {
         setType(newAlignment)
@@ -53,6 +54,21 @@ const ApplicationForm = () => {
 
     // fetching cuz once you go back to the dashboard we need the projects and the applications
     useEffect(() => {
+        const fetchProject = async () => {
+            fetch(`/projects/${id}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Update project title state with fetched data
+                    setProjectID(data.projectID)
+                    setProjectTitle(data.title)
+                })
+                .catch((error) => {
+                    // Handle error
+                })
+        }
+
         const fetchProjects = async () => {
             const response = await fetch("/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
@@ -78,8 +94,9 @@ const ApplicationForm = () => {
         if (user) {
             fetchProjects()
             fetchApplications()
+            fetchProject()
         }
-    }, [dispatch, user])
+    }, [dispatch, user, id])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -92,7 +109,7 @@ const ApplicationForm = () => {
         }
 
         const data = new FormData(event.currentTarget)
-        const projectID = data.get("projectID")
+        const projectID = project_id
         const studentEmail = user.email
         const sop = data.get("sop")
         const type = parseInt(alignment)
@@ -192,18 +209,6 @@ const ApplicationForm = () => {
                                     Details
                                 </Typography>
                                 <Grid container spacing={3}>
-                                    {/* <Grid item xs={12}>
-                    <TextField
-                      required
-                      id="title"
-                      name="title"
-                      value="title"
-                      label="Project Title"
-                      fullWidth
-                      variant="standard"
-                      disabled="true"
-                    />
-                  </Grid> */}
                                     <Grid item xs={12} sm={6}>
                                         <ToggleButtonGroup
                                             value={alignment}
@@ -215,16 +220,14 @@ const ApplicationForm = () => {
                                             <ToggleButton value="0">Informal</ToggleButton>
                                         </ToggleButtonGroup>
                                     </Grid>
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item xs={12}>
                                         <TextField
                                             required
-                                            id="projectID"
-                                            name="projectID"
-                                            // value="projectID"
-                                            label="Project ID"
+                                            value={projectTitle}
+                                            label="Project Title"
                                             fullWidth
                                             variant="standard"
-                                            // disabled="true"
+                                            disabled="true"
                                         />
                                     </Grid>
                                     <Grid item xs={12}>

@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Link from "@mui/material/Link"
 import Toolbar from "@mui/material/Toolbar"
+import HomeIcon from "@mui/icons-material/Home"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useNavigate } from "react-router-dom"
 import { useStudentLogin } from "../../hooks/useStudentLogin"
@@ -52,13 +53,14 @@ const StudentLogin = () => {
                             <Button
                                 fullWidth
                                 onClick={handleClick}
+                                startIcon={<HomeIcon />}
                                 component="h1"
                                 variant="h6"
                                 noWrap
                                 color="inherit"
                                 size="large"
                             >
-                                <span>ProSys</span>
+                                <span> ProSys</span>
                             </Button>
                         </Toolbar>
                     </AppBar>
