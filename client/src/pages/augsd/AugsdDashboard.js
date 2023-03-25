@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -27,12 +28,18 @@ import { useNavigate } from 'react-router-dom'
 import { AppBar } from "../../components/dashboard/AppBar"
 import { Drawer } from "../../components/dashboard/Drawer"
 import AugsdLogin from './AugsdLogin';
+import List from '@mui/material/List';
 
 const mdTheme = createTheme();
 
 function DashboardContent() {
   const { logout } = useLogout()
   const navigate = useNavigate()
+
+  const [open, setOpen] = React.useState(true)
+  const toggleDrawer = () => {
+      setOpen(!open)
+  }
 
   const handleSubmit = async(e) => {
     e.preventDefault()
@@ -71,10 +78,30 @@ function DashboardContent() {
               AUGSD Dashboard
             </Typography>
               </Button>
-              <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit"onClick={goHOD} >Mark HOD</Button>
+              {/* <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit"onClick={goHOD} >Mark HOD</Button> */}
               <Button color="inherit" size="large" startIcon={<LogoutIcon />} onClick={handleSubmit} type="submit" >LogOut</Button>
           </Toolbar>
         </AppBar>
+
+        <Drawer variant="permanent" open={open}>
+                    <Toolbar
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                            px: [1],
+                        }}
+                    >
+                        <IconButton onClick={toggleDrawer}>
+                            <ChevronLeftIcon />
+                        </IconButton>
+                    </Toolbar>
+
+                    <List>
+                        <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit"onClick={goHOD} >Mark HOD</Button>
+                    </List>
+                </Drawer>
+
         <Box
           component="main"
           sx={{

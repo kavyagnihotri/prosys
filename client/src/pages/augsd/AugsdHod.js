@@ -18,12 +18,21 @@ import HomeIcon from '@mui/icons-material/Home';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { useNavigate } from 'react-router-dom'
 import { AppBar } from '../../components/dashboard/AppBar'
+import IconButton from '@mui/material/IconButton';
+import { Drawer } from "../../components/dashboard/Drawer"
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import List from '@mui/material/List';
 
 const mdTheme = createTheme();
 
 function HodContent() {
   const { logout } = useLogout()
   const navigate = useNavigate()
+
+  const [open, setOpen] = React.useState(true)
+  const toggleDrawer = () => {
+      setOpen(!open)
+  }
 
   const handleSubmit = async(e) => {
     e.preventDefault()
@@ -62,10 +71,30 @@ function HodContent() {
               Back to AUGSD Dashboard
             </Typography>
               </Button>
-              <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit"onClick={goHOD} >Mark HOD</Button>
+              {/* <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit"onClick={goHOD} >Mark HOD</Button> */}
               <Button color="inherit" size="large" startIcon={<LogoutIcon />} onClick={handleSubmit} type="submit" >LogOut</Button>
           </Toolbar>
         </AppBar>
+
+        <Drawer variant="permanent" open={open}>
+                    <Toolbar
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                            px: [1],
+                        }}
+                    >
+                        <IconButton onClick={toggleDrawer}>
+                            <ChevronLeftIcon />
+                        </IconButton>
+                    </Toolbar>
+
+                    <List>
+                        <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit"onClick={goHOD} >Mark HOD</Button>
+                    </List>
+                </Drawer>
+
         <Box
           component="main"
           sx={{
