@@ -16,14 +16,12 @@ import { TableContainer } from "@mui/material"
 import { mainListItems, secondaryListItems } from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
-import { AppBar } from "../../components/dashboard/AppBar"
-import { Drawer } from "../../components/dashboard/Drawer"
+import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
-
 const mdTheme = createTheme()
 
 function DashboardContent() {
@@ -31,7 +29,6 @@ function DashboardContent() {
     const toggleDrawer = () => {
         setOpen(!open)
     }
-
     const { logout } = useLogout()
     const navigate = useNavigate()
 

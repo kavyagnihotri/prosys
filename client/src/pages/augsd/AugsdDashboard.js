@@ -30,12 +30,11 @@ import { Drawer } from "../../components/dashboard/Drawer"
 import AugsdLogin from './AugsdLogin';
 import List from '@mui/material/List';
 
-const mdTheme = createTheme();
+const mdTheme = createTheme()
 
 function DashboardContent() {
-  const { logout } = useLogout()
-  const navigate = useNavigate()
-
+    const { logout } = useLogout()
+    const navigate = useNavigate()
   const [open, setOpen] = React.useState(true)
   const toggleDrawer = () => {
       setOpen(!open)
@@ -46,11 +45,11 @@ function DashboardContent() {
     logout()
   }
 
-  const goHome = async(e) => {
-    e.preventDefault()
-    navigate("/augsd/dashboard");
-  }
 
+    const goHome = async (e) => {
+        e.preventDefault()
+        navigate("/augsd/dashboard")
+    }
   const goHOD = async(e) => {
     e.preventDefault()
     navigate("/augsd/hod");
@@ -148,5 +147,5 @@ function DashboardContent() {
 }
 
 export default function Dashboard() {
-  return <DashboardContent />;
+    return <DashboardContent />
 }

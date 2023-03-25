@@ -23,11 +23,11 @@ import { Drawer } from "../../components/dashboard/Drawer"
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import List from '@mui/material/List';
 
-const mdTheme = createTheme();
+const mdTheme = createTheme()
 
 function HodContent() {
-  const { logout } = useLogout()
-  const navigate = useNavigate()
+    const { logout } = useLogout()
+    const navigate = useNavigate()
 
   const [open, setOpen] = React.useState(true)
   const toggleDrawer = () => {
@@ -39,11 +39,10 @@ function HodContent() {
     logout()
   }
 
-  const goHome = async(e) => {
-    e.preventDefault()
-    navigate("/augsd/dashboard");
-  }
-
+    const goHome = async (e) => {
+        e.preventDefault()
+        navigate("/augsd/dashboard")
+    }
   const goHOD = async(e) => {
     e.preventDefault()
     navigate("/augsd/hod");
@@ -132,5 +131,5 @@ function HodContent() {
 }
 
 export default function AugsdHod() {
-  return <HodContent />;
+    return <HodContent />
 }

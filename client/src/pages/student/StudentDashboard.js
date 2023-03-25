@@ -14,14 +14,12 @@ import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import Button from "@mui/material/Button"
 import LogoutIcon from "@mui/icons-material/Logout"
-
 import Projects from "../../components/project/StudentProjects"
 import Applications from "../../components/application/Applications"
 import axios from "axios"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import { mainListItems, secondaryListItems } from "../../components/dashboard/ListItems"
-import { AppBar } from "../../components/dashboard/AppBar"
-import { Drawer } from "../../components/dashboard/Drawer"
+import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
@@ -53,33 +51,12 @@ function DashboardContent() {
         navigate("/chatPage")
     }
 
-    // const [activeStep, setActiveStep] = React.useState('Dashboard');
-    // const handleProfileClick = () => {
-    //   setActiveStep('Profile')
-    // };
-
-    // const handleDashboardClick = () => {
-    //   setActiveStep('Dashboard')
-    // };
-
-    // const handleApplicationsClick = () => {
-    //   setActiveStep('Applications')
-    // };
-
-    // const handleProjectsClick = () => {
-    //   setActiveStep('Projects')
-    // };
-
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: "flex" }}>
                 <CssBaseline />
-                <AppBar position="absolute" open={open}>
-                    <Toolbar
-                        sx={{
-                            pr: "24px", // keep right padding when drawer closed
-                        }}
-                    >
+                <AppBar position="absolute" open={open} sx={{ bgcolor: "#0e5ec7" }}>
+                    <Toolbar sx={{ pr: "24px" }}>
                         <IconButton
                             edge="start"
                             color="inherit"
@@ -174,26 +151,5 @@ function DashboardContent() {
         </ThemeProvider>
     )
 }
-
-// stepper function like in checkout
-// const steps = ['Dashboard', 'Applications', 'Profile', 'Projects']
-// function getStepContent(step) {
-//   switch (step) {
-//     case 'Dashboard': {
-//       return <Projects />
-//     }
-//     case 'Applications': {
-//       return <Applications />
-//     }
-//     case 'Profile': {
-//       return <Projects />
-//     }
-//     case 'Projects': {
-//       return <Projects />
-//     }
-//     default:
-//       return <Projects />
-//   }
-// }
 
 export default DashboardContent

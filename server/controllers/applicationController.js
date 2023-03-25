@@ -1,7 +1,7 @@
-const Application = require('../models/applicationModel')
-const Student = require('../models/studentModel')
-const Project = require('../models/ProjectModel')
-const mongoose = require('mongoose')
+const Application = require("../models/applicationModel")
+const Student = require("../models/studentModel")
+const Project = require("../models/ProjectModel")
+const mongoose = require("mongoose")
 
 // projectTitle, projectID(num), profEmail, studentEmail, type(num), sop, status(num)
 
@@ -17,30 +17,33 @@ const createApplication = async (req, res) => {
 
     try {
         if (!projectID) {
-            return res.status(400).json({ error: 'Please fill the Project ID' })
+            return res.status(400).json({ error: "Please fill the Project ID" })
         }
 
         if (!studentEmail) {
-            return res.status(400).json({ error: 'Please fill the Student Email' })
+            return res.status(400).json({ error: "Please fill the Student Email" })
         }
 
         const student = await Student.findOne({ email: studentEmail })
         if (!student) {
-            return res.status(400).json({ error: 'Not a valid Student Email' })
+            return res.status(400).json({ error: "Not a valid Student Email" })
         }
 
         const proj = await Project.findOne({ projectID: projectID })
-        if (!proj || proj['approved'] != 1) {
-            return res.status(400).json({ error: 'Not a valid Project ID' })
+        if (!proj || proj["approved"] != 1) {
+            return res.status(400).json({ error: "Not a valid Project ID" })
         }
 
-        // studentEmail from the studentLogged in sent by frontend 
+        // studentEmail from the studentLogged in sent by frontend
         // projectID, profEmail from the project
         const project = await Project.findOne({ projectID: projectID })
-        const profEmail = project['professorEmail']
-        const projectTitle = project['title']
+        const profEmail = project["professorEmail"]
+        const projectTitle = project["title"]
 
-        const applicaiton = await Application.create({ projectID, projectTitle, profEmail, studentEmail, type, sop })
+        const applicaiton = await Application.create({ projectTitle, projectID, profEmail, studentEmail, type, sop })
+        project.applicants.push(studentEmail)
+        await project.save()
+
         res.status(200).json(applicaiton)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -50,22 +53,18 @@ const createApplication = async (req, res) => {
 // delete an applciation
 const deleteApplication = async (req, res) => {
     // const { id } = req.params
-
     // if(!mongoose.Types.ObjectId.isValid(id)) {
     //     return res.status(404).json({error: "No such project"})
     // }
-
     // const applicaiton = await Application.findOneAndDelete({_id: id})
-
     // if(!applicaiton) {
     //     return res.status(404).json({error: "No such applicaiton"})
     // }
-
     // res.status(200).json(applicaiton)
 }
 
 module.exports = {
     getApplications,
     createApplication,
-    deleteApplication
+    deleteApplication,
 }

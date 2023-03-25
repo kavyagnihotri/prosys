@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { useAuthContext } from "./hooks/useAuthContext"
 
 // pages and components
-import Home from "./pages/ProjectAdd"
+import ProjectForm from "./components/project/NewProjectForm"
 import StudentLogin from "./pages/student/StudentLogin"
 import StudentSignup from "./pages/student/StudentSignup"
 import AugsdLogin from "./pages/augsd/AugsdLogin"
@@ -82,7 +82,7 @@ function App() {
                             element={!user ? <StudentSignup /> : <Navigate to="/student/dashboard" />}
                         />
 
-                        <Route path="/student/createApplication" element={<ApplicationForm />} />
+                        <Route path="/student/createApplication/:id" element={<ApplicationForm />} />
 
                         <Route path="prof/login" element={!user ? <ProfLogin /> : <Navigate to="/prof/dashboard" />} />
 
@@ -95,8 +95,8 @@ function App() {
                             path="/prof/dashboard"
                             element={user ? <ProfDashboard /> : <Navigate to="/prof/login" />}
                         />
+                        <Route path="/prof/project/add" element={<ProjectForm />} />
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
-                        <Route path="/prof/project/add" element={<Home />} />
                     </Routes>
                 </div>
             </BrowserRouter>
