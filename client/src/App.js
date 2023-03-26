@@ -15,6 +15,7 @@ import ProfDashboard from "./pages/professor/ProfDashboard"
 import ApplicationForm from "./components/application/ApplicationForm"
 import AugsdHod from "./pages/augsd/AugsdHod"
 import ChatPage from "./components/chatDirectory/chatPage"
+import ViewApplications from "./components/application/ViewApplications"
 
 function App() {
     const { user } = useAuthContext()
@@ -97,6 +98,11 @@ function App() {
                         />
                         <Route path="/prof/project/add" element={<ProjectForm />} />
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
+
+                        <Route
+                            path="/prof/project/view/:id" 
+                            element={user ? <ViewApplications /> : <Navigate to="/prof/login" />} 
+                        />
                     </Routes>
                 </div>
             </BrowserRouter>

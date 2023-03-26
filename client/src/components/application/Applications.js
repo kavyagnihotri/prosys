@@ -43,7 +43,7 @@ export default function Orders() {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Project ID</TableCell>
+            {/* <TableCell>Project ID</TableCell> */}
             <TableCell>Title</TableCell>
             <TableCell>Offered By</TableCell>
             <TableCell>Statement of Purpose</TableCell>
@@ -55,7 +55,7 @@ export default function Orders() {
           {applications && applications.map((application) => (
             application.studentEmail === user.email &&
             <TableRow key={application._id}>
-              <TableCell>{application.projectID}</TableCell>
+              {/* <TableCell>{application.projectID}</TableCell> */}
               <TableCell>{application.projectTitle}</TableCell>
               <TableCell>{application.profEmail}</TableCell>
               <TableCell>{application.sop}</TableCell>

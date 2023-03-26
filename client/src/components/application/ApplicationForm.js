@@ -109,7 +109,7 @@ const ApplicationForm = () => {
         }
 
         const data = new FormData(event.currentTarget)
-        const projectID = project_id
+        const projectID = id
         const studentEmail = user.email
         const sop = data.get("sop")
         const type = parseInt(alignment)
