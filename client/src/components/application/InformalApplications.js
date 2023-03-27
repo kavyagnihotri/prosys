@@ -10,6 +10,8 @@ import { useApplicationsContext } from '../../hooks/useApplicationsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useParams } from 'react-router-dom';
 import { useStudentsContext } from '../../hooks/useStudentsContext';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -85,8 +87,12 @@ export default function InformalApplications() {
               <TableCell>{stud.dept}</TableCell>
               <TableCell>{stud.cgpa}</TableCell>
               <TableCell>{app.sop}</TableCell>
-              <TableCell>{stud.cv_link}</TableCell>
-              <TableCell>{stud.per_link}</TableCell>
+              <TableCell>
+              <ListItemButton href={stud.cv_link}><ListItemText primary="CV" /></ListItemButton>
+              </TableCell>
+              <TableCell>
+              <ListItemButton href={stud.per_link}><ListItemText primary="Performace Sheet" /></ListItemButton>
+              </TableCell>
               <TableCell>{stud.aoi}</TableCell>
             </TableRow>
           ))))}
