@@ -15,7 +15,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function FormalApplications() {
+export default function InformalApplications() {
 
   var { applications, dispatch } = useApplicationsContext()
   const { user } = useAuthContext()
@@ -61,7 +61,7 @@ export default function FormalApplications() {
 
   return (
     <React.Fragment>
-      <Title>Formal Applicants for Project</Title>
+      <Title>Informal Applicants for Project</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -77,7 +77,7 @@ export default function FormalApplications() {
         <TableBody>
           {applications && applications.map((app) => (
             app.profEmail===user.email && 
-            app.projectID===id && app.type===1 &&
+            app.projectID===id && app.type===0 &&
             students && students.map((stud) => (
             stud.email===app.studentEmail &&
             <TableRow key={stud._id}>

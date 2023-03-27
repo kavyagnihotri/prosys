@@ -39,4 +39,9 @@ const signupStudent = async (req, res) => {
     }
 }
 
-module.exports = { signupStudent, loginStudent }
+const getStudents = async (req, res) => {
+    const students = await Student.find({})
+    res.status(200).json(students)
+}
+
+module.exports = { signupStudent, loginStudent, getStudents }

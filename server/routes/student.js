@@ -1,7 +1,7 @@
 const express = require('express')
 
 // controller fucntion
-const { signupStudent, loginStudent } = require('../controllers/studentController')
+const { signupStudent, loginStudent , getStudents} = require('../controllers/studentController')
 const { getProjects, getProject } = require('../controllers/projectController')
 const { getApplications, createApplication, deleteApplication } = require('../controllers/applicationController')
 
@@ -23,6 +23,9 @@ router.get('/projects/:id', getProject)
 // Applications
 router.get('/applications', getApplications)
 router.post('/createApplication', createApplication)
+
+
+router.get('/',getStudents)
 // router.delete('/applications/:id', deleteApplication)
 // router.patch('/:id', updateProject)
 

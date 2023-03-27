@@ -22,6 +22,13 @@ import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
+import FormalApplications from "./FormalApplications"
+import InformalApplications from "./InformalApplications"
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import Paper from "@mui/material/Paper"
+
+
 const mdTheme = createTheme()
 
 function ViewApplications() {
@@ -42,25 +49,25 @@ function ViewApplications() {
         navigate("/chatPage")
     }
 
-    const { dispatch } = useProjectsContext()
+    // const { dispatch } = useProjectsContext()
     const { user } = useAuthContext()
 
-    useEffect(() => {
-        const fetchProf = async () => {
-            const response = await fetch("/profs", {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
+    // useEffect(() => {
+    //     const fetchProf = async () => {
+    //         const response = await fetch("/profs", {
+    //             headers: { Authorization: `Bearer ${user.token}` },
+    //         })
+    //         const json = await response.json()
 
-            if (response.ok) {
-                dispatch({ type: "SET_PROF", payload: json })
-            }
-        }
+    //         if (response.ok) {
+    //             dispatch({ type: "SET_PROF", payload: json })
+    //         }
+    //     }
 
-        if (user) {
-            fetchProf()
-        }
-    }, [dispatch, user])
+    //     if (user) {
+    //         fetchProf()
+    //     }
+    // }, [dispatch, user])
 
     return (
         <ThemeProvider theme={mdTheme}>
@@ -137,9 +144,25 @@ function ViewApplications() {
                     }}
                 >
                     <Toolbar />
-                    <TableContainer>
-                        
-                    </TableContainer>
+                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                                    <FormalApplications />
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    </Container>
+
+                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                                    <InformalApplications />
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    </Container>
                 </Box>
             </Box>
         </ThemeProvider>
