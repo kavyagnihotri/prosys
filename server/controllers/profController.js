@@ -1,8 +1,8 @@
 const Prof = require("../models/profModel")
 const jwt = require("jsonwebtoken")
 
-const createToken = (_id) => {
-    return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" })
+const createToken = (id) => {
+    return jwt.sign({ _id: id, role: "1" }, process.env.SECRET, { expiresIn: "3d" })
 }
 
 const getProfs = async (req, res) => {
@@ -37,14 +37,13 @@ const appointHOD = async (req, res) => {
 
 const loginProf = async (req, res) => {
     const { email, password } = req.body
+    role = "1"
 
     try {
         const prof = await Prof.login(email, password)
-
-        // token
         const token = createToken(prof._id)
 
-        res.status(200).json({ email, token })
+        res.status(200).json({ email, role, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -52,14 +51,14 @@ const loginProf = async (req, res) => {
 
 const signupProf = async (req, res) => {
     const { email, password, name, dept, chamber, researchInterest, websites, hod } = req.body
-
+    role = "0"
     try {
         const prof = await Prof.signup(email, password, name, dept, chamber, researchInterest, websites, hod)
 
         // create a token
         const token = createToken(prof._id)
 
-        res.status(200).json({ email, token })
+        res.status(200).json({ email, role, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
