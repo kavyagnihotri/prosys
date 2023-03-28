@@ -24,8 +24,8 @@ export default function Album() {
             <main>
                 <Box
                     sx={{
-                        pt: 8,
-                        pb: 6,
+                        pt: 1,
+                        pb: 1,
                     }}
                 >
                     <Container maxWidth="sm">
@@ -59,8 +59,8 @@ export default function Album() {
                                     alt="Logo"
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        AUGSD Sign In
+                                    <Typography gutterBottom variant="h5" component="h2" align="center">
+                                        AUGSD
                                     </Typography>
                                     <Typography>You can use this section to go to AUGSD Login Page</Typography>
                                 </CardContent>
@@ -84,8 +84,8 @@ export default function Album() {
                                     alt="random"
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Professor Sign In
+                                    <Typography gutterBottom variant="h5" component="h2" align="center">
+                                        Professor
                                     </Typography>
                                     <Typography>You can use this section to go to Professor Login Page</Typography>
                                 </CardContent>
@@ -109,8 +109,8 @@ export default function Album() {
                                     alt="random"
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Student Sign In
+                                    <Typography gutterBottom variant="h5" component="h2" align="center">
+                                        Student
                                     </Typography>
                                     <Typography>You can use this section to go to Student Login Page</Typography>
                                 </CardContent>
