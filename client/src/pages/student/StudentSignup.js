@@ -14,9 +14,12 @@ import Container from "@mui/material/Container"
 import MenuItem from "@mui/material/MenuItem"
 import Toolbar from "@mui/material/Toolbar"
 import HomeIcon from "@mui/icons-material/Home"
+import Input from "@mui/material/Input"
+import InputLabel from "@mui/material/InputLabel"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 const theme = createTheme()
 
 const branches = [
@@ -45,14 +48,24 @@ const branches = [
         label: "Civil",
     },
 ]
+
 const StudentSignup = () => {
     const { signup, error, isLoading } = useStudentSignup()
-    const [age, setAge] = React.useState("")
+    const [file, setFile] = useState(null)
+    const [perFile, setPerFile] = useState(null)
     const navigate = useNavigate()
 
     const handleClick = (event) => {
         event.preventDefault()
         navigate("/")
+    }
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0])
+    }
+
+    const handlePerFileChange = (event) => {
+        setPerFile(event.target.files[0])
     }
 
     const handleSubmit = async (event) => {
@@ -65,11 +78,40 @@ const StudentSignup = () => {
         const studentID = data.get("studentID")
         const dept = data.get("dept")
         const cgpa = data.get("cgpa")
-        const cv_link = data.get("cv_link")
-        const per_link = data.get("per_link")
+        // const cv_link = data.get("cv_link")
+        // const per_link = data.get("per_link")
         const aoi = data.get("aoi")
+        var cv_link
+        var per_link
 
-        //
+        var formData = new FormData()
+        formData.append("file", file)
+        const response = await fetch("/file/upload", {
+            method: "POST",
+            body: formData,
+        })
+        const json = await response.json()
+        if (!response.ok) {
+            throw Error("Network response was not ok.")
+        }
+        if (response.ok) {
+            cv_link = json["url"]
+        }
+
+        const formData2 = new FormData()
+        formData2.append("file", perFile)
+        const response2 = await fetch("/file/upload", {
+            method: "POST",
+            body: formData2,
+        })
+        const json2 = await response2.json()
+        if (!response2.ok) {
+            throw Error("Network response was not ok.")
+        }
+        if (response2.ok) {
+            per_link = json2["url"]
+        }
+
         await signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi)
     }
     return (
@@ -162,13 +204,7 @@ const StudentSignup = () => {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        id="studentID"
-                                        label="Student ID"
-                                        name="studentID"
-                                        //   autoComplete="studentID"
-                                    />
+                                    <TextField fullWidth id="studentID" label="Student ID" name="studentID" />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
@@ -188,41 +224,32 @@ const StudentSignup = () => {
                                     </TextField>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField
+                                    <TextField fullWidth id="cgpa" label="CGPA" name="cgpa" />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <InputLabel htmlFor="cv_file">Upload CV</InputLabel>
+                                    <Input
                                         fullWidth
-                                        id="cgpa"
-                                        label="CGPA"
-                                        name="cgpa"
-                                        //   autoComplete="cgpa"
+                                        id="cv_file"
+                                        accept="pdf"
+                                        type="file"
+                                        name="file"
+                                        onChange={handleFileChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField
+                                    <InputLabel htmlFor="per_file">Upload Performance Sheet</InputLabel>
+                                    <Input
                                         fullWidth
-                                        id="cv_link"
-                                        label="CV (link)"
-                                        name="cv_link"
-                                        autoComplete="cv_link"
+                                        id="per_file"
+                                        accept="pdf"
+                                        type="file"
+                                        name="file"
+                                        onChange={handlePerFileChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        id="per_link"
-                                        label="Performance Sheet (link)"
-                                        name="per_link"
-                                        autoComplete="per_link"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        id="aoi"
-                                        label="Area of Interest"
-                                        name="aoi"
-                                        multiline
-                                        //   autoComplete="email"
-                                    />
+                                    <TextField fullWidth id="aoi" label="Area of Interest" name="aoi" multiline />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
@@ -231,7 +258,6 @@ const StudentSignup = () => {
                                         label="Password"
                                         name="password"
                                         type="password"
-                                        //   autoComplete="email"
                                     />
                                 </Grid>
                             </Grid>
