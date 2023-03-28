@@ -102,17 +102,16 @@ export default function InformalApplications() {
     if (user) {
       fetchApplications()
       fetchStudents()
-      // applications && applications.map((a) =>{
-      //   if(a.projectID==id)
-      //     title = a.projectTitle
-      // })
     }
 
   }, [dispatch,dispatch1, user])
 
   return (
     <React.Fragment>
-      <Title>Informal Applicants for Project</Title>
+      {applications && applications.map((app) => (
+        app.projectID===id &&
+      <Title>Formal Applicants for {app.projectTitle} Project</Title>
+      ))}
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -145,7 +144,7 @@ export default function InformalApplications() {
               </TableCell>
               <TableCell>{stud.aoi}</TableCell>
               <TableCell>
-                <TextField id="score" name="score" select defaultValue="" required label="Score">
+                <TextField id="score" name="score" select defaultValue="" required>
                   {branches.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                             {option.label}
