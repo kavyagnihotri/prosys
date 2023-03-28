@@ -14,6 +14,53 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MenuItem from "@mui/material/MenuItem"
+
+
+const branches = [
+  {
+      value: 1,
+      label: "1",
+  },
+  {
+      value: 2,
+      label: "2",
+  },
+  {
+      value: 3,
+      label: "3",
+  },
+  {
+      value: 4,
+      label: "4",
+  },
+  {
+      value: 5,
+      label: "5",
+  },
+  {
+      value: 6,
+      label: "6",
+  },
+  {
+    value: 7,
+    label: "7",
+  },
+  {
+    value: 8,
+    label: "8",
+  }, 
+  {
+  value: 9,
+  label: "9",
+  },
+  {
+  value: 10,
+  label: "10",
+  },
+]
+
+
 
 function preventDefault(event) {
   event.preventDefault();
@@ -98,7 +145,13 @@ export default function InformalApplications() {
               </TableCell>
               <TableCell>{stud.aoi}</TableCell>
               <TableCell>
-                <TextField id="standard-basic" label="Score" variant="standard" />
+                <TextField id="score" name="score" select defaultValue="" required label="Score">
+                  {branches.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                      </MenuItem>
+                  ))}
+                </TextField>
               </TableCell>
             </TableRow>
           ))))}
