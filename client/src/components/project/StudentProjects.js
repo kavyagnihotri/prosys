@@ -40,7 +40,7 @@ export default function Orders() {
             <Table size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Project ID</TableCell>
+                        {/* <TableCell>Project ID</TableCell> */}
                         <TableCell>Title</TableCell>
                         <TableCell>Type</TableCell>
                         <TableCell>Description</TableCell>
