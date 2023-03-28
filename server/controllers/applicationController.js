@@ -14,7 +14,6 @@ const getApplications = async (req, res) => {
 // Create an application
 const createApplication = async (req, res) => {
     const { projectID, studentEmail, type, sop } = req.body
-
     try {
         if (!projectID) {
             return res.status(400).json({ error: "Please fill the Project ID" })
@@ -29,17 +28,16 @@ const createApplication = async (req, res) => {
             return res.status(400).json({ error: "Not a valid Student Email" })
         }
 
-        const proj = await Project.findOne({ projectID: projectID })
+        const proj = await Project.findOne({ _id: projectID })
         if (!proj || proj["approved"] != 1) {
             return res.status(400).json({ error: "Not a valid Project ID" })
         }
 
         // studentEmail from the studentLogged in sent by frontend
         // projectID, profEmail from the project
-        const project = await Project.findOne({ projectID: projectID })
+        const project = await Project.findOne({ _id: projectID })
         const profEmail = project["professorEmail"]
         const projectTitle = project["title"]
-
         const applicaiton = await Application.create({ projectTitle, projectID, profEmail, studentEmail, type, sop })
         project.applicants.push(studentEmail)
         await project.save()

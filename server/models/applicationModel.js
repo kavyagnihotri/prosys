@@ -11,7 +11,7 @@ const applicationSchema = new Schema(
             type: String,
         },
         projectID: {
-            type: Number,
+            type: Object,
         },
         profEmail: {
             type: String,

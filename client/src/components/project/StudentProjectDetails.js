@@ -16,7 +16,7 @@ const Project = ({ project }) => {
 
     return (
         <TableRow key={project._id}>
-            <TableCell>{project.projectID}</TableCell>
+            {/* <TableCell>{project.projectID}</TableCell> */}
             <TableCell>{project.title}</TableCell>
             <TableCell>{project.projectType}</TableCell>
             <TableCell>{project.description}</TableCell>
