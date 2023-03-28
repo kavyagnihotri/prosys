@@ -12,8 +12,8 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import Logo from "../img/bitsimage.webp"
-import Prof from "../img/professorimage.jpeg"
-import Student from "../img/studentimage.jpg"
+import Prof from "../img/proflogo.png"
+import Student from "../img/studentlogo.jpg"
 
 const theme = createTheme()
 
