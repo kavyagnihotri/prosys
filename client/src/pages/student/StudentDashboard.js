@@ -13,38 +13,37 @@ import Paper from "@mui/material/Paper"
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import Button from "@mui/material/Button"
-import LogoutIcon from "@mui/icons-material/Logout"
 import Projects from "../../components/project/StudentProjects"
 import Applications from "../../components/application/Applications"
 import axios from "axios"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
-import { mainListItems, secondaryListItems } from "../../components/dashboard/ListItems"
+import ListItems from "../../components/dashboard/ListItems"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 
 const mdTheme = createTheme()
 
 function DashboardContent() {
     const [open, setOpen] = React.useState(true)
     const { user } = useAuthContext()
-    const { logout } = useLogout()
     const navigate = useNavigate()
+    const [selectedContent, setSelectedContent] = useState("dashboard")
+
+    const handleListItemClick = (content) => {
+        setSelectedContent(content)
+    }
 
     const toggleDrawer = () => {
         setOpen(!open)
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        logout()
     }
 
     const handleClick = (event) => {
         event.preventDefault()
         navigate("/student/dashboard")
     }
+
     const goChat = async (e) => {
         axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
         e.preventDefault()
@@ -87,11 +86,6 @@ function DashboardContent() {
                                 Chat Room
                             </Button>
                         </Box>
-                        <Box component="form" noValidate onSubmit={handleSubmit}>
-                            <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
-                                LogOut
-                            </Button>
-                        </Box>
                     </Toolbar>
                 </AppBar>
 
@@ -108,13 +102,9 @@ function DashboardContent() {
                             <ChevronLeftIcon />
                         </IconButton>
                     </Toolbar>
-
                     <Divider />
-
                     <List>
-                        {mainListItems}
-                        <Divider sx={{ my: 1 }} />
-                        {secondaryListItems}
+                        <ListItems onListItemClick={handleListItemClick} />
                     </List>
                 </Drawer>
                 <Box
@@ -132,16 +122,8 @@ function DashboardContent() {
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                    <Projects />
-                                </Paper>
-                            </Grid>
-                        </Grid>
-                    </Container>
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                    <Applications />
+                                    {selectedContent === "dashboard" && <Projects />}
+                                    {selectedContent === "applications" && <Applications />}
                                 </Paper>
                             </Grid>
                         </Grid>
