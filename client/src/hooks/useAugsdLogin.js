@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { useAuthContext } from './useAuthContext'
-import * as React from 'react';
+import { useAuthContext } from "./useAuthContext"
 
 export const useAugsdLogin = () => {
     const [error, setError] = useState(null)
@@ -10,25 +9,22 @@ export const useAugsdLogin = () => {
     const login = async (email, password) => {
         setIsLoading(true)
         setError(null)
-        
-        const response = await fetch('/augsd/login', {
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password})
+
+        const response = await fetch("/augsd/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
         })
         const json = await response.json()
 
-        if(!response.ok) {
+        if (!response.ok) {
             setIsLoading(false)
             setError(json.error)
         }
 
-        if(response.ok) {
-            
-            localStorage.setItem('user', JSON.stringify(response))
-
-            // update the auth context
-            dispatch({type: 'LOGIN', payload: json})
+        if (response.ok) {
+            localStorage.setItem("user", JSON.stringify(json))
+            dispatch({ type: "LOGIN", payload: json })
 
             setIsLoading(false)
         }
