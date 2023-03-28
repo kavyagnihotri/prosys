@@ -13,6 +13,8 @@ import { useStudentsContext } from '../../hooks/useStudentsContext';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button'
 
 function preventDefault(event) {
   event.preventDefault();
@@ -75,6 +77,7 @@ export default function FormalApplications() {
             <TableCell>CV Link</TableCell>
             <TableCell>Performace Sheet Link</TableCell>
             <TableCell>Areas of Interest</TableCell>
+            <TableCell>Score</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -95,10 +98,16 @@ export default function FormalApplications() {
               <ListItemButton href={stud.per_link}><ListItemText primary="Performace Sheet" /></ListItemButton>
               </TableCell>
               <TableCell>{stud.aoi}</TableCell>
+              <TableCell>
+                <TextField id="standard-basic" label="Score" variant="standard" />
+              </TableCell>
             </TableRow>
           ))))}
         </TableBody>
       </Table>
+      <Button color="inherit" size="large" type="submit" variant='outlined' align='right'>
+              Approve Score
+            </Button>
     </React.Fragment>
   );
 }

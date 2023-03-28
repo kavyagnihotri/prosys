@@ -12,6 +12,8 @@ import { useParams } from 'react-router-dom';
 import { useStudentsContext } from '../../hooks/useStudentsContext';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -74,6 +76,7 @@ export default function InformalApplications() {
             <TableCell>CV Link</TableCell>
             <TableCell>Performace Sheet Link</TableCell>
             <TableCell>Areas of Interest</TableCell>
+            <TableCell>Score</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -94,10 +97,16 @@ export default function InformalApplications() {
               <ListItemButton href={stud.per_link}><ListItemText primary="Performace Sheet" /></ListItemButton>
               </TableCell>
               <TableCell>{stud.aoi}</TableCell>
+              <TableCell>
+                <TextField id="standard-basic" label="Score" variant="standard" />
+              </TableCell>
             </TableRow>
           ))))}
         </TableBody>
       </Table>
+      <Button color="inherit" size="large" type="submit" variant='outlined'>
+              Approve Score
+      </Button>
     </React.Fragment>
   );
 }
