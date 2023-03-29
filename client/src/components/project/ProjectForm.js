@@ -49,7 +49,7 @@ const ProjectForm = () => {
       numberOfStudents,
       approved,
     };
-    
+   
     const response = await fetch("/projects", {
       method: "POST",
       body: JSON.stringify({
