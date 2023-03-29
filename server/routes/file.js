@@ -1,7 +1,10 @@
 const express = require("express")
 const filestack = require("filestack-js")
 const multer = require("multer")
-const upload = multer({ dest: "uploads/" })
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 1000000 }, // Limit file size to 1MB
+})
 const router = require("express").Router()
 
 const client = filestack.init(process.env.FILESTACK_API_KEY)
