@@ -1,7 +1,7 @@
 const express = require('express')
 
 // controller fucntion
-const { signupStudent, loginStudent , getStudents} = require('../controllers/studentController')
+const { signupStudent, loginStudent , getStudents, updateProfile} = require('../controllers/studentController')
 const { getProjects, getProject } = require('../controllers/projectController')
 const { getApplications, createApplication, deleteApplication } = require('../controllers/applicationController')
 
@@ -27,6 +27,6 @@ router.post('/createApplication', createApplication)
 
 router.get('/',getStudents)
 // router.delete('/applications/:id', deleteApplication)
-// router.patch('/:id', updateProject)
+router.put('/:id', updateProfile)
 
 module.exports = router
