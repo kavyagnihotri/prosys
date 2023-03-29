@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "axios": "^1.3.4",
+    "dotenv": "^16.0.3",
+    "react-chat-engine": "^1.11.28",
+    "react-chat-engine-pretty": "^0.1.8"
   }
 }
