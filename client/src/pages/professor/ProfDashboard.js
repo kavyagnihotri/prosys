@@ -33,6 +33,12 @@ function DashboardContent() {
     const { logout } = useLogout()
     const [open, setOpen] = React.useState(true)
     const [selectedContent, setSelectedContent] = useState("dashboard")
+    const [projectID, setProjectID] = useState(null)
+
+    const handleViewApplicationClick = (content) => {
+        setSelectedContent("application")
+        setProjectID(content)
+    }
 
     const handleListItemClick = (content) => {
         setSelectedContent(content)
@@ -144,8 +150,10 @@ function DashboardContent() {
                 >
                     <Toolbar />
                     <TableContainer>
-                        {selectedContent === "dashboard" && <Projects />}
-                        {selectedContent === "applications" && <ViewApplications />}
+                        {selectedContent === "dashboard" && (
+                            <Projects onViewApplicationClick={handleViewApplicationClick} />
+                        )}
+                        {selectedContent === "application" && <ViewApplications projectID={projectID} />}
                     </TableContainer>
                 </Box>
             </Box>

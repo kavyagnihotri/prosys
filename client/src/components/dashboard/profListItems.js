@@ -23,12 +23,12 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
             </ListItemButton>
-            <ListItemButton button onClick={() => handleListItemClick("applications")}>
+            {/* <ListItemButton button onClick={() => handleListItemClick("allApplications")}>
                 <ListItemIcon>
                     <LayersIcon />
                 </ListItemIcon>
-                <ListItemText primary="View Applications" />
-            </ListItemButton>
+                <ListItemText primary="View All Applications" />
+            </ListItemButton> */}
             <Divider sx={{ my: 1 }} />
             <ListSubheader component="div" inset>
                 Personal
