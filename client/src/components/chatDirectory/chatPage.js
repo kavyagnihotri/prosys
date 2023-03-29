@@ -28,21 +28,27 @@ const mdTheme = createTheme()
 
 const ChatsPage = (props) => {
     const { user } = useAuthContext()
-    console.log(user.email)
+    var title = ""
+    if (user.role === "1") {
+        title = "Professor Chat Portal"
+    }
+    if (user.role === "2") {
+        title = "Student Chat Portal"
+    }
     const { logout } = useLogout()
     const navigate = useNavigate()
     const [open, setOpen] = React.useState(true)
     const toggleDrawer = () => {
-        setOpen(!open)
+        if (user.role === "1") {
+            navigate("/prof/dashboard")
+        }
+        if (user.role === "2") {
+            navigate("/student/dashboard")
+        }
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
         logout()
-    }
-    const goChat = async (e) => {
-        axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
-        e.preventDefault()
-        navigate("/chatPage")
     }
     return (
         <ThemeProvider theme={mdTheme}>
@@ -51,10 +57,10 @@ const ChatsPage = (props) => {
                 <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={false}>
                     <Toolbar sx={{}}>
                         <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={toggleDrawer}>
-                            <MenuIcon />
+                            <ChevronLeftIcon />
                         </IconButton>
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                            ProSys - Chat Portal
+                            {title}
                         </Typography>
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                             {user.name}
