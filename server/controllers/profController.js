@@ -65,4 +65,21 @@ const signupProf = async (req, res) => {
     }
 }
 
-module.exports = { signupProf, loginProf, getProfs, dissmissProf, appointHOD }
+const updateProfile = async(req, res) => {
+    const id = req.body.id
+
+    try {
+        profToUpdate = await Prof.findById(id)
+        profToUpdate.chamber = req.body.chamber
+        profToUpdate.researchInterest = req.body.researchInterest
+        profToUpdate.websites = req.body.websites
+        profToUpdate.save()
+        const user = await Prof.findByIdAndUpdate(req.user._id,profToUpdate)
+        res.status(200).json(user)
+        res.send("Updated")
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+module.exports = { signupProf, loginProf, getProfs, dissmissProf, appointHOD, updateProfile }
