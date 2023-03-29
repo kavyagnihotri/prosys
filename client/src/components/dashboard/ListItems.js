@@ -43,7 +43,7 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="My Applications" />
             </ListItemButton>
-            <ListItemButton component={Link} to="/student/profile">
+            <ListItemButton component={Link} to="/student/profile/update">
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>

@@ -44,4 +44,20 @@ const getStudents = async (req, res) => {
     res.status(200).json(students)
 }
 
-module.exports = { signupStudent, loginStudent, getStudents }
+const updateProfile = async(req, res) => {
+    const id = req.body.id
+
+    try {
+        studentToUpdate = await Student.findById(id)
+        studentToUpdate.cgpa = req.body.cgpa
+        studentToUpdate.cv_link = req.body.cv_link
+        studentToUpdate.per_link = req.body.per_link
+        studentToUpdate.aoi = req.body.aoi
+        studentToUpdate.save()
+        res.send("Updated")
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+module.exports = { signupStudent, loginStudent, getStudents, updateProfile }
