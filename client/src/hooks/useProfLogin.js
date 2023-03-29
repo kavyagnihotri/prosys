@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { useAuthContext } from "./useAuthContext";
-
-// email, password, name, dept, chamber, researchInterest, websites, hod
+import { useState } from "react"
+import { useAuthContext } from "./useAuthContext"
 
 export const useProfLogin = () => {
     const [error, setError] = useState(null)
@@ -12,28 +10,23 @@ export const useProfLogin = () => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch('/prof/login', {
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password})
+        const response = await fetch("/prof/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
         })
-
         const json = await response.json()
 
-        if(!response.ok) {
+        if (!response.ok) {
             setIsLoading(false)
             setError(json.error)
         }
 
-        if(response.ok) {
-            // save user to local storage, from auth context we get the email and the token
-            localStorage.setItem('user', JSON.stringify(json))
-
-            // update the authContext
-            dispatch({type: 'LOGIN', payload: json})
+        if (response.ok) {
+            localStorage.setItem("user", JSON.stringify(json))
+            dispatch({ type: "LOGIN", payload: json })
 
             setIsLoading(false)
-
         }
     }
     return { login, error, isLoading }

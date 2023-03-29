@@ -21,22 +21,12 @@ import StudentUpdate from "./components/project/StudentUpdateProfile"
 function App() {
     const { user } = useAuthContext()
 
-    var studentregex = new RegExp("[fhp][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*")
-    var profregex = new RegExp("[a-zA-Z]*@.*com")
-    var role = 0
-
     // localstorage fetch
     // const data = window.localStorage
     //
 
     if (user != null) {
-        if (user.email === "augsd@gmail.com") {
-            role = 1
-        } else if (studentregex.test(user.email)) {
-            role = 2
-        } else if (profregex.test(user.email)) {
-            role = 3
-        }
+        console.log("ROLE " + user.role)
     }
 
     return (
@@ -48,18 +38,12 @@ function App() {
 
                         <Route
                             path="/augsd/login"
-                            element={!user ? <AugsdLogin /> : <Navigate to="/augsd/dashboard" />}
+                            element={!user || user.role !== "0" ? <AugsdLogin /> : <Navigate to="/augsd/dashboard" />}
                         />
 
                         <Route
                             path="/augsd/dashboard"
-                            element={
-                                user && user.email === "augsd@gmail.com" ? (
-                                    <AugsdDashboard />
-                                ) : (
-                                    <Navigate to="/augsd/login" />
-                                )
-                            }
+                            element={user && user.role === "0" ? <AugsdDashboard /> : <Navigate to="/augsd/login" />}
                         />
 
                         <Route
@@ -71,12 +55,16 @@ function App() {
 
                         <Route
                             path="/student/login"
-                            element={!user ? <StudentLogin /> : <Navigate to="/student/dashboard" />}
+                            element={
+                                !user || user.role !== "2" ? <StudentLogin /> : <Navigate to="/student/dashboard" />
+                            }
                         />
 
                         <Route
                             path="/student/dashboard"
-                            element={user ? <StudentDashboard /> : <Navigate to="/student/login" />}
+                            element={
+                                user && user.role === "2" ? <StudentDashboard /> : <Navigate to="/student/login" />
+                            }
                         />
 
                         <Route
@@ -91,7 +79,10 @@ function App() {
 
                         <Route path="/student/createApplication/:id" element={<ApplicationForm />} />
 
-                        <Route path="prof/login" element={!user ? <ProfLogin /> : <Navigate to="/prof/dashboard" />} />
+                        <Route
+                            path="prof/login"
+                            element={!user || user.role !== "1" ? <ProfLogin /> : <Navigate to="/prof/dashboard" />}
+                        />
 
                         <Route
                             path="prof/signup"
@@ -100,7 +91,7 @@ function App() {
 
                         <Route
                             path="/prof/dashboard"
-                            element={user ? <ProfDashboard /> : <Navigate to="/prof/login" />}
+                            element={user && user.role === "1" ? <ProfDashboard /> : <Navigate to="/prof/login" />}
                         />
                         <Route path="/prof/project/add" element={<ProjectForm />} />
                         <Route
