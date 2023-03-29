@@ -45,6 +45,7 @@ function DashboardContent() {
 
     const { dispatch } = useProjectsContext()
     const { user } = useAuthContext()
+    console.log(user)
 
     useEffect(() => {
         const fetchProf = async () => {
