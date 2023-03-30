@@ -36,6 +36,7 @@ function DashboardContent() {
         e.preventDefault()
         logout()
     }
+
     const goChat = async (e) => {
         axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
         e.preventDefault()

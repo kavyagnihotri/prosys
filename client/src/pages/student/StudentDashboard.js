@@ -1,5 +1,5 @@
 import * as React from "react"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
+import axios from "axios"
 import CssBaseline from "@mui/material/CssBaseline"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
@@ -15,21 +15,29 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import Button from "@mui/material/Button"
 import Projects from "../../components/project/StudentProjects"
 import Applications from "../../components/application/Applications"
-import axios from "axios"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import ListItems from "../../components/dashboard/ListItems"
+import LogoutIcon from "@mui/icons-material/Logout"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
+import { useLogout } from "../../hooks/useLogout"
 import { useState } from "react"
 
 const mdTheme = createTheme()
 
 function DashboardContent() {
-    const [open, setOpen] = React.useState(true)
-    const { user } = useAuthContext()
     const navigate = useNavigate()
+    const { user } = useAuthContext()
+    const { logout } = useLogout()
+    const [open, setOpen] = React.useState(true)
     const [selectedContent, setSelectedContent] = useState("dashboard")
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        logout()
+    }
 
     const handleListItemClick = (content) => {
         setSelectedContent(content)
@@ -84,6 +92,11 @@ function DashboardContent() {
                         <Box component="form" noValidate onSubmit={goChat}>
                             <Button color="inherit" size="large" startIcon={<MarkChatReadIcon />} type="submit">
                                 Chat Room
+                            </Button>
+                        </Box>
+                        <Box component="form" noValidate onSubmit={handleSubmit}>
+                            <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
+                                LogOut
                             </Button>
                         </Box>
                     </Toolbar>

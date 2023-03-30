@@ -49,12 +49,6 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="My Profile" />
             </ListItemButton>
-            <ListItemButton onClick={handleLogout}>
-                <ListItemIcon>
-                    <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText primary="Log out" />
-            </ListItemButton>
         </React.Fragment>
     )
 }
