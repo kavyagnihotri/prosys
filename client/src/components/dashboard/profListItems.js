@@ -9,10 +9,22 @@ import LayersIcon from "@mui/icons-material/Layers"
 import Divider from "@mui/material/Divider"
 import AssignmentIcon from "@mui/icons-material/Assignment"
 import Link from "@mui/material/Link"
+import { useAuthContext } from "../../hooks/useAuthContext"
+import { useLogout } from "../../hooks/useLogout"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 
 export default function ListItems({ onListItemClick }) {
+    const navigate = useNavigate()
+    const { user } = useAuthContext()
+    const { logout } = useLogout()
     const handleListItemClick = (content) => {
         onListItemClick(content)
+    }
+    const goChat = async (e) => {
+        axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
+        navigate("/chatPage")
     }
 
     return (
@@ -38,6 +50,12 @@ export default function ListItems({ onListItemClick }) {
                     <AssignmentIcon />
                 </ListItemIcon>
                 <ListItemText primary="Add Projects" />
+            </ListItemButton>
+            <ListItemButton button onClick={() => goChat()}>
+                <ListItemIcon>
+                    <MarkChatReadIcon />
+                </ListItemIcon>
+                <ListItemText primary="Chat Portal" />
             </ListItemButton>
             <ListItemButton component={Link} to="/prof/profile">
                 <ListItemIcon>
