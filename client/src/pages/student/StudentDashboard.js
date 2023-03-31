@@ -52,12 +52,6 @@ function DashboardContent() {
         navigate("/student/dashboard")
     }
 
-    const goChat = async (e) => {
-        axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
-        e.preventDefault()
-        navigate("/chatPage")
-    }
-
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: "flex" }}>
@@ -89,11 +83,6 @@ function DashboardContent() {
                         >
                             {user.email}
                         </Typography>
-                        <Box component="form" noValidate onSubmit={goChat}>
-                            <Button color="inherit" size="large" startIcon={<MarkChatReadIcon />} type="submit">
-                                Chat Room
-                            </Button>
-                        </Box>
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
                                 LogOut
