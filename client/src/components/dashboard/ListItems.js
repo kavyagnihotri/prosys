@@ -47,7 +47,7 @@ export default function ListItems({ onListItemClick }) {
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="My Profile" />
+                <ListItemText primary="Update Profile" />
             </ListItemButton>
             <ListItemButton onClick={handleLogout}>
                 <ListItemIcon>
