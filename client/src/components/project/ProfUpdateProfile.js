@@ -1,4 +1,3 @@
-import { useProfSignup } from "../../hooks/useProfSignup"
 import * as React from "react"
 import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
@@ -14,11 +13,12 @@ import MenuItem from "@mui/material/MenuItem"
 import Toolbar from "@mui/material/Toolbar"
 import Paper from "@mui/material/Paper"
 import HomeIcon from "@mui/icons-material/Home"
-import { AppBar } from "../../components/dashboard/Objects"
-import { useParams, useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { useAuthContext } from "../../hooks/useAuthContext"
+import { useParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
+
+import { AppBar } from "../../components/dashboard/Objects"
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 const theme = createTheme()
 
@@ -26,10 +26,16 @@ const ProfUpdate = () => {
     const navigate = useNavigate()
     const { user } = useAuthContext()
     const params = useParams()
+    // const usr_email = user.email
     const [form, setForm] = useState({
-      chamber: "",
-      researchInterest: "",
-      websites: "",
+        // email: usr_email,
+        // name: "",
+        // password: "",
+        // dept: "",
+        chamber: "",
+        researchInterest: "",
+        websites: "",
+        // hod: false,
     });
 
     const handleClick = (event) => {
@@ -40,7 +46,7 @@ const ProfUpdate = () => {
     useEffect(() => {
       async function fetchData() {
         const id = params.id.toString();
-        const response = await fetch(`/profs/${params.id.toString()}`);
+        const response = await fetch(`/profs/${id}`);
 
         if (!response.ok) {
           const message = `An error has occurred: ${response.statusText}`;
@@ -66,21 +72,27 @@ const ProfUpdate = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+        const id = user._id
         const editedProf = {
+        //   email: form.email,
+        //   name: form.name,
+        //   password: form.password,
+        //   dept: form.dept,
           chamber: form.chamber,
           researchInterest: form.researchInterest,
           websites: form.websites,
+        //   hod: form.hod,
         };
    
-        await fetch(`/profs`, {
-          method: "POST",
+        await fetch(`/profs/${id}`, {
+          method: "PUT",
           body: JSON.stringify(editedProf),
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${user.token}`,
           },
         });
-      
+
         navigate("/prof/dashboard")
         alert("Profile Updated!")
     }
@@ -139,6 +151,18 @@ const ProfUpdate = () => {
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                             <Grid container spacing={2}>
+                                {/* <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth
+                                        id="email"
+                                        // label="Email"
+                                        name="email"
+                                        value={form.email}
+                                        onChange={(e) => updateForm({ email: e.target.value })}
+                                        required
+                                        disabled
+                                    />
+                                </Grid> */}
                                 <Grid item xs={12}>
                                     <TextField
                                         fullWidth
