@@ -14,6 +14,51 @@ import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
+import MenuItem from "@mui/material/MenuItem"
+import { useNavigate } from "react-router-dom"
+
+const branches = [
+    {
+        value: 1,
+        label: "1",
+    },
+    {
+        value: 2,
+        label: "2",
+    },
+    {
+        value: 3,
+        label: "3",
+    },
+    {
+        value: 4,
+        label: "4",
+    },
+    {
+        value: 5,
+        label: "5",
+    },
+    {
+        value: 6,
+        label: "6",
+    },
+    {
+        value: 7,
+        label: "7",
+    },
+    {
+        value: 8,
+        label: "8",
+    },
+    {
+        value: 9,
+        label: "9",
+    },
+    {
+        value: 10,
+        label: "10",
+    },
+]
 
 export default function InformalApplications({ projectID }) {
     var { applications, dispatch } = useApplicationsContext()
@@ -56,6 +101,18 @@ export default function InformalApplications({ projectID }) {
             // })
         }
     }, [dispatch, dispatch1, user])
+
+    const addScore = async (newScore, appId) => {
+        const response = await fetch("/student/score", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+            body: JSON.stringify({ appId: appId, newScore: newScore }),
+        })
+        const json = await response.json()
+        if (response.ok) {
+            dispatch({ type: "SET_APPLICATIONS", payload: json })
+        }
+    }
 
     return (
         <React.Fragment>
@@ -100,9 +157,42 @@ export default function InformalApplications({ projectID }) {
                                                     </ListItemButton>
                                                 </TableCell>
                                                 <TableCell>{stud.aoi}</TableCell>
-                                                <TableCell>
-                                                    <TextField id="standard-basic" label="Score" variant="standard" />
-                                                </TableCell>
+                                                {app.score === -1 && (
+                                                    <TableCell>
+                                                        <TextField
+                                                            id="score"
+                                                            name="score"
+                                                            select
+                                                            defaultValue=""
+                                                            required
+                                                            onChange={(event) => addScore(event.target.value, app._id)}
+                                                        >
+                                                            {branches.map((option) => (
+                                                                <MenuItem key={option.value} value={option.value}>
+                                                                    {option.label}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </TextField>
+                                                    </TableCell>
+                                                )}
+                                                {app.score != -1 && (
+                                                    <TableCell>
+                                                        <TextField
+                                                            id="score"
+                                                            name="score"
+                                                            select
+                                                            defaultValue={app.score}
+                                                            required
+                                                            onChange={(event) => addScore(event.target.value, app._id)}
+                                                        >
+                                                            {branches.map((option) => (
+                                                                <MenuItem key={option.value} value={option.value}>
+                                                                    {option.label}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </TextField>
+                                                    </TableCell>
+                                                )}
                                             </TableRow>
                                         )
                                 )

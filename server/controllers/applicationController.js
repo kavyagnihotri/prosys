@@ -48,6 +48,21 @@ const createApplication = async (req, res) => {
     }
 }
 
+const addScore = async (req, res) => {
+    const { appId, newScore } = req.body
+    console.log(req.body)
+    console.log(appId, newScore)
+    try {
+        appToUpdate = await Application.findById(appId)
+        // console.log(appToUpdate)
+        appToUpdate.score = newScore
+        appToUpdate.save()
+        res.send("updated")
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 // delete an applciation
 const deleteApplication = async (req, res) => {
     // const { id } = req.params
@@ -65,4 +80,5 @@ module.exports = {
     getApplications,
     createApplication,
     deleteApplication,
+    addScore,
 }
