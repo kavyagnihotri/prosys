@@ -10,6 +10,7 @@ const projectRoutes = require("./routes/projects")
 const studentRoutes = require("./routes/student")
 const augsdRoutes = require("./routes/augsd")
 const profRoutes = require("./routes/prof")
+const fileRoutes = require("./routes/file")
 
 // middleware
 // app.use(bodyParser())
@@ -27,6 +28,7 @@ app.use("/projects", projectRoutes)
 app.use("/student", studentRoutes)
 app.use("/augsd", augsdRoutes)
 app.use("/prof", profRoutes)
+app.use("/file", fileRoutes)
 
 // db connect and listen for reqs
 mongoose.set("strictQuery", false)
