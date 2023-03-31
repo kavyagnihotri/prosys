@@ -53,12 +53,6 @@ function DashboardContent() {
         logout()
     }
 
-    const goChat = async (e) => {
-        axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
-        e.preventDefault()
-        navigate("/chatPage")
-    }
-
     useEffect(() => {
         const fetchProf = async () => {
             const response = await fetch("/profs", {
@@ -104,12 +98,6 @@ function DashboardContent() {
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                             {user.name}
                         </Typography>
-
-                        <Box component="form" noValidate onSubmit={goChat}>
-                            <Button color="inherit" size="large" startIcon={<MarkChatReadIcon />} type="submit">
-                                Chat Room
-                            </Button>
-                        </Box>
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
                                 LogOut
