@@ -54,6 +54,8 @@ const updateProfile = async(req, res) => {
         studentToUpdate.per_link = req.body.per_link
         studentToUpdate.aoi = req.body.aoi
         studentToUpdate.save()
+        const user = await Prof.findByIdAndUpdate(req.user._id,studentToUpdate)
+        res.status(200).json(user)
         res.send("Updated")
     } catch (error) {
         res.status(400).json({ error: error.message })
