@@ -13,8 +13,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import LogoutIcon from "@mui/icons-material/Logout"
 import Button from "@mui/material/Button"
 import { TableContainer } from "@mui/material"
-import { mainListItems, secondaryListItems } from "../../components/dashboard/profListItems"
+import ListItems from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
+import ViewApplications from "../../components/application/ViewApplications"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -22,15 +23,30 @@ import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
+
 const mdTheme = createTheme()
 
 function DashboardContent() {
+    const navigate = useNavigate()
+    const { dispatch } = useProjectsContext()
+    const { user } = useAuthContext()
+    const { logout } = useLogout()
     const [open, setOpen] = React.useState(true)
+    const [selectedContent, setSelectedContent] = useState("dashboard")
+    const [projectID, setProjectID] = useState(null)
+
+    const handleViewApplicationClick = (content) => {
+        setSelectedContent("application")
+        setProjectID(content)
+    }
+
+    const handleListItemClick = (content) => {
+        setSelectedContent(content)
+    }
+
     const toggleDrawer = () => {
         setOpen(!open)
     }
-    const { logout } = useLogout()
-    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -42,10 +58,6 @@ function DashboardContent() {
         e.preventDefault()
         navigate("/chatPage")
     }
-
-    const { dispatch } = useProjectsContext()
-    const { user } = useAuthContext()
-    console.log(user)
 
     useEffect(() => {
         const fetchProf = async () => {
@@ -123,9 +135,7 @@ function DashboardContent() {
                     <Divider />
 
                     <List>
-                        {mainListItems}
-                        <Divider sx={{ my: 1 }} />
-                        {secondaryListItems}
+                        <ListItems onListItemClick={handleListItemClick} />
                     </List>
                 </Drawer>
                 <Box
@@ -140,7 +150,10 @@ function DashboardContent() {
                 >
                     <Toolbar />
                     <TableContainer>
-                        <Projects />
+                        {selectedContent === "dashboard" && (
+                            <Projects onViewApplicationClick={handleViewApplicationClick} />
+                        )}
+                        {selectedContent === "application" && <ViewApplications projectID={projectID} />}
                     </TableContainer>
                 </Box>
             </Box>
