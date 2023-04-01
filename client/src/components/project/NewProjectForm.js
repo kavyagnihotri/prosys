@@ -99,7 +99,7 @@ const ProjectForm = () => {
 
         const response = await fetch("/projects", {
             method: "POST",
-            body: JSON.stringify({ project }),
+            body: JSON.stringify(project),
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${user.token}`,
