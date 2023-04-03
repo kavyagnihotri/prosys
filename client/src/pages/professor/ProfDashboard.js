@@ -1,3 +1,5 @@
+import { serverURL } from "../../utils/constants"
+
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -16,12 +18,10 @@ import { TableContainer } from "@mui/material"
 import ListItems from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
 import ViewApplications from "../../components/application/ViewApplications"
-import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 
 const mdTheme = createTheme()
@@ -55,7 +55,7 @@ function DashboardContent() {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch("/profs", {
+            const response = await fetch(serverURL + "/profs", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()

@@ -1,3 +1,5 @@
+import { serverURL } from "../utils/constants"
+
 import * as React from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
@@ -28,7 +30,7 @@ export default function RemainingProfs() {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response = await fetch("/prof/", {
+            const response = await fetch(serverURL + "/prof/", {
                 method: "POST",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -81,13 +83,13 @@ export default function RemainingProfs() {
             }
         })
         if (change == 0) {
-            await fetch("/prof/appoint", {
+            await fetch(serverURL + "/prof/appoint", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: project._id }),
             })
             const fetchProjects = async () => {
-                const response = await fetch("/prof/", {
+                const response = await fetch(serverURL + "/prof/", {
                     method: "POST",
                     headers: { Authorization: `Bearer ${user.token}` },
                 })
@@ -103,18 +105,18 @@ export default function RemainingProfs() {
                 fetchProjects()
             }
         } else if (change == 1) {
-            await fetch("/prof/appoint", {
+            await fetch(serverURL + "/prof/appoint", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: project._id }),
             })
-            await fetch("/prof/dismiss", {
+            await fetch(serverURL + "/prof/dismiss", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: prof1._id }),
             })
             const fetchProjects = async () => {
-                const response = await fetch("/prof/", {
+                const response = await fetch(serverURL + "/prof/", {
                     method: "POST",
                     headers: { Authorization: `Bearer ${user.token}` },
                 })
@@ -130,15 +132,6 @@ export default function RemainingProfs() {
                 fetchProjects()
             }
         }
-        // else if(change == -1){
-        //   console.log("trying open")
-        //   handleClickOpen()
-        // }
-        // else{
-        //   if (user) {
-        //     fetchProjects()
-        //   }
-        // }
     }
 
     return (

@@ -11,6 +11,7 @@ import Projects from "./StudentProjectDetails"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
+import { serverURL } from "../../utils/constants"
 
 export default function Orders() {
     const { projects, dispatch } = useProjectsContext()
@@ -19,7 +20,7 @@ export default function Orders() {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response = await fetch("/student/projects", {
+            const response = await fetch(serverURL + "/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()

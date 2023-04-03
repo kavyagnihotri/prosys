@@ -5,16 +5,15 @@ import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Title from "../Title"
-import { useState, useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { useParams } from "react-router-dom"
 import { useStudentsContext } from "../../hooks/useStudentsContext"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
-import Link from "@mui/material/Link"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
+import { serverURL } from "../../utils/constants"
 
 export default function FormalApplications({ projectID }) {
     var { applications, dispatch } = useApplicationsContext()
@@ -25,7 +24,7 @@ export default function FormalApplications({ projectID }) {
 
     useEffect(() => {
         const fetchApplications = async () => {
-            const response = await fetch("/student/applications/", {
+            const response = await fetch(serverURL + "/student/applications/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -38,7 +37,7 @@ export default function FormalApplications({ projectID }) {
         }
 
         const fetchStudents = async () => {
-            const response = await fetch("/student/", {
+            const response = await fetch(serverURL + "/student/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })

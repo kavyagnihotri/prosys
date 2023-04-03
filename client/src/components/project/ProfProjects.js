@@ -1,21 +1,19 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
-import Link from "@mui/material/Link"
+import { useEffect } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
-import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Title from "../Title"
 import Paper from "@mui/material/Paper"
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
-import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
 
+import Projects from "./ProfProjectDetails"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import Projects from "./ProfProjectDetails"
+import { serverURL } from "../../utils/constants"
 
 const tables = [-1, 0, 1]
 const status = ["Rejected", "Pending", "Approved"]
@@ -34,7 +32,7 @@ export default function Orders({ onViewApplicationClick }) {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response = await fetch("/projects", {
+            const response = await fetch(serverURL + "/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
