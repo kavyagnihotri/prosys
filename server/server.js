@@ -10,6 +10,7 @@ const projectRoutes = require("./routes/projects")
 const studentRoutes = require("./routes/student")
 const augsdRoutes = require("./routes/augsd")
 const profRoutes = require("./routes/prof")
+const fileRoutes = require("./routes/file")
 
 // middleware
 // app.use(bodyParser())
@@ -27,6 +28,7 @@ app.use("/projects", projectRoutes)
 app.use("/student", studentRoutes)
 app.use("/augsd", augsdRoutes)
 app.use("/prof", profRoutes)
+app.use("/file", fileRoutes)
 
 // db connect and listen for reqs
 mongoose.set("strictQuery", false)
@@ -51,7 +53,7 @@ app.post("/authenticate", async (req, res) => {
         const r = await axios.put(
             "https://api.chatengine.io/users/",
             { username: username, secret: username, first_name: username },
-            { headers: { "Private-Key": "bd81780d-7af4-4add-be57-7bcdd870fbb5" } }
+            { headers: { "Private-Key": "66fb706d-7c8c-4c26-8edc-49dd33ea1038" } }
         )
         return res.status(r.status).json(r.data)
     } catch (e) {

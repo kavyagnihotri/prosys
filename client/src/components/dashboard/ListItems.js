@@ -11,12 +11,21 @@ import Divider from "@mui/material/Divider"
 import AssignmentIcon from "@mui/icons-material/Assignment"
 import Link from "@mui/material/Link"
 import { useLogout } from "../../hooks/useLogout"
+import { useAuthContext } from "../../hooks/useAuthContext"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 
 export default function ListItems({ onListItemClick }) {
-    const { logout } = useLogout()
-
     const handleListItemClick = (content) => {
         onListItemClick(content)
+    }
+    const navigate = useNavigate()
+    const { user } = useAuthContext()
+    const { logout } = useLogout()
+    const goChat = async (e) => {
+        axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
+        navigate("/chatPage")
     }
 
     const handleLogout = async (e) => {
@@ -43,17 +52,19 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="My Applications" />
             </ListItemButton>
-            <ListItemButton component={Link} to="/student/profile/update">
+
+            <ListItemButton button onClick={() => goChat()}>
+                <ListItemIcon>
+                    <MarkChatReadIcon />
+                </ListItemIcon>
+
+                <ListItemText primary="Chat Portal" />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/student/profile">
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Update Profile" />
-            </ListItemButton>
-            <ListItemButton onClick={handleLogout}>
-                <ListItemIcon>
-                    <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText primary="Log out" />
+                <ListItemText primary="My Profile" />
             </ListItemButton>
         </React.Fragment>
     )
