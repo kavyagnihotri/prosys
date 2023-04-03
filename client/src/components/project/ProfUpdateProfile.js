@@ -28,13 +28,13 @@ const ProfUpdate = () => {
     const params = useParams()
     // const usr_email = user.email
     const [form, setForm] = useState({
-        // email: usr_email,
+        // email: "",
         // name: "",
         // password: "",
         // dept: "",
-        chamber: "",
-        researchInterest: "",
-        websites: "",
+        // chamber: "",
+        // researchInterest: "",
+        // websites: "",
         // hod: false,
     });
 
@@ -74,16 +74,16 @@ const ProfUpdate = () => {
         event.preventDefault()
         const id = user._id
         const editedProf = {
-        //   email: form.email,
-        //   name: form.name,
-        //   password: form.password,
-        //   dept: form.dept,
+          email: form.email,
+          name: form.name,
+          password: form.password,
+          dept: form.dept,
           chamber: form.chamber,
           researchInterest: form.researchInterest,
           websites: form.websites,
-        //   hod: form.hod,
+          hod: form.hod,
         };
-   
+
         await fetch(`/profs/${id}`, {
           method: "PUT",
           body: JSON.stringify(editedProf),
@@ -151,18 +151,18 @@ const ProfUpdate = () => {
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                             <Grid container spacing={2}>
-                                {/* <Grid item xs={12}>
+                                <Grid item xs={12}>
                                     <TextField
                                         fullWidth
                                         id="email"
                                         // label="Email"
                                         name="email"
                                         value={form.email}
-                                        onChange={(e) => updateForm({ email: e.target.value })}
+                                        // onChange={(e) => updateForm({ email: e.target.value })}
                                         required
                                         disabled
                                     />
-                                </Grid> */}
+                                </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         fullWidth
