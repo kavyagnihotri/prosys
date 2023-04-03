@@ -52,10 +52,12 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="My Applications" />
             </ListItemButton>
+
             <ListItemButton button onClick={() => goChat()}>
                 <ListItemIcon>
                     <MarkChatReadIcon />
                 </ListItemIcon>
+
                 <ListItemText primary="Chat Portal" />
             </ListItemButton>
             <ListItemButton component={Link} to="/student/profile">
