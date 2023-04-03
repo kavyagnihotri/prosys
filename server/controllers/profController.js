@@ -1,5 +1,6 @@
 const Prof = require("../models/profModel")
 const jwt = require("jsonwebtoken")
+const mongoose = require("mongoose")
 
 const createToken = (id) => {
     return jwt.sign({ _id: id, role: "1" }, process.env.SECRET, { expiresIn: "3d" })
@@ -64,41 +65,50 @@ const signupProf = async (req, res) => {
     }
 }
 
-const getName = async(req, res) => {
-  try {
-    const user1 = await Prof.find({ email: req.body.email });
-    return user1
-  } catch (error) {
-    console.error(error);
-  }
+const getName = async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "Invalid ID, No such professor" })
+    }
+
+    const prof = await Prof.findById(id)
+
+    if (!prof) {
+        return res.status(404).json({ error: "No such professor" })
+    }
+
+    res.status(200).json(prof)
 }
 
-const updateProfile = async(req, res) => {
+const updateProfile = async (req, res) => {
     const id = req.params.id
 
-    Prof.findByIdAndUpdate({ _id: id }, {
-        $set: {
-            email: req.body.email,
-            name: req.body.name,
-            password: req.body.password,
-            dept: req.body.dept,
-            chamber: req.body.chamber,
-            researchInterest: req.body.researchInterest,
-            websites: req.body.websites,
-            hod: req.body.hod
+    Prof.findByIdAndUpdate(
+        { _id: id },
+        {
+            $set: {
+                email: req.body.email,
+                name: req.body.name,
+                password: req.body.password,
+                dept: req.body.dept,
+                chamber: req.body.chamber,
+                researchInterest: req.body.researchInterest,
+                websites: req.body.websites,
+                hod: req.body.hod,
+            },
         }
-    })
-    .then(result=>{
-        res.status(200).json({
-            updated_result: result
+    )
+        .then((result) => {
+            res.status(200).json({
+                updated_result: result,
+            })
         })
-    })
-    .catch(error=>{
-        res.status(400).json({
-            error: error
+        .catch((error) => {
+            res.status(400).json({
+                error: error,
+            })
         })
-    })
-    
 }
 
 module.exports = { signupProf, loginProf, getProfs, dissmissProf, appointHOD, updateProfile, getName }
