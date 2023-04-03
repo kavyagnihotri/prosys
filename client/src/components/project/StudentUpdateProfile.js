@@ -1,4 +1,3 @@
-import { useProfSignup } from "../../hooks/useProfSignup"
 import * as React from "react"
 import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
@@ -41,7 +40,7 @@ const StudentUpdate = () => {
     useEffect(() => {
       async function fetchData() {
         const id = params.id.toString();
-        const response = await fetch(`/students/${params.id.toString()}`);
+        const response = await fetch(`/students/${id}`);
 
         if (!response.ok) {
           const message = `An error has occurred: ${response.statusText}`;
