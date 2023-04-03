@@ -30,7 +30,7 @@ app.use("/augsd", augsdRoutes)
 app.use("/prof", profRoutes)
 app.use("/file", fileRoutes)
 
-// db connect and listen for reqs
+// db connect and listen for requests
 mongoose.set("strictQuery", false)
 mongoose
     .connect(process.env.MONGO_URL, {
