@@ -11,5 +11,24 @@
         "src": "/(.*)",
         "dest": "server.js"
       }
+    ],
+    "headers": [
+      {
+        "source": "/file/upload",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "prosys-client.vercel.app"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "POST"
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Content-Type"
+          }
+        ]
+      }
     ]
 }
