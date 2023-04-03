@@ -1,205 +1,292 @@
-import { useState } from "react";
-import { useProjectsContext } from "../../hooks/useProjectsContext";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import * as React from "react";
+import * as React from "react"
+import Box from "@mui/material/Box"
+import Container from "@mui/material/Container"
+import Paper from "@mui/material/Paper"
+import Button from "@mui/material/Button"
+import Link from "@mui/material/Link"
+import Typography from "@mui/material/Typography"
+import Grid from "@mui/material/Grid"
+import TextField from "@mui/material/TextField"
+import Toolbar from "@mui/material/Toolbar"
+import LogoutIcon from "@mui/icons-material/Logout"
 
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { useProjectsContext } from "../../hooks/useProjectsContext"
+import { useAuthContext } from "../../hooks/useAuthContext"
+import { AppBar } from "../dashboard/Objects"
+import { useLogout } from "../../hooks/useLogout"
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+const theme = createTheme()
 
 const ProjectForm = () => {
-  const { dispatch } = useProjectsContext();
-  const { user } = useAuthContext();
+    const { dispatch } = useProjectsContext()
+    const { user } = useAuthContext()
+    const { logout } = useLogout()
+    const navigate = useNavigate()
+    const [activeStep, setActiveStep] = React.useState(0)
+    const [isLoading, setIsLoading] = useState(null)
+    const [error, setError] = useState(null)
+    const [emptyfields, setEmptyFields] = useState([])
 
-  const [title, setTitle] = useState("");
-  const [projectID, setProjectID] = useState("");
-  const [description, setDescription] = useState("");
-  const [projectType, setProjectType] = useState("");
-  const [prerequisite, setPrerquisite] = useState("");
-  const [numberOfStudents, setProjectNumber] = useState("");
-  const [error, setError] = useState(null);
-  const [emptyfields, setEmptyFields] = useState([]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!user) {
-      setError("You must be logged in");
-      return;
-    }
-    const professorEmail = user.email;
-    const approved = 0;
-
-    const project = {
-      title,
-      projectID,
-      description,
-      prerequisite,
-      projectType,
-      professorEmail,
-      numberOfStudents,
-      approved,
-    };
-    
-    const response = await fetch("/projects", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        projectID,
-        description,
-        prerequisite,
-        projectType,
-        professorEmail,
-        numberOfStudents,
-        approved,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
-    
-    if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyfields);
+    const handleLogout = async (e) => {
+        e.preventDefault()
+        logout()
+        navigate("/")
     }
 
-    if (response.ok) {
-      setTitle("");
-      setProjectID("");
-      setDescription("");
-      setProjectNumber("");
-      setProjectType("");
-      setPrerquisite("");
-      setError(null);
-      setEmptyFields([]);
-      
-      dispatch({ type: "CREATE_PROJECT", payload: json });
+    const handleClick = (event) => {
+        event.preventDefault()
+        navigate("/prof/dashboard")
     }
-  };
 
-  return (
-    <Container component="main">
-      <CssBaseline />
-      <Box
-        sx={{
-          margin: 10,
-          // alignSelf: "center",
-          // alignItems: "center",
-        }}
-      >
-          
-        <Box
-          sx={{
-            
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        > 
-          <Typography component="h1" variant="h5">
-            Add Projects
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              mt:3,
-            }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Project Title"
-                  type="text"
-                  onChange={(e) => setTitle(e.target.value)}
-                  value={title}
-                  className={emptyfields.includes("title") ? "error" : ""}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Project ID"
-                  type="text"
-                  onChange={(e) => setProjectID(e.target.value)}
-                  value={projectID}
-                  className={emptyfields.includes("projectID") ? "error" : ""}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  type="text"
-                  label="Description"
-                  onChange={(e) => setDescription(e.target.value)}
-                  value={description}
-                  className={emptyfields.includes("description") ? "error" : ""}
-                  //   autoComplete="studentID"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  type="text"
-                  onChange={(e) => setPrerquisite(e.target.value)}
-                  value={prerequisite}
-                  className={emptyfields.includes("description") ? "error" : ""}
-                  label="Prerequisite(s)"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  type="text"
-                  label="Project Type"
-                  onChange={(e) => setProjectType(e.target.value)}
-                  value={projectType}
-                  className={emptyfields.includes("description") ? "error" : ""}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  type="text"
-                  onChange={(e) => setProjectNumber(e.target.value)}
-                  value={numberOfStudents}
-                  className={emptyfields.includes("description") ? "error" : ""}
-                  label="Number of Formal Students"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Add Project
-            </Button>
-            {error && <div className="error">{error}</div>}
-          </Box>
-        </Box>
-      </Box>
-    </Container>
-  );
-};
+    useEffect(() => {
+        const fetchProjects = async () => {
+            const response = await fetch("/student/projects", {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
 
-export default ProjectForm;
+            if (response.ok) {
+                dispatch({ type: "SET_PROJECTS", payload: json })
+            }
+        }
+
+        if (user) {
+            fetchProjects()
+        }
+    }, [dispatch, user])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const profregex = new RegExp("[a-zA-Z0-9]+.*")
+
+        if (!user || !profregex.test(user.email)) {
+            setError("Professor must be logged in")
+            return
+        }
+
+        const data = new FormData(e.currentTarget)
+        const title = data.get("title")
+        const projectID = data.get("projectID")
+        const description = data.get("description")
+        const projectType = data.get("type")
+        const prerequisite = data.get("prerequistie")
+        const numberOfStudents = data.get("numberOfStudents")
+        const professorEmail = user.email
+        console.log(professorEmail)
+        const approved = 0
+
+        const project = {
+            title,
+            projectID,
+            description,
+            prerequisite,
+            projectType,
+            professorEmail,
+            numberOfStudents,
+            approved,
+        }
+
+        const response = await fetch("/projects", {
+            method: "POST",
+            body: JSON.stringify(project),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`,
+            },
+        })
+        const json = await response.json()
+
+        if (!response.ok) {
+            setError(json.error)
+            setEmptyFields(json.emptyfields)
+            setIsLoading(false)
+        }
+
+        if (response.ok) {
+            // setTitle("")
+            // setProjectID("")
+            // setDescription("")
+            // setProjectNumber("")
+            // setProjectType("")
+            // setPrerquisite("")
+            setError(null)
+            setEmptyFields([])
+
+            dispatch({ type: "CREATE_PROJECT", payload: json })
+            setIsLoading(false)
+            setActiveStep(1)
+        }
+    }
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+                <Box
+                    sx={{
+                        marginTop: 10,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                    }}
+                >
+                    <AppBar position="absolute">
+                        <Toolbar sx={{ pr: "24px" }}>
+                            <Button
+                                onClick={handleClick}
+                                component="h1"
+                                variant="h6"
+                                noWrap
+                                color="inherit"
+                                size="large"
+                            >
+                                ProSys: Professor
+                            </Button>
+                            <Typography
+                                component="h1"
+                                variant="h6"
+                                color="inherit"
+                                align="center"
+                                noWrap
+                                sx={{ flexGrow: 1 }}
+                            >
+                                {JSON.parse(localStorage.getItem("user")).email}
+                            </Typography>
+                            <Box component="form" noValidate onSubmit={handleLogout}>
+                                <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
+                                    Log Out
+                                </Button>
+                            </Box>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
+                <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+                    <Typography component="h1" variant="h4" align="center">
+                        Project Proposal
+                    </Typography>
+                    {activeStep === 1 ? (
+                        <React.Fragment>
+                            <p></p>
+                            <Typography variant="h5" gutterBottom>
+                                Your Project Proposal is Submitted.
+                            </Typography>
+                            <Button
+                                component={Link}
+                                to="/prof/dashboard"
+                                variant="contained"
+                                sx={{ mt: 3, ml: 1 }}
+                                onClick={handleClick}
+                            >
+                                Go to Home
+                            </Button>
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment>
+                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                                <Typography variant="h6" gutterBottom>
+                                    Details
+                                </Typography>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="title"
+                                            name="title"
+                                            label="Project Title"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("title") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="projectID"
+                                            name="projectID"
+                                            label="Project ID"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("projectID") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="description"
+                                            name="description"
+                                            label="Description"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("description") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="prerequistie"
+                                            name="prerequistie"
+                                            label="Prerequistie(s)"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("prerequisite") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            id="type"
+                                            name="type"
+                                            label="Project Type"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("type") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            id="numberOfStudents"
+                                            name="numberOfStudents"
+                                            label="Number of Formal Students"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("numberOfStudents") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            // required
+                                            id="profEmail"
+                                            name="profEmail"
+                                            label="Your Email"
+                                            fullWidth
+                                            value={JSON.parse(localStorage.getItem("user")).email}
+                                            disabled="true"
+                                            variant="standard"
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} justifyContent="center" alignItems="center">
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        sx={{ mt: 3, ml: 1 }}
+                                        disabled={isLoading}
+                                    >
+                                        Submit Proposal
+                                    </Button>
+                                    {error && <div className="error">{error}</div>}
+                                </Grid>
+                            </Box>
+                        </React.Fragment>
+                    )}
+                </Paper>
+            </Container>
+        </ThemeProvider>
+    )
+}
+
+export default ProjectForm
