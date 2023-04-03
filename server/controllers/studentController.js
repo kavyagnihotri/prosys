@@ -1,5 +1,6 @@
 const Student = require("../models/studentModel")
 const jwt = require("jsonwebtoken")
+const mongoose = require("mongoose")
 
 const createToken = (id) => {
     return jwt.sign({ _id: id, role: "2" }, process.env.SECRET, { expiresIn: "3d" })
@@ -44,22 +45,46 @@ const getStudents = async (req, res) => {
     res.status(200).json(students)
 }
 
-const updateProfile = async(req, res) => {
-    const id = req.body.id
+const getName = async (req, res) => {
+    const { id } = req.params
 
-    try {
-        studentToUpdate = await Student.findById(id)
-        studentToUpdate.cgpa = req.body.cgpa
-        studentToUpdate.cv_link = req.body.cv_link
-        studentToUpdate.per_link = req.body.per_link
-        studentToUpdate.aoi = req.body.aoi
-        studentToUpdate.save()
-        const user = await Prof.findByIdAndUpdate(req.user._id,studentToUpdate)
-        res.status(200).json(user)
-        res.send("Updated")
-    } catch (error) {
-        res.status(400).json({ error: error.message })
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "Invalid ID, No such student" })
     }
+
+    const student = await Student.findById(id)
+
+    if (!student) {
+        return res.status(404).json({ error: "No such student" })
+    }
+
+    res.status(200).json(student)
+}
+
+const updateProfile = async(req, res) => {
+    const id = req.params.id
+
+    Prof.findByIdAndUpdate(
+        { _id: id },
+        {
+            $set: {
+                cgpa: req.body.cgpa,
+                cv_link: req.body.cv_link,
+                per_link: req.body.per_link,
+                aoi: req.body.aoi,
+            },
+        }
+    )
+        .then((result) => {
+            res.status(200).json({
+                updated_result: result,
+            })
+        })
+        .catch((error) => {
+            res.status(400).json({
+                error: error,
+            })
+        })
 }
 
 module.exports = { signupStudent, loginStudent, getStudents, updateProfile }
