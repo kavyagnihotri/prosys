@@ -80,6 +80,7 @@ const ChatsPage = (props) => {
                     <ChatEngine
                         height="calc(95vh - 66px)"
                         publicKey={"7daba61f-e686-473f-9284-48c58b8720cf"}
+                        ProjectID={"7daba61f-e686-473f-9284-48c58b8720cf"}
                         userName={user.email}
                         userSecret={user.email}
                     />
