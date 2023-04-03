@@ -16,6 +16,7 @@ import { TableContainer } from "@mui/material"
 import ListItems from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
 import ViewApplications from "../../components/application/ViewApplications"
+import Profile from "../../components/dashboard/ProfProfile"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -34,6 +35,7 @@ function DashboardContent() {
     const [open, setOpen] = React.useState(true)
     const [selectedContent, setSelectedContent] = useState("dashboard")
     const [projectID, setProjectID] = useState(null)
+    const [profID, setProfID] = useState(null)
 
     const handleViewApplicationClick = (content) => {
         setSelectedContent("application")
@@ -55,7 +57,7 @@ function DashboardContent() {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch("/profs", {
+            const response = await fetch("/prof", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -142,6 +144,7 @@ function DashboardContent() {
                             <Projects onViewApplicationClick={handleViewApplicationClick} />
                         )}
                         {selectedContent === "application" && <ViewApplications projectID={projectID} />}
+                        {selectedContent === "profile" && <Profile />}
                     </TableContainer>
                 </Box>
             </Box>

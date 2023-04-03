@@ -1,34 +1,33 @@
-const express = require('express')
+const express = require("express")
 
 // controller fucntion
-const { signupStudent, loginStudent , getStudents, updateProfile} = require('../controllers/studentController')
-const { getProjects, getProject } = require('../controllers/projectController')
-const { getApplications, createApplication, deleteApplication } = require('../controllers/applicationController')
+const { signupStudent, loginStudent, getStudents, updateProfile } = require("../controllers/studentController")
+const { getProjects, getProject } = require("../controllers/projectController")
+const { getApplications, createApplication, deleteApplication } = require("../controllers/applicationController")
 
 const router = express.Router()
 
 // login route
-router.post('/login', loginStudent)
+router.post("/login", loginStudent)
 
 // singup route
-router.post('/signup', signupStudent)
+router.post("/signup", signupStudent)
 
-const requireAuth = require('../middleware/requireAuth')
+const requireAuth = require("../middleware/requireAuth")
 router.use(requireAuth)
 
 // Projects
-router.get('/projects', getProjects)
-router.get('/projects/:id', getProject)
+router.get("/projects", getProjects)
+router.get("/projects/:id", getProject)
 
 // Applications
-router.get('/applications', getApplications)
-router.post('/createApplication', createApplication)
+router.get("/applications", getApplications)
+router.post("/createApplication", createApplication)
 
-
-router.get('/',getStudents)
+router.get("/", getStudents)
 // router.delete('/applications/:id', deleteApplication)
 router.put("/:id", updateProfile)
 
-router.get("/:id", getName)
+// router.get("/:id", getName)
 
 module.exports = router

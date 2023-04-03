@@ -11,6 +11,21 @@ const getProfs = async (req, res) => {
     res.status(200).json(profs)
 }
 
+const getProf = async (req, res) => {
+    const email = req.params.id
+    try {
+        const prof = await Prof.findOne({ email })
+
+        if (!prof) {
+            return res.status(404).json({ error: "Professor not found" })
+        }
+        res.status(200).json(prof)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: "Internal server error" })
+    }
+}
+
 const dissmissProf = async (req, res) => {
     const id = req.body.id
     try {
@@ -111,4 +126,4 @@ const updateProfile = async (req, res) => {
         })
 }
 
-module.exports = { signupProf, loginProf, getProfs, dissmissProf, appointHOD, updateProfile, getName }
+module.exports = { signupProf, loginProf, getProfs, dissmissProf, appointHOD, updateProfile, getName, getProf }
