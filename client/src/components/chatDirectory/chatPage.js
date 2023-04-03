@@ -79,7 +79,7 @@ const ChatsPage = (props) => {
                     <Toolbar />
                     <ChatEngine
                         height="calc(95vh - 66px)"
-                        publicKey={"d4c39480-3612-4e4c-8dd0-fef825748c8b"}
+                        publicKey={"7daba61f-e686-473f-9284-48c58b8720cf"}
                         userName={user.email}
                         userSecret={user.email}
                     />
