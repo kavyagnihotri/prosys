@@ -27,6 +27,8 @@ router.post('/createApplication', createApplication)
 
 router.get('/',getStudents)
 // router.delete('/applications/:id', deleteApplication)
-router.put('/:id', updateProfile)
+router.put("/:id", updateProfile)
+
+router.get("/:id", getName)
 
 module.exports = router
