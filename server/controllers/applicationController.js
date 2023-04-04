@@ -77,8 +77,8 @@ const updateStatus = async (req, res) => {
     }
 }
 
-const getRanked = async (req, res) => {
-    const applications = await Application.find().sort({ score: "desc" })
+const getInformal = async (req, res) => {
+    const applications = await Application.find({ type: 0 }).sort({ score: "desc" })
     res.status(200).json(applications)
 }
 
@@ -100,6 +100,6 @@ module.exports = {
     createApplication,
     deleteApplication,
     addScore,
-    getRanked,
+    getInformal,
     updateStatus,
 }

@@ -16,7 +16,7 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import MenuItem from "@mui/material/MenuItem"
 import { useNavigate } from "react-router-dom"
-import { useProfContext } from "../../hooks/useProfContext"
+import { useProjectsContext } from "../../hooks/useProjectsContext"
 import setSelectedContent from "../../pages/professor/ProfDashboard"
 
 const branches = [
@@ -62,12 +62,13 @@ const branches = [
     },
 ]
 
-export default function FormalApplications({ projectID, numberOfStudents, onListItemClick }) {
+export default function InformalApplications({ projectID, numberOfStudents, onListItemClick }) {
+    console.log(projectID, numberOfStudents)
     var { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
     var { students, dispatch1 } = useStudentsContext()
-    var { profs, dispatch } = useProfContext()
+    var title = ""
     var NoStudents = numberOfStudents
     var count = 0
     const navigate = useNavigate()
@@ -97,23 +98,15 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
             }
         }
 
-        const fetchProfs = async () => {
-            const response = await fetch("/prof/", {
-                method: "POST",
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: "SET_PROF", payload: json })
-            }
-        }
-
         if (user) {
             fetchApplications()
             fetchStudents()
-            fetchProfs()
-            console.log(profs)
+            applications &&
+                applications.map((a) => {
+                    if (a.projectID == id) {
+                        title = a.projectTitle
+                    }
+                })
         }
     }, [dispatch2, dispatch1, user])
 
@@ -146,16 +139,6 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     }
 
     const changeStatus = async () => {
-        const response = await fetch("/student/rank/", {
-            method: "GET",
-            headers: { Authorization: `Bearer ${user.token}` },
-        })
-        const json = await response.json()
-
-        if (response.ok) {
-            dispatch2({ type: "SET_APPLICATIONS", payload: json })
-            applications = json
-        }
         applications &&
             applications.map((a) => {
                 if (
@@ -165,17 +148,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                     a.score != -1 &&
                     count < NoStudents
                 ) {
-                    students &&
-                        students.map((s) => {
-                            if (s.email === a.studentEmail) {
-                                profs &&
-                                    profs.map((prof) => {
-                                        if (prof.email === user.email && prof.dept === s.dept) updateStatus(a._id, 1)
-                                        else if (prof.email === user.email && prof.dept != s.dept)
-                                            updateStatus(a._id, 3)
-                                    })
-                            }
-                        })
+                    updateStatus(a._id, 1)
                     count += 1
                 } else if (
                     a.profEmail === user.email &&
@@ -192,7 +165,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
 
     return (
         <React.Fragment>
-            <Title>Informal Applicants for Project</Title>
+            <Title>Informal Applicants for {title} Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
