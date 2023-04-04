@@ -118,7 +118,6 @@ export default function NewProjectTable() {
                 <TableHead>
                     <TableRow>
                         <TableCell>Project Title</TableCell>
-                        <TableCell>Project ID</TableCell>
                         <TableCell>Project Type</TableCell>
                         <TableCell>Professor Name</TableCell>
                         <TableCell>Description</TableCell>
@@ -134,7 +133,6 @@ export default function NewProjectTable() {
                                 project.approved === 0 && (
                                     <TableRow key={project._id}>
                                         <TableCell>{project.title}</TableCell>
-                                        <TableCell>{project.projectID}</TableCell>
                                         <TableCell>{project.projectType}</TableCell>
                                         <TableCell>{project.professorEmail}</TableCell>
                                         <TableCell>{project.description}</TableCell>
