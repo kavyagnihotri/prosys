@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom"
 const Project = ({ onViewApplication, project, tab }) => {
     const navigate = useNavigate()
 
-    const onView = async (id, numberOfStudents) => {
-        onViewApplication(id, numberOfStudents)
+    const onView = async (id) => {
+        onViewApplication(id)
         // navigate("/prof/project/view/" + id)
     }
 
@@ -25,11 +25,10 @@ const Project = ({ onViewApplication, project, tab }) => {
                         size="large"
                         startIcon={<OpenInNewIcon />}
                         type="submit"
-                        onClick={(e) => onView(project._id, project.numberOfStudents)}
+                        onClick={(e) => onView(project._id)}
                     ></Button>
                 </TableCell>
             )}
-            {tab === -1 && <TableCell align="center">{project.recommendation}</TableCell>}
         </TableRow>
     )
 }

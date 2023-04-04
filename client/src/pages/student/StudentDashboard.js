@@ -23,7 +23,8 @@ import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
 import { useLogout } from "../../hooks/useLogout"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import StudentProfile from "../../components/dashboard/StudentUpdateProfile"
 
 const mdTheme = createTheme()
 
@@ -33,6 +34,7 @@ function DashboardContent() {
     const { logout } = useLogout()
     const [open, setOpen] = React.useState(true)
     const [selectedContent, setSelectedContent] = useState("dashboard")
+    const [name, setName] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -49,9 +51,24 @@ function DashboardContent() {
 
     const handleClick = (event) => {
         event.preventDefault()
-        navigate("/student/dashboard")
     }
 
+    useEffect(() => {
+        const fetchStudent = async () => {
+            const response = await fetch(`/student/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            if (response.ok) {
+                setName(json.name)
+            }
+        }
+
+        if (user) {
+            fetchStudent()
+        }
+    })
+    
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: "flex" }}>
@@ -81,7 +98,7 @@ function DashboardContent() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            {user.email}
+                            {name}
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
@@ -126,6 +143,7 @@ function DashboardContent() {
                                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                                     {selectedContent === "dashboard" && <Projects />}
                                     {selectedContent === "applications" && <Applications />}
+                                    {selectedContent === "studentprofile" && <StudentProfile />}
                                 </Paper>
                             </Grid>
                         </Grid>
