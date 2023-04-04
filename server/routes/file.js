@@ -12,7 +12,15 @@ const router = require("express").Router()
 
 const client = filestack.init(process.env.FILESTACK_API_KEY)
 
-router.post("/upload", cors({ origin: clientURL }), upload.single("file"), (req, res) => {
+const corsOptions = {
+    origin: clientURL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    // exposedHeaders: ["Authorization"],
+    maxAge: 86400,
+}
+
+router.post("/upload", cors(corsOptions), upload.single("file"), (req, res) => {
     const { buffer } = req.file
     client
         .upload(buffer)
