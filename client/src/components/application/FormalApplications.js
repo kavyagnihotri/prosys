@@ -21,7 +21,6 @@ import { useNavigate } from "react-router-dom"
 import { useProfContext } from "../../hooks/useProfContext"
 import setSelectedContent from "../../pages/professor/ProfDashboard"
 
-
 const branches = [
     {
         value: 1,
@@ -101,7 +100,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
         }
 
         const fetchProfs = async () => {
-            const response = await fetch("/prof/", {
+            const response = await fetch(serverURL + "/prof/", {
                 method: "POST",
                 headers: { Authorization: `Bearer ${user.token}` },
             })

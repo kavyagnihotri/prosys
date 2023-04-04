@@ -100,7 +100,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
         }
 
         const fetchProfs = async () => {
-            const response = await fetch("/prof/", {
+            const response = await fetch(serverURL + "/prof/", {
                 method: "POST",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -124,7 +124,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     }
 
     const addScore = async (newScore, appId) => {
-        const response = await fetch("/student/score", {
+        const response = await fetch(serverURL + "/student/score", {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
             body: JSON.stringify({ appId: appId, newScore: newScore }),
@@ -136,7 +136,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     }
 
     const updateStatus = async (appId, appStatus) => {
-        const response = await fetch("/student/status", {
+        const response = await fetch(serverURL + "/student/status", {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
             body: JSON.stringify({ appId: appId, status: appStatus }),
@@ -148,7 +148,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     }
 
     const changeStatus = async () => {
-        const response = await fetch("/student/rank/", {
+        const response = await fetch(serverURL + "/student/rank/", {
             method: "GET",
             headers: { Authorization: `Bearer ${user.token}` },
         })
