@@ -24,8 +24,8 @@ export default function Album() {
             <main>
                 <Box
                     sx={{
-                        pt: 1,
-                        pb: 1,
+                        pt: 8,
+                        pb: 6,
                     }}
                 >
                     <Container maxWidth="sm">

@@ -28,8 +28,8 @@ export default function Orders({ onViewApplicationClick }) {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
 
-    const handleViewApplicationClick = (content, content1) => {
-        onViewApplicationClick(content, content1)
+    const handleViewApplicationClick = (content) => {
+        onViewApplicationClick(content)
     }
 
     useEffect(() => {
