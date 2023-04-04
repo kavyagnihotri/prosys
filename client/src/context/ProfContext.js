@@ -1,12 +1,12 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useReducer } from "react"
 
 export const ProfContext = createContext()
 
 export const profReducer = (state, action) => {
     switch (action.type) {
-        case 'SET_PROF':
+        case "SET_PROF":
             return {
-                projects: action.payload
+                profs: action.payload,
             }
         default:
             return state
@@ -15,15 +15,10 @@ export const profReducer = (state, action) => {
 
 export const ProfContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(profReducer, {
-        projects: null,
-        approvedprojects: null
+        profs: null,
     })
 
     // dispatch({type: 'CREATE_PROJECTS', payload: [{}, {}]})
 
-    return (
-        <ProfContext.Provider value={{...state, dispatch}}>
-            { children }
-        </ProfContext.Provider>
-    )
+    return <ProfContext.Provider value={{ ...state, dispatch }}>{children}</ProfContext.Provider>
 }

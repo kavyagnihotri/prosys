@@ -16,7 +16,7 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import MenuItem from "@mui/material/MenuItem"
 import { useNavigate } from "react-router-dom"
-import { useProjectsContext } from "../../hooks/useProjectsContext"
+import { useProfContext } from "../../hooks/useProfContext"
 import setSelectedContent from "../../pages/professor/ProfDashboard"
 
 const branches = [
@@ -62,13 +62,12 @@ const branches = [
     },
 ]
 
-export default function InformalApplications({ projectID, numberOfStudents, onListItemClick }) {
-    console.log(projectID, numberOfStudents)
+export default function FormalApplications({ projectID, numberOfStudents, onListItemClick }) {
     var { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
     var { students, dispatch1 } = useStudentsContext()
-    var title = ""
+    var { profs, dispatch } = useProfContext()
     var NoStudents = numberOfStudents
     var count = 0
     const navigate = useNavigate()
@@ -98,15 +97,23 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
             }
         }
 
+        const fetchProfs = async () => {
+            const response = await fetch("/prof/", {
+                method: "POST",
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatch({ type: "SET_PROF", payload: json })
+            }
+        }
+
         if (user) {
             fetchApplications()
             fetchStudents()
-            applications &&
-                applications.map((a) => {
-                    if (a.projectID == id) {
-                        title = a.projectTitle
-                    }
-                })
+            fetchProfs()
+            console.log(profs)
         }
     }, [dispatch2, dispatch1, user])
 
@@ -148,7 +155,17 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
                     a.score != -1 &&
                     count < NoStudents
                 ) {
-                    updateStatus(a._id, 1)
+                    students &&
+                        students.map((s) => {
+                            if (s.email === a.studentEmail) {
+                                profs &&
+                                    profs.map((prof) => {
+                                        if (prof.email === user.email && prof.dept === s.dept) updateStatus(a._id, 1)
+                                        else if (prof.email === user.email && prof.dept != s.dept)
+                                            updateStatus(a._id, 3)
+                                    })
+                            }
+                        })
                     count += 1
                 } else if (
                     a.profEmail === user.email &&
@@ -165,7 +182,7 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
 
     return (
         <React.Fragment>
-            <Title>Informal Applicants for {title} Project</Title>
+            <Title>Informal Applicants for Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>

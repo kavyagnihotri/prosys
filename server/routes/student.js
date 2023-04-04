@@ -8,7 +8,7 @@ const {
     createApplication,
     deleteApplication,
     addScore,
-    getInformal,
+    getRanked,
     updateStatus,
 } = require("../controllers/applicationController")
 
@@ -31,7 +31,7 @@ router.get("/projects/:id", getProject)
 router.get("/applications", getApplications)
 router.post("/createApplication", createApplication)
 router.post("/score", addScore)
-router.get("/infrank", getInformal)
+router.get("/rank", getRanked)
 router.post("/status", updateStatus)
 
 router.get("/", getStudents)
