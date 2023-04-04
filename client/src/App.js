@@ -79,12 +79,12 @@ function App() {
                         <Route path="/student/createApplication/:id" element={<ApplicationForm />} />
 
                         <Route
-                            path="prof/login"
+                            path="/prof/login"
                             element={!user || user.role !== "1" ? <ProfLogin /> : <Navigate to="/prof/dashboard" />}
                         />
 
                         <Route
-                            path="prof/signup"
+                            path="/prof/signup"
                             element={!user ? <ProfSignup /> : <Navigate to="/prof/dashboard" />}
                         />
 
