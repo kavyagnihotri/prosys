@@ -18,7 +18,6 @@ export const ProfContextProvider = ({ children }) => {
         profs: null,
     })
 
-    // dispatch({type: 'CREATE_PROJECTS', payload: [{}, {}]})
-
     return <ProfContext.Provider value={{ ...state, dispatch }}>{children}</ProfContext.Provider>
 }
+
