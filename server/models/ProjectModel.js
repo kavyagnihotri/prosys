@@ -8,11 +8,11 @@ const projectSchema = new Schema(
             type: String,
             required: true,
         },
-        projectID: {
-            type: Number,
-            required: true,
-            unique: true,
-        },
+        // projectID: {
+        //     type: Number,
+        //     required: true,
+        //     unique: true,
+        // },
         description: {
             type: String,
             required: true,
