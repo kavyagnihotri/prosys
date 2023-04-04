@@ -28,6 +28,10 @@ const projectSchema = new Schema(
             type: String,
             required: true,
         },
+        recommendation: {
+            type: String,
+            default: "",
+        },
         numberOfStudents: {
             type: Number,
             required: true,
