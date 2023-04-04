@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { useAuthContext } from "./hooks/useAuthContext"
 
 // pages and components
-import ProjectForm from "./components/project/NewProjectForm"
+import ProjectForm from "./components/project/ProjectForm"
 import StudentLogin from "./pages/student/StudentLogin"
 import StudentSignup from "./pages/student/StudentSignup"
 import AugsdLogin from "./pages/augsd/AugsdLogin"
@@ -19,10 +19,6 @@ import ViewApplications from "./components/application/ViewApplications"
 
 function App() {
     const { user } = useAuthContext()
-
-    // localstorage fetch
-    // const data = window.localStorage
-    //
 
     if (user != null) {
         console.log("ROLE " + user.role)
@@ -88,6 +84,7 @@ function App() {
                             element={user && user.role === "1" ? <ProfDashboard /> : <Navigate to="/prof/login" />}
                         />
                         <Route path="/prof/project/add" element={<ProjectForm />} />
+
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
 
                         <Route
