@@ -82,7 +82,6 @@ export default function StudentProfile({onUpdateProfileClick}) {
             per_link: change.per_link,
             aoi: change.aoi
         }
-        console.log(editedStudent)
 
         await fetch(`/student/${id}`, {
             method: "PUT",
