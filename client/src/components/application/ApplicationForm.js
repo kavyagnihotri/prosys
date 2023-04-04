@@ -13,7 +13,7 @@ import Toolbar from "@mui/material/Toolbar"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
-
+import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -27,6 +27,7 @@ const theme = createTheme()
 const ApplicationForm = () => {
     const navigate = useNavigate()
     const { dispatch2 } = useApplicationsContext()
+    const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
     const { logout } = useLogout()
     const [activeStep, setActiveStep] = React.useState(0)
