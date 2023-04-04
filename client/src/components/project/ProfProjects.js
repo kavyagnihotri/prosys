@@ -28,8 +28,8 @@ export default function Orders({ onViewApplicationClick }) {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
 
-    const handleViewApplicationClick = (content) => {
-        onViewApplicationClick(content)
+    const handleViewApplicationClick = (content, content1) => {
+        onViewApplicationClick(content, content1)
     }
 
     useEffect(() => {
@@ -67,6 +67,7 @@ export default function Orders({ onViewApplicationClick }) {
                                                 <TableCell align="center">Prerequisite(s)</TableCell>
                                                 <TableCell align="center">Number of Students</TableCell>
                                                 {table === 1 && <TableCell align="center">View Application</TableCell>}
+                                                {table === -1 && <TableCell align="center">Recommendations</TableCell>}
                                             </TableRow>
                                         </TableHead>
                                         {projects.map((project) => (
