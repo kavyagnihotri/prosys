@@ -27,6 +27,11 @@ export default function Profile({ onUpdateProfileClick }) {
     const { dispatch } = useProjectsContext()
     // const params = useParams()
     const [form, setForm] = useState({})
+    const [change, setChange] = useState({
+        chamber: "",
+        researchInterest: "",
+        websites: ""
+    })
 
     useEffect(() => {
         const fetchProf = async () => {
@@ -42,47 +47,37 @@ export default function Profile({ onUpdateProfileClick }) {
         }
     })
 
-    // useEffect(() => {
-    // async function fetchData() {
-    //     const id = params.id.toString()
-    //     const response = await fetch(`/profs/${id}`)
-
-    //     if (!response.ok) {
-    //         const message = `An error has occurred: ${response.statusText}`
-    //         alert(message)
-    //         return
-    //     }
-
-    //     const record = await response.json()
-
-    //     setForm(record)
-    // }
-
-    // fetchData()
-
-    //     return
-    // }, [params.id, navigate])
-
-    function updateForm(value) {
-        return setForm((prev) => {
-            return { ...prev, ...value }
-        })
-    }
+    const handleInputChange = (event) => {
+        const { name, value } = event.target
+        setChange((prevProps) => ({
+            ...prevProps,
+            [name]: value
+        }));
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault()
         const id = form._id
+        if (change.chamber === "") {
+            change.chamber = form.chamber
+        }
+        if (change.researchInterest === "") {
+            change.researchInterest = form.researchInterest
+        }
+        if (change.websites === "") {
+            change.websites = form.websites
+        }
         const editedProf = {
             email: form.email,
             name: form.name,
             password: form.password,
             dept: form.dept,
-            chamber: form.chamber,
-            researchInterest: form.researchInterest,
-            websites: form.websites,
-            hod: form.hod,
+            chamber: change.chamber,
+            researchInterest: change.researchInterest,
+            websites: change.websites,
+            hod: form.hod
         }
-
+        
         await fetch(`/prof/${id}`, {
             method: "PUT",
             body: JSON.stringify(editedProf),
@@ -121,7 +116,7 @@ export default function Profile({ onUpdateProfileClick }) {
                                                 fullWidth
                                                 id="email"
                                                 name="email"
-                                                value={user.email}
+                                                value={form.email}
                                                 required
                                                 disabled
                                             />
@@ -130,10 +125,10 @@ export default function Profile({ onUpdateProfileClick }) {
                                             <TextField
                                                 fullWidth
                                                 id="chamber"
-                                                label="Chamber"
+                                                placeholder="Chamber"
                                                 name="chamber"
-                                                value={form.chamber}
-                                                onChange={(e) => updateForm({ chamber: e.target.value })}
+                                                value={change.chamber}
+                                                onChange={handleInputChange}
                                                 required
                                             />
                                         </Grid>
@@ -141,10 +136,10 @@ export default function Profile({ onUpdateProfileClick }) {
                                             <TextField
                                                 fullWidth
                                                 id="researchInterest"
-                                                label="Research Interests (separate line by line)"
+                                                placeholder="Research Interests (separate line by line)"
                                                 name="researchInterest"
-                                                value={form.researchInterest}
-                                                onChange={(e) => updateForm({ researchInterest: e.target.value })}
+                                                value={change.researchInterest}
+                                                onChange={handleInputChange}
                                                 multiline
                                                 required
                                             />
@@ -153,10 +148,10 @@ export default function Profile({ onUpdateProfileClick }) {
                                             <TextField
                                                 fullWidth
                                                 id="websites"
-                                                label="Social Profiles (separate line by line)"
+                                                placeholder="Social Profiles (separate line by line)"
                                                 name="websites"
-                                                value={form.websites}
-                                                onChange={(e) => updateForm({ websites: e.target.value })}
+                                                value={change.websites}
+                                                onChange={handleInputChange}
                                                 multiline
                                                 required
                                             />
