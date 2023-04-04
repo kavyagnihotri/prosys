@@ -1,35 +1,36 @@
-import * as React from "react"
-import { useEffect, useState } from "react"
-import Link from "@mui/material/Link"
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell from "@mui/material/TableCell"
-import TableHead from "@mui/material/TableHead"
-import TableRow from "@mui/material/TableRow"
-import Title from "../Title"
+import * as React from 'react';
+import { useEffect, useState } from 'react'
+import Link from '@mui/material/Link';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Title from '../Title';
 
-import { useApplicationsContext } from "../../hooks/useApplicationsContext"
-import { useAuthContext } from "../../hooks/useAuthContext"
+import { useApplicationsContext } from '../../hooks/useApplicationsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 function preventDefault(event) {
-    event.preventDefault()
+  event.preventDefault();
 }
 
 export default function Orders() {
-    const { applications, dispatch2 } = useApplicationsContext()
-    const { user } = useAuthContext()
+  const { applications, dispatch } = useApplicationsContext()
+  const { user } = useAuthContext()
 
-    useEffect(() => {
-        const fetchApplications = async () => {
-            const response = await fetch("/student/applications", {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
+  useEffect(() => {
+    const fetchApplications = async () => {
+      const response = await fetch('/student/applications', {
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
 
-            if (response.ok) {
-                dispatch2({ type: "SET_APPLICATIONS", payload: json })
-            }
-        }
+      if (response.ok) {
+        dispatch({ type: 'SET_APPLICATIONS', payload: json })
+      }
+    }
+
 
         if (user) {
             fetchApplications()
@@ -79,6 +80,6 @@ export default function Orders() {
             {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
         See more
       </Link> */}
-        </React.Fragment>
-    )
+    </React.Fragment>
+  );
 }

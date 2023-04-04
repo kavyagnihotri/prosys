@@ -36,42 +36,11 @@ const ProjectForm = () => {
       setError("You must be logged in");
       return;
     }
-    const professorEmail = user.email;
-    const approved = 0;
 
-    const project = {
-      title,
-      projectID,
-      description,
-      prerequisite,
-      projectType,
-      professorEmail,
-      numberOfStudents,
-      approved,
-    };
-    
-    const response = await fetch("/projects", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        projectID,
-        description,
-        prerequisite,
-        projectType,
-        professorEmail,
-        numberOfStudents,
-        approved,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
-    
-    if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyfields);
+
+    const handleClick = (event) => {
+        event.preventDefault()
+        navigate("/prof/dashboard")
     }
 
     if (response.ok) {
