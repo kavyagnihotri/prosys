@@ -63,6 +63,7 @@ const branches = [
 ]
 
 export default function InformalApplications({ projectID, numberOfStudents, onListItemClick }) {
+    console.log(projectID, numberOfStudents)
     var { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
@@ -70,6 +71,7 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
     var title = ""
     var NoStudents = numberOfStudents
     var count = 0
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -139,14 +141,26 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
     const changeStatus = async () => {
         applications &&
             applications.map((a) => {
-                if (a.profEmail === user.email && a.projectID === id && a.type === 0 && count < NoStudents) {
+                if (
+                    a.profEmail === user.email &&
+                    a.projectID === id &&
+                    a.type === 0 &&
+                    a.score != -1 &&
+                    count < NoStudents
+                ) {
                     updateStatus(a._id, 1)
                     count += 1
-                } else if (a.profEmail === user.email && a.projectID === id && a.type === 0 && count >= NoStudents) {
+                } else if (
+                    a.profEmail === user.email &&
+                    a.projectID === id &&
+                    a.type === 0 &&
+                    a.score != -1 &&
+                    count >= NoStudents
+                ) {
                     updateStatus(a._id, 2)
                 }
             })
-        handleListItemClick("dashboard")
+        navigate(0)
     }
 
     return (

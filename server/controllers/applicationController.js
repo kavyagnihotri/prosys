@@ -50,8 +50,8 @@ const createApplication = async (req, res) => {
 
 const addScore = async (req, res) => {
     const { appId, newScore } = req.body
-    console.log(req.body)
-    console.log(appId, newScore)
+    // console.log(req.body)
+    // console.log(appId, newScore)
     try {
         appToUpdate = await Application.findById(appId)
         // console.log(appToUpdate)
@@ -65,7 +65,7 @@ const addScore = async (req, res) => {
 
 const updateStatus = async (req, res) => {
     const { appId, status } = req.body
-    console.log(req.body)
+    // console.log(req.body)
     try {
         appToUpdate = await Application.findById(appId)
         // console.log(appToUpdate)
