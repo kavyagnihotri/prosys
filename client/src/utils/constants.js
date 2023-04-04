@@ -1,4 +1,4 @@
-const serverURL = "http://localhost:8080"
-const clientURL = "http://localhost:3000"
+const serverURL = "https://prosys.vercel.app"
+const clientURL = "https://prosys-client.vercel.app"
 
 module.exports = { serverURL, clientURL }
