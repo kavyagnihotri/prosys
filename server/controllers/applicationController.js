@@ -63,6 +63,25 @@ const addScore = async (req, res) => {
     }
 }
 
+const updateStatus = async (req, res) => {
+    const { appId, status } = req.body
+    console.log(req.body)
+    try {
+        appToUpdate = await Application.findById(appId)
+        // console.log(appToUpdate)
+        appToUpdate.status = status
+        appToUpdate.save()
+        res.status(200).json("Updated")
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const getInformal = async (req, res) => {
+    const applications = await Application.find({ type: 0 }).sort({ score: "desc" })
+    res.status(200).json(applications)
+}
+
 // delete an applciation
 const deleteApplication = async (req, res) => {
     // const { id } = req.params
@@ -81,4 +100,6 @@ module.exports = {
     createApplication,
     deleteApplication,
     addScore,
+    getInformal,
+    updateStatus,
 }

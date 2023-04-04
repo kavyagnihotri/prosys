@@ -26,7 +26,7 @@ const theme = createTheme()
 
 const ApplicationForm = () => {
     const navigate = useNavigate()
-    const { dispatch } = useApplicationsContext()
+    const { dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const { logout } = useLogout()
     const [activeStep, setActiveStep] = React.useState(0)
@@ -87,7 +87,7 @@ const ApplicationForm = () => {
             const json = await response.json()
 
             if (response.ok) {
-                dispatch({ type: "SET_APPLICATIONS", payload: json })
+                dispatch2({ type: "SET_APPLICATIONS", payload: json })
             }
         }
 
@@ -96,7 +96,7 @@ const ApplicationForm = () => {
             fetchApplications()
             fetchProject()
         }
-    }, [dispatch, user, id])
+    }, [dispatch2, user, id])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -135,7 +135,7 @@ const ApplicationForm = () => {
         if (response.ok) {
             setError(null)
 
-            dispatch({ type: "CREATE_APPLICATION", payload: json })
+            dispatch2({ type: "CREATE_APPLICATION", payload: json })
             setIsLoading(false)
             setActiveStep(1)
         }

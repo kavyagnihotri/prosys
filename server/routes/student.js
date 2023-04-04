@@ -8,6 +8,8 @@ const {
     createApplication,
     deleteApplication,
     addScore,
+    getInformal,
+    updateStatus,
 } = require("../controllers/applicationController")
 
 const router = express.Router()
@@ -29,6 +31,8 @@ router.get("/projects/:id", getProject)
 router.get("/applications", getApplications)
 router.post("/createApplication", createApplication)
 router.post("/score", addScore)
+router.get("/infrank", getInformal)
+router.post("/status", updateStatus)
 
 router.get("/", getStudents)
 // router.delete('/applications/:id', deleteApplication)

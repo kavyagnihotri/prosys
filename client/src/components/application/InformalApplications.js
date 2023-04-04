@@ -16,6 +16,8 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import MenuItem from "@mui/material/MenuItem"
 import { useNavigate } from "react-router-dom"
+import { useProjectsContext } from "../../hooks/useProjectsContext"
+import setSelectedContent from "../../pages/professor/ProfDashboard"
 
 const branches = [
     {
@@ -60,12 +62,14 @@ const branches = [
     },
 ]
 
-export default function InformalApplications({ projectID }) {
-    var { applications, dispatch } = useApplicationsContext()
+export default function InformalApplications({ projectID, numberOfStudents, onListItemClick }) {
+    var { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
     var { students, dispatch1 } = useStudentsContext()
     var title = ""
+    var NoStudents = numberOfStudents
+    var count = 0
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -76,7 +80,7 @@ export default function InformalApplications({ projectID }) {
             const json = await response.json()
 
             if (response.ok) {
-                dispatch({ type: "SET_APPLICATIONS", payload: json })
+                dispatch2({ type: "SET_APPLICATIONS", payload: json })
                 applications = json
             }
         }
@@ -95,12 +99,18 @@ export default function InformalApplications({ projectID }) {
         if (user) {
             fetchApplications()
             fetchStudents()
-            // applications && applications.map((a) =>{
-            //   if(a.projectID==id)
-            //     title = a.projectTitle
-            // })
+            applications &&
+                applications.map((a) => {
+                    if (a.projectID == id) {
+                        title = a.projectTitle
+                    }
+                })
         }
-    }, [dispatch, dispatch1, user])
+    }, [dispatch2, dispatch1, user])
+
+    const handleListItemClick = (content) => {
+        onListItemClick(content)
+    }
 
     const addScore = async (newScore, appId) => {
         const response = await fetch("/student/score", {
@@ -110,13 +120,38 @@ export default function InformalApplications({ projectID }) {
         })
         const json = await response.json()
         if (response.ok) {
-            dispatch({ type: "SET_APPLICATIONS", payload: json })
+            dispatch2({ type: "SET_APPLICATIONS", payload: json })
         }
+    }
+
+    const updateStatus = async (appId, appStatus) => {
+        const response = await fetch("/student/status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+            body: JSON.stringify({ appId: appId, status: appStatus }),
+        })
+        const json = await response.json()
+        if (response.ok) {
+            dispatch2({ type: "SET_APPLICATIONS", payload: json })
+        }
+    }
+
+    const changeStatus = async () => {
+        applications &&
+            applications.map((a) => {
+                if (a.profEmail === user.email && a.projectID === id && a.type === 0 && count < NoStudents) {
+                    updateStatus(a._id, 1)
+                    count += 1
+                } else if (a.profEmail === user.email && a.projectID === id && a.type === 0 && count >= NoStudents) {
+                    updateStatus(a._id, 2)
+                }
+            })
+        handleListItemClick("dashboard")
     }
 
     return (
         <React.Fragment>
-            <Title>Informal Applicants for Project</Title>
+            <Title>Informal Applicants for {title} Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -199,7 +234,7 @@ export default function InformalApplications({ projectID }) {
                         )}
                 </TableBody>
             </Table>
-            <Button color="inherit" size="large" type="submit" variant="outlined">
+            <Button color="inherit" size="large" type="submit" variant="outlined" onClick={changeStatus}>
                 Approve Score
             </Button>
         </React.Fragment>
