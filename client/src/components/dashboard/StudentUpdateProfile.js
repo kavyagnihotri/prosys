@@ -117,7 +117,7 @@ export default function StudentProfile({onUpdateProfileClick}) {
                                 fullWidth
                                 id="email"
                                 name="email"
-                                value={user.email}
+                                value={form.email}
                                 required
                                 disabled
                             />
