@@ -7,69 +7,48 @@ import Link from "@mui/material/Link"
 import Typography from "@mui/material/Typography"
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
-import ToggleButton from "@mui/material/ToggleButton"
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import Toolbar from "@mui/material/Toolbar"
-import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
-import { useProjectsContext } from "../../hooks/useProjectsContext"
+
 import { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { useApplicationsContext } from "../../hooks/useApplicationsContext"
+import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useLogout } from "../../hooks/useLogout"
 
 const theme = createTheme()
 
-const ApplicationForm = () => {
-    const navigate = useNavigate()
-    const { dispatch2 } = useApplicationsContext()
-    const { projects, dispatch } = useProjectsContext()
+const ProjectForm = () => {
+    const { dispatch } = useProjectsContext()
     const { user } = useAuthContext()
     const { logout } = useLogout()
+    const navigate = useNavigate()
+    // const [title, setTitle] = useState("")
+    // const [projectID, setProjectID] = useState("")
+    // const [description, setDescription] = useState("")
+    // const [projectType, setProjectType] = useState("")
+    // const [prerequisite, setPrerquisite] = useState("")
+    // const [numberOfStudents, setProjectNumber] = useState("")
     const [activeStep, setActiveStep] = React.useState(0)
-    const [alignment, setType] = React.useState("1")
-    const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
-    const [projectTitle, setProjectTitle] = useState("")
-    const [project_id, setProjectID] = useState("")
-    const { id } = useParams()
-
-    const handleToggle = (event, newAlignment) => {
-        setType(newAlignment)
-    }
+    const [open, setOpen] = React.useState(true)
+    const [error, setError] = useState(null)
+    const [emptyfields, setEmptyFields] = useState([])
 
     const handleLogout = async (e) => {
         e.preventDefault()
-        navigate("/student/login")
         logout()
+        navigate("/")
     }
 
-    const handleHome = (event) => {
+    const handleClick = (event) => {
         event.preventDefault()
-        navigate("/student/dashboard")
+        navigate("/prof/dashboard")
     }
 
-    // fetching cuz once you go back to the dashboard we need the projects and the applications
     useEffect(() => {
-        const fetchProject = async () => {
-            fetch(`/projects/${id}`, {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    // Update project title state with fetched data
-                    setProjectID(data.projectID)
-                    setProjectTitle(data.title)
-                })
-                .catch((error) => {
-                    // Handle error
-                })
-        }
-
         const fetchProjects = async () => {
             const response = await fetch("/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
@@ -81,62 +60,70 @@ const ApplicationForm = () => {
             }
         }
 
-        const fetchApplications = async () => {
-            const response = await fetch("/student/applications", {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch2({ type: "SET_APPLICATIONS", payload: json })
-            }
-        }
-
         if (user) {
             fetchProjects()
-            fetchApplications()
-            fetchProject()
         }
-    }, [dispatch2, user, id])
+    }, [dispatch, user])
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
-        const studentregex = new RegExp("[fhp][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*")
+        const profregex = new RegExp("[a-zA-Z0-9]+.*")
 
-        if (!user || !studentregex.test(user.email)) {
-            setError("Student must be logged in")
+        if (!user || !profregex.test(user.email)) {
+            setError("Professor must be logged in")
             return
         }
 
-        const data = new FormData(event.currentTarget)
-        const projectID = id
-        const studentEmail = user.email
-        const sop = data.get("sop")
-        const type = parseInt(alignment)
+        const data = new FormData(e.currentTarget)
+        const title = data.get("title")
+        const projectID = data.get("projectID")
+        const description = data.get("description")
+        const projectType = data.get("type")
+        const prerequisite = data.get("prerequistie")
+        const numberOfStudents = data.get("numberOfStudents")
+        const professorEmail = user.email
+        console.log(professorEmail)
+        const approved = 0
 
-        const application = { projectID, studentEmail, type, sop }
+        const project = {
+            title,
+            projectID,
+            description,
+            prerequisite,
+            projectType,
+            professorEmail,
+            numberOfStudents,
+            approved,
+        }
 
-        const response = await fetch("/student/createApplication", {
+        const response = await fetch("/projects", {
             method: "POST",
-            body: JSON.stringify(application),
+            body: JSON.stringify({ project }),
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${user.token}`,
             },
         })
-
         const json = await response.json()
 
         if (!response.ok) {
             setError(json.error)
+            setEmptyFields(json.emptyfields)
             setIsLoading(false)
         }
 
         if (response.ok) {
+            // setTitle("")
+            // setProjectID("")
+            // setDescription("")
+            // setProjectNumber("")
+            // setProjectType("")
+            // setPrerquisite("")
             setError(null)
+            setEmptyFields([])
 
-            dispatch2({ type: "CREATE_APPLICATION", payload: json })
+            dispatch({ type: "CREATE_PROJECT", payload: json })
             setIsLoading(false)
             setActiveStep(1)
         }
@@ -156,14 +143,14 @@ const ApplicationForm = () => {
                     <AppBar position="absolute">
                         <Toolbar sx={{ pr: "24px" }}>
                             <Button
-                                onClick={handleHome}
+                                onClick={handleClick}
                                 component="h1"
                                 variant="h6"
                                 noWrap
                                 color="inherit"
                                 size="large"
                             >
-                                ProSys - Student
+                                ProSys: Professor
                             </Button>
                             <Typography
                                 component="h1"
@@ -177,7 +164,7 @@ const ApplicationForm = () => {
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleLogout}>
                                 <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
-                                    LogOut
+                                    Log Out
                                 </Button>
                             </Box>
                         </Toolbar>
@@ -185,20 +172,20 @@ const ApplicationForm = () => {
                 </Box>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Typography component="h1" variant="h4" align="center">
-                        Application
+                        Project Proposal
                     </Typography>
                     {activeStep === 1 ? (
                         <React.Fragment>
                             <p></p>
                             <Typography variant="h5" gutterBottom>
-                                Your Application is Submitted.
+                                Your Project Proposal is Submitted.
                             </Typography>
                             <Button
                                 component={Link}
-                                to="/student/dashboard"
+                                to="/prof/dashboard"
                                 variant="contained"
                                 sx={{ mt: 3, ml: 1 }}
-                                onClick={handleHome}
+                                onClick={handleClick}
                             >
                                 Go to Home
                             </Button>
@@ -210,41 +197,77 @@ const ApplicationForm = () => {
                                     Details
                                 </Typography>
                                 <Grid container spacing={3}>
-                                    <Grid item xs={12} sm={6}>
-                                        <ToggleButtonGroup
-                                            value={alignment}
-                                            exclusive
-                                            onChange={handleToggle}
-                                            aria-label="project-type"
-                                        >
-                                            <ToggleButton value="1">Formal</ToggleButton>
-                                            <ToggleButton value="0">Informal</ToggleButton>
-                                        </ToggleButtonGroup>
-                                    </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             required
-                                            value={projectTitle}
+                                            id="title"
+                                            name="title"
                                             label="Project Title"
                                             fullWidth
                                             variant="standard"
-                                            disabled="true"
+                                            className={emptyfields.includes("title") ? "error" : ""}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
-                                            id="sop"
-                                            name="sop"
-                                            label="Statement of Purpose"
+                                            required
+                                            id="projectID"
+                                            name="projectID"
+                                            label="Project ID"
                                             fullWidth
                                             variant="standard"
+                                            className={emptyfields.includes("projectID") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="description"
+                                            name="description"
+                                            label="Description"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("description") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="prerequisite"
+                                            name="prerequisite"
+                                            label="Prerequisite(s)"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("prerequisite") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            id="type"
+                                            name="type"
+                                            label="Project Type"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("type") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            id="numberOfStudents"
+                                            name="numberOfStudents"
+                                            label="Number of Formal Students"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("numberOfStudents") ? "error" : ""}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             // required
-                                            id="studentEmail"
-                                            name="studentEmail"
+                                            id="profEmail"
+                                            name="profEmail"
                                             label="Your Email"
                                             fullWidth
                                             value={JSON.parse(localStorage.getItem("user")).email}
@@ -260,7 +283,7 @@ const ApplicationForm = () => {
                                         sx={{ mt: 3, ml: 1 }}
                                         disabled={isLoading}
                                     >
-                                        Submit
+                                        Submit Proposal
                                     </Button>
                                     {error && <div className="error">{error}</div>}
                                 </Grid>
@@ -273,4 +296,4 @@ const ApplicationForm = () => {
     )
 }
 
-export default ApplicationForm
+export default ProjectForm
