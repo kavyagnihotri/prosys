@@ -24,7 +24,7 @@ const theme = createTheme()
 export default function StudentProfile({onUpdateProfileClick}) {
     const navigate = useNavigate()
     const { user } = useAuthContext()
-    const params = useParams()
+    // const params = useParams()
     const [form, setForm] = useState({})
     const [change, setChange] = useState({
         cgpa: "",
@@ -34,7 +34,7 @@ export default function StudentProfile({onUpdateProfileClick}) {
     })
 
     useEffect(() => {
-        const fetchData= async () => {
+        const fetchData = async () => {
             const response = await fetch(`/student/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
