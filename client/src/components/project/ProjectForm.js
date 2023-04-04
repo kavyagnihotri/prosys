@@ -39,7 +39,6 @@ const ProjectForm = () => {
     const handleClick = (event) => {
         event.preventDefault()
         navigate("/prof/dashboard")
-
     }
 
     useEffect(() => {
