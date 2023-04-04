@@ -35,6 +35,7 @@ export default function Orders() {
             fetchApplications()
         }
     }, [dispatch2, user])
+
     return (
         <React.Fragment>
             <Title>Your Applications</Title>

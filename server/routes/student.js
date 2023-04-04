@@ -12,7 +12,6 @@ const {
     updateStatus,
 } = require("../controllers/applicationController")
 
-
 const router = express.Router()
 
 // login route
@@ -38,11 +37,5 @@ router.post("/status", updateStatus)
 router.get("/", getStudents)
 // router.delete('/applications/:id', deleteApplication)
 // router.patch('/:id', updateProject)
-
-
-router.get("/", getStudents)
-router.get("/:id", getStudent)
-
-router.put("/:id", updateProfile)
 
 module.exports = router
