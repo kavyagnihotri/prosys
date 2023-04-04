@@ -36,6 +36,7 @@ function DashboardContent() {
     const [selectedContent, setSelectedContent] = useState("dashboard")
     const [projectID, setProjectID] = useState(null)
     const [profID, setProfID] = useState(null)
+    const [name, setName] = useState(null)
 
     const handleViewApplicationClick = (content) => {
         setSelectedContent("application")
@@ -57,12 +58,13 @@ function DashboardContent() {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch("/prof", {
+            const response = await fetch(`/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
 
             if (response.ok) {
+                setName(json.name)
                 dispatch({ type: "SET_PROF", payload: json })
             }
         }
@@ -98,7 +100,7 @@ function DashboardContent() {
                             ProSys - Professor
                         </Typography>
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                            {user.name}
+                            {name}
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
@@ -121,9 +123,7 @@ function DashboardContent() {
                             <ChevronLeftIcon />
                         </IconButton>
                     </Toolbar>
-
                     <Divider />
-
                     <List>
                         <ListItems onListItemClick={handleListItemClick} />
                     </List>
