@@ -36,10 +36,10 @@ function DashboardContent() {
     const [projectID, setProjectID] = useState(null)
     const [numberOfStudents, setNumberOfStudents] = useState(null)
 
-
-    const handleViewApplicationClick = (content) => {
+    const handleViewApplicationClick = (content, content1) => {
         setSelectedContent("application")
         setProjectID(content)
+        setNumberOfStudents(content1)
     }
 
     const handleListItemClick = (content) => {
@@ -143,7 +143,6 @@ function DashboardContent() {
                         {selectedContent === "dashboard" && (
                             <Projects onViewApplicationClick={handleViewApplicationClick} />
                         )}
-
                         {selectedContent === "application" && (
                             <ViewApplications
                                 projectID={projectID}
@@ -151,7 +150,6 @@ function DashboardContent() {
                                 onListItemClick={handleListItemClick}
                             />
                         )}
-
                     </TableContainer>
                 </Box>
             </Box>
