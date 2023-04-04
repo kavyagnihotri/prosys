@@ -16,8 +16,7 @@ import ApplicationForm from "./components/application/ApplicationForm"
 import AugsdHod from "./pages/augsd/AugsdHod"
 import ChatPage from "./components/chatDirectory/chatPage"
 import ViewApplications from "./components/application/ViewApplications"
-import ProfUpdate from "./components/project/ProfUpdateProfile"
-import StudentUpdate from "./components/project/StudentUpdateProfile"
+
 function App() {
     const { user } = useAuthContext()
 
@@ -67,10 +66,10 @@ function App() {
                             }
                         />
 
-                        <Route
+                        {/* <Route
                             path="/student/profile/update"
                             element={<StudentUpdate />}
-                        />
+                        /> */}
 
                         <Route
                             path="/student/signup"
@@ -94,10 +93,10 @@ function App() {
                             element={user && user.role === "1" ? <ProfDashboard /> : <Navigate to="/prof/login" />}
                         />
                         <Route path="/prof/project/add" element={<ProjectForm />} />
-                        <Route
+                        {/* <Route
                             path="/prof/profile/update"
                             element= {<ProfUpdate />}
-                        />
+                        /> */}
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
 
                         <Route
