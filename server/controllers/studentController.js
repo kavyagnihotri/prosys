@@ -51,7 +51,7 @@ const getStudent = async (req, res) => {
         const student = await Student.findOne({ email })
 
         if (!student) {
-            return res.status(404).json({ error: "Professor not found" })
+            return res.status(404).json({ error: "Student not found" })
         }
         res.status(200).json(student)
     } catch (error) {
