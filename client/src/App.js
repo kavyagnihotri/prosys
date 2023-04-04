@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { useAuthContext } from "./hooks/useAuthContext"
 
 // pages and components
-import ProjectForm from "./components/project/NewProjectForm"
+import ProjectForm from "./components/project/ProjectForm"
 import StudentLogin from "./pages/student/StudentLogin"
 import StudentSignup from "./pages/student/StudentSignup"
 import AugsdLogin from "./pages/augsd/AugsdLogin"
