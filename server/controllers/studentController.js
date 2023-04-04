@@ -45,6 +45,21 @@ const getStudents = async (req, res) => {
     res.status(200).json(students)
 }
 
+const getStudent = async (req, res) => {
+    const email = req.params.id
+    try {
+        const student = await Student.findOne({ email })
+
+        if (!student) {
+            return res.status(404).json({ error: "Professor not found" })
+        }
+        res.status(200).json(student)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: "Internal server error" })
+    }
+}
+
 const getName = async (req, res) => {
     const { id } = req.params
 
@@ -64,10 +79,15 @@ const getName = async (req, res) => {
 const updateProfile = async(req, res) => {
     const id = req.params.id
 
-    Prof.findByIdAndUpdate(
+    Student.findByIdAndUpdate(
         { _id: id },
         {
             $set: {
+                email: req.body.email,
+                password: req.body.password,
+                name: req.body.name,
+                studentID: req.body.studentID,
+                dept: req.body.dept,
                 cgpa: req.body.cgpa,
                 cv_link: req.body.cv_link,
                 per_link: req.body.per_link,
@@ -87,4 +107,4 @@ const updateProfile = async(req, res) => {
         })
 }
 
-module.exports = { signupStudent, loginStudent, getStudents, updateProfile }
+module.exports = { signupStudent, loginStudent, getStudents, getStudent, updateProfile, getName}
