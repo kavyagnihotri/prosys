@@ -20,10 +20,6 @@ import ViewApplications from "./components/application/ViewApplications"
 function App() {
     const { user } = useAuthContext()
 
-    // localstorage fetch
-    // const data = window.localStorage
-    //
-
     if (user != null) {
         console.log("ROLE " + user.role)
     }
@@ -88,6 +84,7 @@ function App() {
                             element={user && user.role === "1" ? <ProfDashboard /> : <Navigate to="/prof/login" />}
                         />
                         <Route path="/prof/project/add" element={<ProjectForm />} />
+
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
 
                         <Route
