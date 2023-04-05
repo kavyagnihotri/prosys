@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { AppBar } from "../dashboard/Objects"
+import { AppBar } from "../../components/dashboard/Objects"
 import { useLogout } from "../../hooks/useLogout"
 
 const theme = createTheme()
@@ -39,7 +39,6 @@ const ProjectForm = () => {
     const handleClick = (event) => {
         event.preventDefault()
         navigate("/prof/dashboard")
-
     }
 
     useEffect(() => {

@@ -62,7 +62,7 @@ const branches = [
     },
 ]
 
-export default function InformalApplications({ projectID, numberOfStudents, onListItemClick  }) {
+export default function FormalApplications({ projectID, numberOfStudents, onListItemClick }) {
     var { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
@@ -71,48 +71,6 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
     var NoStudents = numberOfStudents
     var count = 0
     const navigate = useNavigate()
-    var title = ""
-
-    const handleListItemClick = (content) => {
-        onListItemClick(content)
-    }
-
-    const addScore = async (newScore, appId) => {
-        const response = await fetch("/student/score", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
-            body: JSON.stringify({ appId: appId, newScore: newScore }),
-        })
-        const json = await response.json()
-        if (response.ok) {
-            dispatch2({ type: "SET_APPLICATIONS", payload: json })
-        }
-    }
-
-    const updateStatus = async (appId, appStatus) => {
-        const response = await fetch("/student/status", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
-            body: JSON.stringify({ appId: appId, status: appStatus }),
-        })
-        const json = await response.json()
-        if (response.ok) {
-            dispatch2({ type: "SET_APPLICATIONS", payload: json })
-        }
-    }
-
-    const changeStatus = async () => {
-        const response = await fetch("/student/rank/", {
-            method: "GET",
-            headers: { Authorization: `Bearer ${user.token}` },
-        })
-        const json = await response.json()
-
-        if (response.ok) {
-            dispatch2({ type: "SET_APPLICATIONS", payload: json })
-            applications = json
-        }
-    }
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -156,19 +114,55 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
             fetchStudents()
             fetchProfs()
             console.log(profs)
-            // applications && applications.map((a) =>{
-            //   if(a.projectID==id)
-            //     title = a.projectTitle
-            // })
         }
+    }, [dispatch2, dispatch1, user])
 
+    const handleListItemClick = (content) => {
+        onListItemClick(content)
+    }
+
+    const addScore = async (newScore, appId) => {
+        const response = await fetch("/student/score", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+            body: JSON.stringify({ appId: appId, newScore: newScore }),
+        })
+        const json = await response.json()
+        if (response.ok) {
+            dispatch2({ type: "SET_APPLICATIONS", payload: json })
+        }
+    }
+
+    const updateStatus = async (appId, appStatus) => {
+        const response = await fetch("/student/status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+            body: JSON.stringify({ appId: appId, status: appStatus }),
+        })
+        const json = await response.json()
+        if (response.ok) {
+            dispatch2({ type: "SET_APPLICATIONS", payload: json })
+        }
+    }
+
+    const changeStatus = async () => {
+        const response = await fetch("/student/rank/", {
+            method: "GET",
+            headers: { Authorization: `Bearer ${user.token}` },
+        })
+        const json = await response.json()
+
+        if (response.ok) {
+            dispatch2({ type: "SET_APPLICATIONS", payload: json })
+            applications = json
+        }
         applications &&
             applications.map((a) => {
                 if (
                     a.profEmail === user.email &&
                     a.projectID === id &&
                     a.type === 0 &&
-                    a.score !== -1 &&
+                    a.score != -1 &&
                     count < NoStudents
                 ) {
                     students &&
@@ -177,7 +171,7 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
                                 profs &&
                                     profs.map((prof) => {
                                         if (prof.email === user.email && prof.dept === s.dept) updateStatus(a._id, 1)
-                                        else if (prof.email === user.email && prof.dept !== s.dept)
+                                        else if (prof.email === user.email && prof.dept != s.dept)
                                             updateStatus(a._id, 3)
                                     })
                             }
@@ -187,14 +181,14 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
                     a.profEmail === user.email &&
                     a.projectID === id &&
                     a.type === 0 &&
-                    a.score !== -1 &&
+                    a.score != -1 &&
                     count >= NoStudents
                 ) {
                     updateStatus(a._id, 2)
                 }
             })
         navigate(0)
-    }, [dispatch, dispatch1, dispatch2, user])
+    }
 
     return (
         <React.Fragment>
@@ -257,7 +251,7 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
                                                         </TextField>
                                                     </TableCell>
                                                 )}
-                                                {app.score !== -1 && (
+                                                {app.score != -1 && (
                                                     <TableCell>
                                                         <TextField
                                                             id="score"
@@ -275,16 +269,13 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
                                                         </TextField>
                                                     </TableCell>
                                                 )}
-                                                <TableCell>
-                                                    <TextField id="standard-basic" label="Score" variant="standard" onClick={changeStatus}/>
-                                                </TableCell>
                                             </TableRow>
                                         )
                                 )
                         )}
                 </TableBody>
             </Table>
-            <Button color="inherit" size="large" type="submit" variant="outlined">
+            <Button color="inherit" size="large" type="submit" variant="outlined" onClick={changeStatus}>
                 Approve Score
             </Button>
         </React.Fragment>
