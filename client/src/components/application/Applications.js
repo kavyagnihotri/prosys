@@ -1,19 +1,12 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
-import Link from "@mui/material/Link"
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell from "@mui/material/TableCell"
-import TableHead from "@mui/material/TableHead"
-import TableRow from "@mui/material/TableRow"
 import Title from "../Title"
-
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import Paper from "@mui/material/Paper"
+import { useEffect } from "react"
+import ApplicationDetails from "./ApplicationDetails"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
-
-function preventDefault(event) {
-    event.preventDefault()
-}
 
 export default function Orders() {
     const { applications, dispatch2 } = useApplicationsContext()
@@ -36,49 +29,23 @@ export default function Orders() {
         }
     }, [dispatch2, user])
 
+    const states = [1, 3, 4, 0, 2]
+    // pending = 0, accepted = 1, rejected = 2, hodApproval = 3, studentResponed = 4
+
     return (
         <React.Fragment>
             <Title>Your Applications</Title>
-            <Table size="small">
-                <TableHead>
-                    <TableRow>
-                        {/* <TableCell>Project ID</TableCell> */}
-                        <TableCell>Title</TableCell>
-                        <TableCell>Offered By</TableCell>
-                        <TableCell>Statement of Purpose</TableCell>
-                        <TableCell>Type</TableCell>
-                        <TableCell>Status</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {applications &&
-                        applications.map(
-                            (application) =>
-                                application.studentEmail === user.email && (
-                                    <TableRow key={application._id}>
-                                        {/* <TableCell>{application.projectID}</TableCell> */}
-                                        <TableCell>{application.projectTitle}</TableCell>
-                                        <TableCell>{application.profEmail}</TableCell>
-                                        <TableCell>{application.sop}</TableCell>
-                                        <TableCell>{application.type == 1 ? "Formal" : "Informal"}</TableCell>
-                                        {/* 0-> undetermined; 1-> accepted, 2-> rejected, 3-> hod approval */}
-                                        <TableCell>
-                                            {application.status == 0
-                                                ? "Applied"
-                                                : application.status === 1
-                                                ? "Accepted"
-                                                : application.status === 2
-                                                ? "Rejected"
-                                                : "Sent for HOD Approval"}
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                        )}
-                </TableBody>
-            </Table>
-            {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more
-      </Link> */}
+            {states.map((value, index) => (
+                <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                                <ApplicationDetails key={index} status={value} />
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Container>
+            ))}
         </React.Fragment>
     )
 }

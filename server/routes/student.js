@@ -6,10 +6,11 @@ const { getProjects, getProject } = require("../controllers/projectController")
 const {
     getApplications,
     createApplication,
-    deleteApplication,
     addScore,
     getRanked,
     updateStatus,
+    acceptApplication,
+    rejectApplication,
 } = require("../controllers/applicationController")
 
 const router = express.Router()
@@ -33,6 +34,10 @@ router.post("/createApplication", createApplication)
 router.post("/score", addScore)
 router.get("/rank", getRanked)
 router.post("/status", updateStatus)
+
+// Student application control
+router.post("/accept", acceptApplication)
+router.post("/reject", rejectApplication)
 
 router.get("/", getStudents)
 // router.delete('/applications/:id', deleteApplication)
