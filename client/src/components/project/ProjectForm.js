@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { AppBar } from "../../components/dashboard/Objects"
+import { AppBar } from "../dashboard/Objects"
 import { useLogout } from "../../hooks/useLogout"
 
 const theme = createTheme()
@@ -39,6 +39,7 @@ const ProjectForm = () => {
     const handleClick = (event) => {
         event.preventDefault()
         navigate("/prof/dashboard")
+
     }
 
     useEffect(() => {
@@ -70,10 +71,10 @@ const ProjectForm = () => {
 
         const data = new FormData(e.currentTarget)
         const title = data.get("title")
-        // const projectID = data.get("projectID")
+        const projectID = data.get("projectID")
         const description = data.get("description")
         const projectType = data.get("type")
-        const prerequisite = data.get("prerequisite")
+        const prerequisite = data.get("prerequistie")
         const numberOfStudents = data.get("numberOfStudents")
         const professorEmail = user.email
         console.log(professorEmail)
@@ -81,7 +82,7 @@ const ProjectForm = () => {
 
         const project = {
             title,
-            // projectID,
+            projectID,
             description,
             prerequisite,
             projectType,
@@ -107,6 +108,12 @@ const ProjectForm = () => {
         }
 
         if (response.ok) {
+            // setTitle("")
+            // setProjectID("")
+            // setDescription("")
+            // setProjectNumber("")
+            // setProjectType("")
+            // setPrerquisite("")
             setError(null)
             setEmptyFields([])
 
@@ -195,7 +202,7 @@ const ProjectForm = () => {
                                             className={emptyfields.includes("title") ? "error" : ""}
                                         />
                                     </Grid>
-                                    {/* <Grid item xs={12}>
+                                    <Grid item xs={12}>
                                         <TextField
                                             required
                                             id="projectID"
@@ -205,7 +212,7 @@ const ProjectForm = () => {
                                             variant="standard"
                                             className={emptyfields.includes("projectID") ? "error" : ""}
                                         />
-                                    </Grid> */}
+                                    </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             required
@@ -220,9 +227,9 @@ const ProjectForm = () => {
                                     <Grid item xs={12}>
                                         <TextField
                                             required
-                                            id="prerequisite"
-                                            name="prerequisite"
-                                            label="Prerequisite(s)"
+                                            id="prerequistie"
+                                            name="prerequistie"
+                                            label="Prerequistie(s)"
                                             fullWidth
                                             variant="standard"
                                             className={emptyfields.includes("prerequisite") ? "error" : ""}
@@ -252,6 +259,7 @@ const ProjectForm = () => {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
+                                            // required
                                             id="profEmail"
                                             name="profEmail"
                                             label="Your Email"

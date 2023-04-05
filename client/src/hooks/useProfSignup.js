@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
-// email, password, name, dept, chamber, researchInterest, websites, hod
-
 export const useProfSignup = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
