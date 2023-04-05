@@ -19,99 +19,98 @@ import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 
 function preventDefault(event) {
-    event.preventDefault()
+  event.preventDefault()
 }
 
 export default function NewProjectTable() {
-    const { projects, dispatch } = useProjectsContext()
-    const { user } = useAuthContext()
-    const [open, setOpen] = React.useState(false)
-    const [textInput, setTextInput] = useState("")
-    const [pid, setPid] = useState(null)
 
-    const handleClickOpen = (id) => {
-        setPid(id)
-        setOpen(true)
+  const { projects, dispatch } = useProjectsContext()
+  const { user } = useAuthContext()
+  const [open, setOpen] = React.useState(false)
+  const [textInput, setTextInput] = useState("")
+  const [pid, setPid] = useState(null)
+
+  const handleClickOpen = (id) => {
+    setPid(id)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleTextInputChange = (event) => {
+    setTextInput(event.target.value)
+  }
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
+        method: "GET",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+  
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
     }
 
-    const handleClose = () => {
-        setOpen(false)
+    if (user) {
+      fetchProjects()
     }
 
-    const handleTextInputChange = (event) => {
-        setTextInput(event.target.value)
+  }, [dispatch, user])
+
+  const onAccept = async (id) => {
+    await fetch('/augsd/accept',{
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id})
+    })
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
+        method: "GET",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
     }
 
-    useEffect(() => {
-        const fetchProjects = async () => {
-            const response = await fetch("/projects/", {
-                method: "GET",
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
+    if (user) {
+      fetchProjects()
+    }
+  }
 
-            if (response.ok) {
-                dispatch({ type: "SET_PROJECTS", payload: json })
-            }
-        }
+  const onReject = async (id) => {
+    // e.preventDefault()s
+    
+    await fetch('/augsd/reject',{
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id})
+    })
+    const fetchProjects = async () => {
+      const response = await fetch('/projects/', {
+        method: "GET",
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+      const json = await response.json()
 
-        if (user) {
-            fetchProjects()
-        }
-    }, [dispatch, user])
-
-    const onAccept = async (id) => {
-        await fetch("/augsd/accept", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: id }),
-        })
-        const fetchProjects = async () => {
-            const response = await fetch("/projects/", {
-                method: "GET",
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: "SET_PROJECTS", payload: json })
-            }
-        }
-
-        if (user) {
-            fetchProjects()
-        }
+      if (response.ok) {
+        dispatch({ type: 'SET_PROJECTS', payload: json })
+      }
     }
 
-    const onReject = async (id) => {
-        // if (id != null && textInput != "") {
-        await fetch("/augsd/reject", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: id, recommendation: textInput }),
-        })
-        setPid(null)
-        setTextInput("")
-        handleClose()
-        // }
-        const fetchProjects = async () => {
-            const response = await fetch("/projects/", {
-                method: "GET",
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: "SET_PROJECTS", payload: json })
-            }
-        }
-
-        if (user) {
-            fetchProjects()
-        }
+    if (user) {
+      fetchProjects()
     }
+  }
 
-    return (
+  return (
         <React.Fragment>
             <Title>New Projects</Title>
             <Table size="small">
@@ -183,5 +182,5 @@ export default function NewProjectTable() {
                 </DialogActions>
             </Dialog>
         </React.Fragment>
-    )
+  )
 }

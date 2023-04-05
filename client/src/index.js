@@ -8,7 +8,7 @@ import { AuthContextProvider } from "./context/AuthContext"
 import { StudentsContextProvider } from "./context/StudentsContext"
 import { ProfContextProvider } from "./context/ProfContext"
 
-const root = ReactDOM.createRoot(document.getElementById("root"))
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <AuthContextProvider>
@@ -23,4 +23,5 @@ root.render(
             </ProjectsContextProvider>
         </AuthContextProvider>
     </React.StrictMode>
-)
+);
+

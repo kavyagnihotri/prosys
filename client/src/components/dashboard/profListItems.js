@@ -57,7 +57,7 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Chat Portal" />
             </ListItemButton>
-            <ListItemButton component={Link} to="/prof/profile">
+            <ListItemButton button onClick={() => handleListItemClick("profile")}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>

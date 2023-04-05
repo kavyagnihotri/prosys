@@ -7,7 +7,7 @@ import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 
-export default function Orders({ projectID, numberOfStudents, onListItemClick }) {
+export default function Orders({ projectID, numberOfStudents, onListItemClick  }) {
     return (
         <React.Fragment>
             <Box
