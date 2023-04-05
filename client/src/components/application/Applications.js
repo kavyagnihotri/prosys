@@ -15,6 +15,7 @@ export default function Orders() {
     useEffect(() => {
         const fetchApplications = async () => {
             const response = await fetch("/student/applications", {
+                method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()

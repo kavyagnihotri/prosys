@@ -20,6 +20,7 @@ export default function Orders({ status }) {
     useEffect(() => {
         const fetchApplications = async () => {
             const response = await fetch("/student/applications", {
+                method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -40,21 +41,7 @@ export default function Orders({ status }) {
             headers: { Authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
             body: JSON.stringify({ id: id }),
         })
-
-        const fetchApplications = async () => {
-            const response = await fetch("/student/applications", {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: "SET_APPLICATIONS", payload: json })
-            }
-        }
-
-        if (user) {
-            fetchApplications()
-        }
+        window.location.reload()
     }
 
     const onReject = async (id) => {
@@ -63,21 +50,7 @@ export default function Orders({ status }) {
             headers: { Authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
             body: JSON.stringify({ id: id }),
         })
-        const fetchApplications = async () => {
-            const response = await fetch("/student/applications", {
-                method: "GET",
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: "SET_APPLICATIONS", payload: json })
-            }
-        }
-
-        if (user) {
-            fetchApplications()
-        }
+        window.location.reload()
     }
 
     return (
@@ -104,12 +77,12 @@ export default function Orders({ status }) {
                         applications.map(
                             (application) =>
                                 application.studentEmail === user.email &&
-                                application.status == status && (
+                                application.status === status && (
                                     <TableRow key={application._id}>
                                         <TableCell>{application.projectTitle}</TableCell>
                                         <TableCell>{application.profEmail}</TableCell>
                                         <TableCell>{application.sop}</TableCell>
-                                        <TableCell>{application.type == 1 ? "Formal" : "Informal"}</TableCell>
+                                        <TableCell>{application.type === 1 ? "Formal" : "Informal"}</TableCell>
                                         {application.status === 0 && (
                                             <TableCell style={{ color: "#7d6f01" }}>Pending</TableCell>
                                         )}
