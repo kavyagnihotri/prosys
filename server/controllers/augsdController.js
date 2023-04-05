@@ -33,9 +33,9 @@ const acceptProject = async (req, res) => {
 }
 
 const rejectProject = async (req, res) => {
-    console.log(req.body)
     const id = req.body.id
     const rec = req.body.recommendation
+
     try {
         projectToUpdate = await Project.findById(id)
         projectToUpdate.recommendation = rec
