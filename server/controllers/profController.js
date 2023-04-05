@@ -51,7 +51,7 @@ const loginProf = async (req, res) => {
 
 const signupProf = async (req, res) => {
     const { email, password, name, dept, chamber, researchInterest, websites, hod } = req.body
-    role = "0"
+    role = "1"
     try {
         const prof = await Prof.signup(email, password, name, dept, chamber, researchInterest, websites, hod)
 
