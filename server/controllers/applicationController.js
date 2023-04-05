@@ -1,7 +1,6 @@
 const Application = require("../models/applicationModel")
 const Student = require("../models/studentModel")
 const Project = require("../models/ProjectModel")
-const mongoose = require("mongoose")
 
 // projectTitle, projectID(num), profEmail, studentEmail, type(num), sop, status(num)
 
@@ -82,24 +81,73 @@ const getRanked = async (req, res) => {
     res.status(200).json(applications)
 }
 
-// delete an applciation
-const deleteApplication = async (req, res) => {
-    // const { id } = req.params
-    // if(!mongoose.Types.ObjectId.isValid(id)) {
-    //     return res.status(404).json({error: "No such project"})
-    // }
-    // const applicaiton = await Application.findOneAndDelete({_id: id})
-    // if(!applicaiton) {
-    //     return res.status(404).json({error: "No such applicaiton"})
-    // }
-    // res.status(200).json(applicaiton)
+const acceptApplication = async (req, res) => {
+    const id = req.body.id
+
+    try {
+        const application = await Application.findOne({ _id: id })
+
+        application.studentStatus = 1
+        application.status = 4
+        await application.save()
+
+        const studentEmail = application["studentEmail"]
+        const projectID = application["projectID"]
+        const project = await Project.findOne({ _id: projectID })
+
+        project.acceptedStudents.push(studentEmail)
+
+        // const index = project.applicants.indexOf(studentEmail)
+        // project.applicants.splice(index, 1)
+
+        await project.save()
+
+        res.send("Updated")
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
+
+const rejectApplication = async (req, res) => {
+    const id = req.body.id
+
+    try {
+        const application = await Application.findOne({ _id: id })
+        application.studentStatus = 0
+        application.status = 4
+        await application.save()
+
+        // const studentEmail = application["studentEmail"]
+        // const projectID = application["projectID"]
+        // const project = await Project.findOne({ _id: projectID })
+        // const index = project.applicants.indexOf(studentEmail)
+        // project.applicants.splice(index, 1)
+        // await project.save()
+
+        res.send("Updated")
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+// delete an applciation
+// const deleteApplication = async (req, res) => {
+// const { id } = req.params
+// if(!mongoose.Types.ObjectId.isValid(id)) {
+//     return res.status(404).json({error: "No such project"})
+// }
+// const applicaiton = await Application.findOneAndDelete({_id: id})
+// if(!applicaiton) {
+//     return res.status(404).json({error: "No such applicaiton"})
+// }
+// res.status(200).json(applicaiton)
+// }
 
 module.exports = {
     getApplications,
     createApplication,
-    deleteApplication,
     addScore,
     getRanked,
     updateStatus,
+    acceptApplication,
+    rejectApplication,
 }
