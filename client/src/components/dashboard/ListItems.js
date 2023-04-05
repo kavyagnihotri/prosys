@@ -17,12 +17,12 @@ import axios from "axios"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 
 export default function ListItems({ onListItemClick }) {
-    const navigate = useNavigate()
-    const { user } = useAuthContext()
-    const { logout } = useLogout()
     const handleListItemClick = (content) => {
         onListItemClick(content)
     }
+    const navigate = useNavigate()
+    const { user } = useAuthContext()
+    const { logout } = useLogout()
     const goChat = async (e) => {
         axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
         navigate("/chatPage")
@@ -52,14 +52,13 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="My Applications" />
             </ListItemButton>
-
             <ListItemButton button onClick={() => goChat()}>
                 <ListItemIcon>
                     <MarkChatReadIcon />
                 </ListItemIcon>
                 <ListItemText primary="Chat Portal" />
             </ListItemButton>
-            <ListItemButton  button onClick={() => handleListItemClick("studentprofile")}>
+            <ListItemButton component={Link} to="/student/profile">
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>

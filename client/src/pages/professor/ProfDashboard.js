@@ -16,7 +16,6 @@ import { TableContainer } from "@mui/material"
 import ListItems from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
 import ViewApplications from "../../components/application/ViewApplications"
-import Profile from "../../components/dashboard/ProfProfile"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -36,8 +35,6 @@ function DashboardContent() {
     const [selectedContent, setSelectedContent] = useState("dashboard")
     const [projectID, setProjectID] = useState(null)
     const [numberOfStudents, setNumberOfStudents] = useState(null)
-    const [profID, setProfID] = useState(null)
-    const [name, setName] = useState(null)
 
     const handleViewApplicationClick = (content, content1) => {
         setSelectedContent("application")
@@ -60,13 +57,12 @@ function DashboardContent() {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch(`/prof/${user.email}`, {
+            const response = await fetch("/profs", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
 
             if (response.ok) {
-                setName(json.name)
                 dispatch({ type: "SET_PROF", payload: json })
             }
         }
@@ -102,7 +98,7 @@ function DashboardContent() {
                             ProSys - Professor
                         </Typography>
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                            {name}
+                            {user.name}
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
@@ -125,7 +121,9 @@ function DashboardContent() {
                             <ChevronLeftIcon />
                         </IconButton>
                     </Toolbar>
+
                     <Divider />
+
                     <List>
                         <ListItems onListItemClick={handleListItemClick} />
                     </List>
@@ -145,8 +143,13 @@ function DashboardContent() {
                         {selectedContent === "dashboard" && (
                             <Projects onViewApplicationClick={handleViewApplicationClick} />
                         )}
-                        {selectedContent === "application" && <ViewApplications projectID={projectID} numberOfStudents={numberOfStudents} onListItemClick={handleListItemClick} />}
-                        {selectedContent === "profile" && <Profile />}
+                        {selectedContent === "application" && (
+                            <ViewApplications
+                                projectID={projectID}
+                                numberOfStudents={numberOfStudents}
+                                onListItemClick={handleListItemClick}
+                            />
+                        )}
                     </TableContainer>
                 </Box>
             </Box>

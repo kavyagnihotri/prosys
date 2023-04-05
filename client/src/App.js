@@ -20,10 +20,6 @@ import ViewApplications from "./components/application/ViewApplications"
 function App() {
     const { user } = useAuthContext()
 
-    // localstorage fetch
-    // const data = window.localStorage
-    //
-
     if (user != null) {
         console.log("ROLE " + user.role)
     }
@@ -66,11 +62,6 @@ function App() {
                             }
                         />
 
-                        {/* <Route
-                            path="/student/profile/update"
-                            element={<StudentUpdate />}
-                        /> */}
-
                         <Route
                             path="/student/signup"
                             element={!user ? <StudentSignup /> : <Navigate to="/student/dashboard" />}
@@ -79,12 +70,12 @@ function App() {
                         <Route path="/student/createApplication/:id" element={<ApplicationForm />} />
 
                         <Route
-                            path="/prof/login"
+                            path="prof/login"
                             element={!user || user.role !== "1" ? <ProfLogin /> : <Navigate to="/prof/dashboard" />}
                         />
 
                         <Route
-                            path="/prof/signup"
+                            path="prof/signup"
                             element={!user ? <ProfSignup /> : <Navigate to="/prof/dashboard" />}
                         />
 
@@ -93,15 +84,12 @@ function App() {
                             element={user && user.role === "1" ? <ProfDashboard /> : <Navigate to="/prof/login" />}
                         />
                         <Route path="/prof/project/add" element={<ProjectForm />} />
-                        {/* <Route
-                            path="/prof/profile/update"
-                            element= {<ProfUpdate />}
-                        /> */}
+
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
 
                         <Route
                             path="/prof/project/view/:id"
-                            element={user ? <ViewApplications /> : <Navigate to="/prof/login" />} 
+                            element={user ? <ViewApplications /> : <Navigate to="/prof/login" />}
                         />
                     </Routes>
                 </div>

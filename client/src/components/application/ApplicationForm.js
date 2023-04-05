@@ -14,7 +14,6 @@ import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
-
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -98,7 +97,7 @@ const ApplicationForm = () => {
             fetchApplications()
             fetchProject()
         }
-    }, [dispatch, user, id, dispatch2])
+    }, [dispatch2, user, id])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
