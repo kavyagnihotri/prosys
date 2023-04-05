@@ -22,12 +22,12 @@ export const applicationReducer = (state, action) => {
 }
 
 export const ApplicationsContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(applicationReducer, {
+    const [state, dispatch2] = useReducer(applicationReducer, {
         applications: null
     })
 
     return (
-        <ApplicationsContext.Provider value={{...state, dispatch}}>
+        <ApplicationsContext.Provider value={{...state, dispatch2}}>
             { children }
         </ApplicationsContext.Provider>
     )

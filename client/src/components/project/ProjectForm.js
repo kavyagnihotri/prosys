@@ -71,10 +71,10 @@ const ProjectForm = () => {
 
         const data = new FormData(e.currentTarget)
         const title = data.get("title")
-        const projectID = data.get("projectID")
+        // const projectID = data.get("projectID")
         const description = data.get("description")
         const projectType = data.get("type")
-        const prerequisite = data.get("prerequistie")
+        const prerequisite = data.get("prerequisite")
         const numberOfStudents = data.get("numberOfStudents")
         const professorEmail = user.email
         console.log(professorEmail)
@@ -82,7 +82,7 @@ const ProjectForm = () => {
 
         const project = {
             title,
-            projectID,
+            // projectID,
             description,
             prerequisite,
             projectType,
@@ -108,12 +108,6 @@ const ProjectForm = () => {
         }
 
         if (response.ok) {
-            // setTitle("")
-            // setProjectID("")
-            // setDescription("")
-            // setProjectNumber("")
-            // setProjectType("")
-            // setPrerquisite("")
             setError(null)
             setEmptyFields([])
 
@@ -202,7 +196,7 @@ const ProjectForm = () => {
                                             className={emptyfields.includes("title") ? "error" : ""}
                                         />
                                     </Grid>
-                                    <Grid item xs={12}>
+                                    {/* <Grid item xs={12}>
                                         <TextField
                                             required
                                             id="projectID"
@@ -212,7 +206,7 @@ const ProjectForm = () => {
                                             variant="standard"
                                             className={emptyfields.includes("projectID") ? "error" : ""}
                                         />
-                                    </Grid>
+                                    </Grid> */}
                                     <Grid item xs={12}>
                                         <TextField
                                             required
@@ -227,9 +221,9 @@ const ProjectForm = () => {
                                     <Grid item xs={12}>
                                         <TextField
                                             required
-                                            id="prerequistie"
-                                            name="prerequistie"
-                                            label="Prerequistie(s)"
+                                            id="prerequisite"
+                                            name="prerequisite"
+                                            label="Prerequisite(s)"
                                             fullWidth
                                             variant="standard"
                                             className={emptyfields.includes("prerequisite") ? "error" : ""}
@@ -259,7 +253,6 @@ const ProjectForm = () => {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
-                                            // required
                                             id="profEmail"
                                             name="profEmail"
                                             label="Your Email"

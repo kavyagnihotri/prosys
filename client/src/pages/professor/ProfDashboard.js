@@ -35,12 +35,14 @@ function DashboardContent() {
     const [open, setOpen] = React.useState(true)
     const [selectedContent, setSelectedContent] = useState("dashboard")
     const [projectID, setProjectID] = useState(null)
+    const [numberOfStudents, setNumberOfStudents] = useState(null)
     const [profID, setProfID] = useState(null)
     const [name, setName] = useState(null)
 
-    const handleViewApplicationClick = (content) => {
+    const handleViewApplicationClick = (content, content1) => {
         setSelectedContent("application")
         setProjectID(content)
+        setNumberOfStudents(content1)
     }
 
     const handleListItemClick = (content) => {
@@ -143,7 +145,7 @@ function DashboardContent() {
                         {selectedContent === "dashboard" && (
                             <Projects onViewApplicationClick={handleViewApplicationClick} />
                         )}
-                        {selectedContent === "application" && <ViewApplications projectID={projectID} />}
+                        {selectedContent === "application" && <ViewApplications projectID={projectID} numberOfStudents={numberOfStudents} onListItemClick={handleListItemClick} />}
                         {selectedContent === "profile" && <Profile />}
                     </TableContainer>
                 </Box>

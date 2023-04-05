@@ -11,7 +11,7 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 // import {approvedprojects} from '../context/ProjectContext'
 
 function preventDefault(event) {
-  event.preventDefault();
+  event.preventDefault()
 }
 
 export default function NewProjectTable() {

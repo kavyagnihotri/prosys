@@ -10,7 +10,7 @@ import { useProjectsContext } from '../../hooks/useProjectsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
 function preventDefault(event) {
-  event.preventDefault();
+  event.preventDefault()
 }
 
 export default function NewProjectTable() {
@@ -36,8 +36,6 @@ export default function NewProjectTable() {
     }
 
   }, [dispatch, user])
-
-
 
   return (
     <React.Fragment>

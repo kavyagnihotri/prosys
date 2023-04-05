@@ -34,9 +34,11 @@ const acceptProject = async (req, res) => {
 
 const rejectProject = async (req, res) => {
     const id = req.body.id
+    const rec = req.body.recommendation
 
     try {
         projectToUpdate = await Project.findById(id)
+        projectToUpdate.recommendation = rec
         projectToUpdate.approved = -1
         projectToUpdate.save()
         res.send("Updated")

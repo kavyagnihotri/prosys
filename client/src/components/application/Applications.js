@@ -12,11 +12,11 @@ import { useApplicationsContext } from '../../hooks/useApplicationsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
 function preventDefault(event) {
-  event.preventDefault();
+  event.preventDefault()
 }
 
 export default function Orders() {
-  const { applications, dispatch } = useApplicationsContext()
+  const { applications, dispatch2 } = useApplicationsContext()
   const { user } = useAuthContext()
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function Orders() {
       const json = await response.json()
 
       if (response.ok) {
-        dispatch({ type: 'SET_APPLICATIONS', payload: json })
+        dispatch2({ type: 'SET_APPLICATIONS', payload: json })
       }
     }
 
@@ -35,7 +35,7 @@ export default function Orders() {
       fetchApplications()
     }
 
-  }, [dispatch, user])
+  }, [dispatch2, user])
 
   return (
     <React.Fragment>
