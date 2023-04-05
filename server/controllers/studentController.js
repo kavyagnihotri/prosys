@@ -26,14 +26,14 @@ const loginStudent = async (req, res) => {
 // signup
 const signupStudent = async (req, res) => {
     const { email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi } = req.body
-
+    role = "2"
     try {
         const student = await Student.signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi)
 
         // create a token
         const token = createToken(student._id)
 
-        res.status(200).json({ email, token })
+        res.status(200).json({ email, role, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
