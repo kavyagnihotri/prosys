@@ -126,10 +126,10 @@ export default function StudentProfile({onUpdateProfileClick}) {
                             <TextField
                                 fullWidth
                                 id="cgpa"
-                                label="CGPA"
                                 name="cgpa"
-                                value={change.cgpa}
+                                defaultValue={form.cgpa}
                                 onChange={handleInputChange}
+                                multiline
                                 required
                             />
                         </Grid>
@@ -137,9 +137,8 @@ export default function StudentProfile({onUpdateProfileClick}) {
                             <TextField
                                 fullWidth
                                 id="cv_link"
-                                label="CV Link"
                                 name="cv_link"
-                                value={change.cv_link}
+                                defaultValue={form.cv_link}
                                 onChange={handleInputChange}
                                 multiline
                                 required
@@ -149,9 +148,8 @@ export default function StudentProfile({onUpdateProfileClick}) {
                             <TextField
                                 fullWidth
                                 id="per_link"
-                                label="Performance Sheet Link"
                                 name="per_link"
-                                value={change.per_link}
+                                defaultValue={form.per_link}
                                 onChange={handleInputChange}
                                 multiline
                                 required
@@ -161,9 +159,8 @@ export default function StudentProfile({onUpdateProfileClick}) {
                             <TextField
                                 fullWidth
                                 id="aoi"
-                                label="Area of Interest"
                                 name="aoi"
-                                value={change.aoi}
+                                defaultValue={form.aoi}
                                 onChange={handleInputChange}
                                 multiline
                                 required
