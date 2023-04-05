@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import Toolbar from "@mui/material/Toolbar"
 import LogoutIcon from "@mui/icons-material/Logout"
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -29,6 +30,7 @@ const ProjectForm = () => {
     const [isLoading, setIsLoading] = useState(null)
     const [error, setError] = useState(null)
     const [emptyfields, setEmptyFields] = useState([])
+    const [name, setName] = useState(null)
 
     const handleLogout = async (e) => {
         e.preventDefault()
@@ -43,6 +45,16 @@ const ProjectForm = () => {
 
     useEffect(() => {
         const fetchProjects = async () => {
+            const response1 = await fetch(`/prof/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json1 = await response1.json()
+
+            if (response1.ok) {
+                setName(json1.name)
+                dispatch({ type: "SET_PROF", payload: json1 })
+            }
+
             const response = await fetch("/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -137,7 +149,8 @@ const ProjectForm = () => {
                                 color="inherit"
                                 size="large"
                             >
-                                ProSys: Professor
+                                <ChevronLeftIcon/>
+                                ProSys - Professor
                             </Button>
                             <Typography
                                 component="h1"
@@ -147,7 +160,7 @@ const ProjectForm = () => {
                                 noWrap
                                 sx={{ flexGrow: 1 }}
                             >
-                                {JSON.parse(localStorage.getItem("user")).email}
+                                {name}
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleLogout}>
                                 <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
