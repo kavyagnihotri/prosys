@@ -35,8 +35,20 @@ const applicationSchema = new Schema(
             // 1-> accepted,
             // 2-> rejected,
             // 3-> hod approval
+            // 4-> studentResponded
             type: Number,
             default: 0,
+        },
+        score: {
+            type: Number,
+            default: -1,
+        },
+        studentStatus: {
+            // -1> undetermined
+            // 0-> rejected,
+            // 1-> accepted,
+            type: Number,
+            default: -1,
         },
     },
     { timestamps: true }

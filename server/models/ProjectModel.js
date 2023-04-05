@@ -45,6 +45,11 @@ const projectSchema = new Schema(
                 type: String,
             },
         ],
+        acceptedStudents: [
+            {
+                type: String,
+            },
+        ],
     },
     { timestamps: true }
 )
