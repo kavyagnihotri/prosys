@@ -68,7 +68,7 @@ function DashboardContent() {
             fetchStudent()
         }
     })
-    
+
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: "flex" }}>
@@ -87,9 +87,15 @@ function DashboardContent() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Button onClick={handleClick} component="h1" variant="h6" noWrap color="inherit" size="large">
+                        <Typography
+                            component="h1"
+                            variant="h6"
+                            color="inherit"
+                            align="center"
+                            noWrap
+                        >
                             ProSys - Student
-                        </Button>
+                        </Typography>
                         <Typography
                             component="h1"
                             variant="h6"
