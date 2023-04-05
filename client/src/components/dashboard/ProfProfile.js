@@ -26,7 +26,7 @@ export default function Profile({ onUpdateProfileClick }) {
     const { user } = useAuthContext()
     const { dispatch } = useProjectsContext()
     // const params = useParams()
-    const [form, setForm] = useState({})
+    const [form, setForm] = useState([])
     const [change, setChange] = useState({
         chamber: "",
         researchInterest: "",
@@ -46,6 +46,10 @@ export default function Profile({ onUpdateProfileClick }) {
             fetchProf()
         }
     })
+
+    const [chamber, setChamber] = useState(form.chamber)
+    const [researchInterest, setresearchInterest] = useState(form.researchInterest)
+    const [websites, setwebsites] = useState(form.websites)
 
     const handleInputChange = (event) => {
         const { name, value } = event.target
@@ -108,7 +112,6 @@ export default function Profile({ onUpdateProfileClick }) {
                                 <Typography component="h1" variant="h5">
                                     Your Profile
                                 </Typography>
-
                                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12}>
@@ -125,20 +128,19 @@ export default function Profile({ onUpdateProfileClick }) {
                                             <TextField
                                                 fullWidth
                                                 id="chamber"
-                                                placeholder="Chamber"
                                                 name="chamber"
-                                                value={change.chamber}
+                                                defaultValue={form.chamber}
                                                 onChange={handleInputChange}
                                                 required
+                                                multiline
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                defaultValue={form.researchInterest}
                                                 fullWidth
                                                 id="researchInterest"
-                                                placeholder="Research Interests (separate line by line)"
                                                 name="researchInterest"
-                                                value={change.researchInterest}
                                                 onChange={handleInputChange}
                                                 multiline
                                                 required
@@ -148,9 +150,8 @@ export default function Profile({ onUpdateProfileClick }) {
                                             <TextField
                                                 fullWidth
                                                 id="websites"
-                                                placeholder="Social Profiles (separate line by line)"
                                                 name="websites"
-                                                value={change.websites}
+                                                defaultValue={form.websites}
                                                 onChange={handleInputChange}
                                                 multiline
                                                 required
