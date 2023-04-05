@@ -101,7 +101,7 @@ function App() {
 
                         <Route
                             path="/prof/project/view/:id"
-                            element={user ? <ViewApplications /> : <Navigate to="/prof/login" />} 
+                            element={user ? <ViewApplications /> : <Navigate to="/prof/login" />}
                         />
                     </Routes>
                 </div>

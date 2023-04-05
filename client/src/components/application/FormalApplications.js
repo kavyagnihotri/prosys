@@ -12,7 +12,6 @@ import { useParams } from "react-router-dom"
 import { useStudentsContext } from "../../hooks/useStudentsContext"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
-import Link from "@mui/material/Link"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import MenuItem from "@mui/material/MenuItem"
@@ -63,7 +62,7 @@ const branches = [
     },
 ]
 
-export default function FormalApplications({ projectID, numberOfStudents, onListItemClick  }) {
+export default function FormalApplications({ projectID, numberOfStudents, onListItemClick }) {
     var { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
@@ -72,31 +71,52 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     var NoStudents = numberOfStudents
     var count = 0
     const navigate = useNavigate()
-    var title = ""
-    
-    const fetchStudents = async () => {
-        const response = await fetch("/student/", {
-            method: "GET",
-            headers: { Authorization: `Bearer ${user.token}` },
-        })
-        const json = await response.json()
-        if (response.ok) {
-            dispatch1({ type: "SET_STUDENTS", payload: json })
-        }
-    }
 
-    const fetchProfs = async () => {
-        const response = await fetch("/prof/", {
-            method: "POST",
-            headers: { Authorization: `Bearer ${user.token}` },
-        })
-        const json = await response.json()
+    useEffect(() => {
+        const fetchApplications = async () => {
+            const response = await fetch("/student/applications/", {
+                method: "GET",
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
 
-        if (response.ok) {
-            dispatch({ type: "SET_PROF", payload: json })
+            if (response.ok) {
+                dispatch2({ type: "SET_APPLICATIONS", payload: json })
+                applications = json
+            }
         }
-    }
-    
+
+        const fetchStudents = async () => {
+            const response = await fetch("/student/", {
+                method: "GET",
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            if (response.ok) {
+                dispatch1({ type: "SET_STUDENTS", payload: json })
+            }
+        }
+
+        const fetchProfs = async () => {
+            const response = await fetch("/prof/", {
+                method: "POST",
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatch({ type: "SET_PROF", payload: json })
+            }
+        }
+
+        if (user) {
+            fetchApplications()
+            fetchStudents()
+            fetchProfs()
+            console.log(profs)
+        }
+    }, [dispatch2, dispatch1, user])
+
     const handleListItemClick = (content) => {
         onListItemClick(content)
     }
@@ -132,7 +152,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                     a.profEmail === user.email &&
                     a.projectID === id &&
                     a.type === 1 &&
-                    a.score !== -1 &&
+                    a.score != -1 &&
                     count < NoStudents
                 ) {
                     students &&
@@ -141,7 +161,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                                 profs &&
                                     profs.map((prof) => {
                                         if (prof.email === user.email && prof.dept === s.dept) updateStatus(a._id, 1)
-                                        else if (prof.email === user.email && prof.dept !== s.dept)
+                                        else if (prof.email === user.email && prof.dept != s.dept)
                                             updateStatus(a._id, 3)
                                     })
                             }
@@ -151,7 +171,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                     a.profEmail === user.email &&
                     a.projectID === id &&
                     a.type === 1 &&
-                    a.score !== -1 &&
+                    a.score != -1 &&
                     count >= NoStudents
                 ) {
                     updateStatus(a._id, 2)
@@ -159,31 +179,6 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
             })
         navigate(0)
     }
-
-    useEffect(() => {
-        const fetchApplications = async () => {
-            const response = await fetch("/student/applications/", {
-                method: "GET",
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch2({ type: "SET_APPLICATIONS", payload: json })
-                applications = json
-            }
-        }
-        if (user) {
-            fetchApplications()
-            fetchStudents()
-            fetchProfs()
-            console.log(profs)
-            // applications && applications.map((a) =>{
-            //   if(a.projectID==id)
-            //     title = a.projectTitle
-            // })
-        }
-    }, [dispatch, dispatch1, dispatch2, user])
 
     return (
         <React.Fragment>
@@ -246,7 +241,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                                                         </TextField>
                                                     </TableCell>
                                                 )}
-                                                {app.score !== -1 && (
+                                                {app.score != -1 && (
                                                     <TableCell>
                                                         <TextField
                                                             id="score"
