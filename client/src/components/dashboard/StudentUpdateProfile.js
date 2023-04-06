@@ -21,7 +21,7 @@ import { useState, useEffect } from "react"
 
 const theme = createTheme()
 
-export default function StudentProfile({onUpdateProfileClick}) {
+export default function StudentProfile({ onUpdateProfileClick }) {
     const navigate = useNavigate()
     const { user } = useAuthContext()
     // const params = useParams()
@@ -30,31 +30,30 @@ export default function StudentProfile({onUpdateProfileClick}) {
         cgpa: "",
         cv_link: "",
         per_link: "",
-        aoi: ""
+        aoi: "",
     })
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`/student/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
-            });
-            const record = await response.json();
-            setForm(record);
+            })
+            const record = await response.json()
+            setForm(record)
         }
 
         if (user) {
             fetchData()
         }
-
-    });
+    })
 
     const handleInputChange = (event) => {
         const { name, value } = event.target
         setChange((prevProps) => ({
             ...prevProps,
-            [name]: value
-        }));
-    };
+            [name]: value,
+        }))
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -80,17 +79,17 @@ export default function StudentProfile({onUpdateProfileClick}) {
             cgpa: change.cgpa,
             cv_link: change.cv_link,
             per_link: change.per_link,
-            aoi: change.aoi
+            aoi: change.aoi,
         }
 
         await fetch(`/student/${id}`, {
             method: "PUT",
             body: JSON.stringify(editedStudent),
             headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.token}`,
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`,
             },
-        });
+        })
 
         alert("Profile Updated!")
     }
@@ -117,6 +116,8 @@ export default function StudentProfile({onUpdateProfileClick}) {
                                 fullWidth
                                 id="email"
                                 name="email"
+                                InputLabelProps={{ shrink: true }}
+                                label="Your Email"
                                 value={form.email}
                                 required
                                 disabled
@@ -127,6 +128,8 @@ export default function StudentProfile({onUpdateProfileClick}) {
                                 fullWidth
                                 id="cgpa"
                                 name="cgpa"
+                                InputLabelProps={{ shrink: true }}
+                                label="CGPA"
                                 defaultValue={form.cgpa}
                                 onChange={handleInputChange}
                                 multiline
@@ -138,6 +141,8 @@ export default function StudentProfile({onUpdateProfileClick}) {
                                 fullWidth
                                 id="cv_link"
                                 name="cv_link"
+                                InputLabelProps={{ shrink: true }}
+                                label="CV Link"
                                 defaultValue={form.cv_link}
                                 onChange={handleInputChange}
                                 multiline
@@ -149,6 +154,8 @@ export default function StudentProfile({onUpdateProfileClick}) {
                                 fullWidth
                                 id="per_link"
                                 name="per_link"
+                                InputLabelProps={{ shrink: true }}
+                                label="Performance Sheet Link"
                                 defaultValue={form.per_link}
                                 onChange={handleInputChange}
                                 multiline
@@ -160,6 +167,8 @@ export default function StudentProfile({onUpdateProfileClick}) {
                                 fullWidth
                                 id="aoi"
                                 name="aoi"
+                                InputLabelProps={{ shrink: true }}
+                                label="Areas of Interest"
                                 defaultValue={form.aoi}
                                 onChange={handleInputChange}
                                 multiline
@@ -167,12 +176,7 @@ export default function StudentProfile({onUpdateProfileClick}) {
                             />
                         </Grid>
                     </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
+                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                         Update Profile
                     </Button>
                 </Box>

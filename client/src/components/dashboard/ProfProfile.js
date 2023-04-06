@@ -30,7 +30,7 @@ export default function Profile({ onUpdateProfileClick }) {
     const [change, setChange] = useState({
         chamber: "",
         researchInterest: "",
-        websites: ""
+        websites: "",
     })
 
     useEffect(() => {
@@ -55,9 +55,9 @@ export default function Profile({ onUpdateProfileClick }) {
         const { name, value } = event.target
         setChange((prevProps) => ({
             ...prevProps,
-            [name]: value
-        }));
-    };
+            [name]: value,
+        }))
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -79,9 +79,9 @@ export default function Profile({ onUpdateProfileClick }) {
             chamber: change.chamber,
             researchInterest: change.researchInterest,
             websites: change.websites,
-            hod: form.hod
+            hod: form.hod,
         }
-        
+
         await fetch(`/prof/${id}`, {
             method: "PUT",
             body: JSON.stringify(editedProf),
@@ -119,21 +119,26 @@ export default function Profile({ onUpdateProfileClick }) {
                                                 fullWidth
                                                 id="email"
                                                 name="email"
+                                                InputLabelProps={{ shrink: true }}
+                                                label="Your Email"
                                                 value={form.email}
                                                 required
                                                 disabled
+                                                multiline
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} label="Chamber">
                                             <TextField
                                                 fullWidth
                                                 id="chamber"
                                                 name="chamber"
                                                 defaultValue={form.chamber}
+                                                InputLabelProps={{ shrink: true }}
+                                                label="Chamber"
                                                 onChange={handleInputChange}
                                                 required
                                                 multiline
-                                            />
+                                            ></TextField>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
@@ -141,6 +146,8 @@ export default function Profile({ onUpdateProfileClick }) {
                                                 fullWidth
                                                 id="researchInterest"
                                                 name="researchInterest"
+                                                InputLabelProps={{ shrink: true }}
+                                                label="Research Interest"
                                                 onChange={handleInputChange}
                                                 multiline
                                                 required
@@ -149,6 +156,8 @@ export default function Profile({ onUpdateProfileClick }) {
                                         <Grid item xs={12}>
                                             <TextField
                                                 fullWidth
+                                                InputLabelProps={{ shrink: true }}
+                                                label="Your Websites"
                                                 id="websites"
                                                 name="websites"
                                                 defaultValue={form.websites}

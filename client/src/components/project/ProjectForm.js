@@ -30,7 +30,7 @@ const ProjectForm = () => {
     const [isLoading, setIsLoading] = useState(null)
     const [error, setError] = useState(null)
     const [emptyfields, setEmptyFields] = useState([])
-    const [name, setName] = useState(null)
+    const [name, setName] = useState("")
 
     const handleLogout = async (e) => {
         e.preventDefault()
@@ -65,7 +65,16 @@ const ProjectForm = () => {
             }
         }
 
+        const fetchProf = async () => {
+            const response = await fetch(`/prof/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            setName(json.name)
+        }
+
         if (user) {
+            fetchProf()
             fetchProjects()
         }
     }, [dispatch, user])
@@ -82,7 +91,7 @@ const ProjectForm = () => {
 
         const data = new FormData(e.currentTarget)
         const title = data.get("title")
-        // const projectID = data.get("projectID")
+        const projectID = data.get("projectID")
         const description = data.get("description")
         const projectType = data.get("type")
         const prerequisite = data.get("prerequisite")
@@ -93,7 +102,7 @@ const ProjectForm = () => {
 
         const project = {
             title,
-            // projectID,
+            projectID,
             description,
             prerequisite,
             projectType,
@@ -208,7 +217,7 @@ const ProjectForm = () => {
                                             className={emptyfields.includes("title") ? "error" : ""}
                                         />
                                     </Grid>
-                                    {/* <Grid item xs={12}>
+                                    <Grid item xs={12}>
                                         <TextField
                                             required
                                             id="projectID"
@@ -218,7 +227,7 @@ const ProjectForm = () => {
                                             variant="standard"
                                             className={emptyfields.includes("projectID") ? "error" : ""}
                                         />
-                                    </Grid> */}
+                                    </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             required
