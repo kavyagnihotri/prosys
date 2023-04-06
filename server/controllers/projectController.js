@@ -43,10 +43,15 @@ const getPendingProjects = async (req, res) => {
 
 // Create a project
 const createProject = async (req, res) => {
-    const { title, description, prerequisite, projectType, professorEmail, numberOfStudents, approved } = req.body
+    const { title, projectID, description, prerequisite, projectType, professorEmail, numberOfStudents, approved } =
+        req.body
     let emptyfields = []
 
     if (!title) {
+        emptyfields.push("title")
+    }
+
+    if (!projectID) {
         emptyfields.push("title")
     }
 
@@ -60,6 +65,7 @@ const createProject = async (req, res) => {
     try {
         const project = await Project.create({
             title,
+            projectID,
             description,
             prerequisite,
             projectType,
@@ -69,6 +75,7 @@ const createProject = async (req, res) => {
         })
         res.status(200).json({
             title,
+            projectID,
             description,
             prerequisite,
             projectType,

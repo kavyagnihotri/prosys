@@ -11,7 +11,7 @@ const projectSchema = new Schema(
         projectID: {
             type: Number,
             required: true,
-            default: 0,
+            unique: true,
         },
         description: {
             type: String,

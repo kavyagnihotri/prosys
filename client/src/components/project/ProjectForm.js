@@ -70,6 +70,7 @@ const ProjectForm = () => {
 
         const data = new FormData(e.currentTarget)
         const title = data.get("title")
+        const projectID = data.get("projectID")
         const description = data.get("description")
         const projectType = data.get("type")
         const prerequisite = data.get("prerequisite")
@@ -80,6 +81,7 @@ const ProjectForm = () => {
 
         const project = {
             title,
+            projectID,
             description,
             prerequisite,
             projectType,
@@ -190,6 +192,17 @@ const ProjectForm = () => {
                                             fullWidth
                                             variant="standard"
                                             className={emptyfields.includes("title") ? "error" : ""}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="projectID"
+                                            name="projectID"
+                                            label="Project ID"
+                                            fullWidth
+                                            variant="standard"
+                                            className={emptyfields.includes("projectID") ? "error" : ""}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
