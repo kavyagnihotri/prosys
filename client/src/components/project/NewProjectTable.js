@@ -175,6 +175,7 @@ export default function NewProjectTable() {
                         fullWidth
                         variant="standard"
                         onChange={handleTextInputChange}
+                        required
                     />
                 </DialogContent>
                 <DialogActions>
