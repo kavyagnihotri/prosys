@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import Toolbar from "@mui/material/Toolbar"
 import LogoutIcon from "@mui/icons-material/Logout"
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -44,6 +45,16 @@ const ProjectForm = () => {
 
     useEffect(() => {
         const fetchProjects = async () => {
+            const response1 = await fetch(`/prof/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json1 = await response1.json()
+
+            if (response1.ok) {
+                setName(json1.name)
+                dispatch({ type: "SET_PROF", payload: json1 })
+            }
+
             const response = await fetch("/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -147,7 +158,8 @@ const ProjectForm = () => {
                                 color="inherit"
                                 size="large"
                             >
-                                ProSys: Professor
+                                <ChevronLeftIcon/>
+                                ProSys - Professor
                             </Button>
                             <Typography
                                 component="h1"
