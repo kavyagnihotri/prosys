@@ -35,7 +35,7 @@ const ProjectForm = () => {
     const handleLogout = async (e) => {
         e.preventDefault()
         logout()
-        navigate("/")
+        navigate("/prof/login")
     }
 
     const handleClick = (event) => {
