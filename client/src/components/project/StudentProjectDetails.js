@@ -3,16 +3,47 @@ import TableRow from "@mui/material/TableRow"
 import Button from "@mui/material/Button"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 const Project = ({ project }) => {
     const { user } = useAuthContext()
+    const [professors, setProfessors] = useState({})
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const fetchProfessors = async () => {
+            const response = await fetch("/prof", {
+                method: "GET",
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                const professorsMap = json.reduce(
+                    (acc, professor) => ({
+                        ...acc,
+                        [professor.email]: professor.name,
+                    }),
+                    {}
+                )
+                setProfessors(professorsMap)
+            }
+        }
+
+        if (user) {
+            fetchProfessors()
+        }
+    })
 
     const handleApply = async (id) => {
         navigate("/student/createApplication/" + id)
     }
 
     const isUserApplicant = project.applicants.includes(user.email)
+
+    const getProfessorName = (email) => {
+        return professors[email] || ""
+    }
 
     return (
         <TableRow key={project._id}>
@@ -21,7 +52,7 @@ const Project = ({ project }) => {
             <TableCell>{project.projectType}</TableCell>
             <TableCell>{project.description}</TableCell>
             <TableCell>{project.prerequisite}</TableCell>
-            <TableCell>{project.professorEmail}</TableCell>
+            <TableCell>{getProfessorName(project.professorEmail)}</TableCell>
             <TableCell>{project.numberOfStudents}</TableCell>
             <TableCell>
                 {isUserApplicant ? (

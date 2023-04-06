@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -16,6 +16,7 @@ import { Button } from "@mui/material"
 export default function Orders({ status }) {
     const { applications, dispatch } = useApplicationsContext()
     const { user } = useAuthContext()
+    const [professors, setProfessors] = useState({})
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -30,10 +31,34 @@ export default function Orders({ status }) {
             }
         }
 
+        const fetchProfessors = async () => {
+            const response = await fetch("/prof", {
+                method: "GET",
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                const professorsMap = json.reduce(
+                    (acc, professor) => ({
+                        ...acc,
+                        [professor.email]: professor.name,
+                    }),
+                    {}
+                )
+                setProfessors(professorsMap)
+            }
+        }
+
         if (user) {
             fetchApplications()
+            fetchProfessors()
         }
     }, [dispatch, user])
+
+    const getProfessorName = (email) => {
+        return professors[email] || ""
+    }
 
     const onAccept = async (id) => {
         await fetch("/student/accept", {
@@ -80,7 +105,7 @@ export default function Orders({ status }) {
                                 application.status === status && (
                                     <TableRow key={application._id}>
                                         <TableCell>{application.projectTitle}</TableCell>
-                                        <TableCell>{application.profEmail}</TableCell>
+                                        <TableCell>{getProfessorName(application.profEmail)}</TableCell>
                                         <TableCell>{application.sop}</TableCell>
                                         <TableCell>{application.type === 1 ? "Formal" : "Informal"}</TableCell>
                                         {application.status === 0 && (

@@ -1,17 +1,9 @@
 const express = require("express")
 
-// controller fucntion
-const { signupStudent, loginStudent, getStudents } = require("../controllers/studentController")
+// controller function
+const { signupStudent, loginStudent, getStudents, getStudent, updateProfile, getName } = require("../controllers/studentController")
 const { getProjects, getProject } = require("../controllers/projectController")
-const {
-    getApplications,
-    createApplication,
-    addScore,
-    getRanked,
-    updateStatus,
-    acceptApplication,
-    rejectApplication,
-} = require("../controllers/applicationController")
+const { getApplications, createApplication, deleteApplication,addScore, getRanked, updateStatus} = require("../controllers/applicationController")
 
 const router = express.Router()
 
@@ -35,12 +27,11 @@ router.post("/score", addScore)
 router.get("/rank", getRanked)
 router.post("/status", updateStatus)
 
-// Student application control
-router.post("/accept", acceptApplication)
-router.post("/reject", rejectApplication)
-
 router.get("/", getStudents)
-// router.delete('/applications/:id', deleteApplication)
-// router.patch('/:id', updateProject)
+router.get("/:id", getStudent)
+
+router.put("/:id", updateProfile)
+
+// router.get("/:id", getName)
 
 module.exports = router
