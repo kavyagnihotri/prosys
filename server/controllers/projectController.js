@@ -50,10 +50,6 @@ const createProject = async (req, res) => {
         emptyfields.push("title")
     }
 
-    // if (!projectID) {
-    //     emptyfields.push("projectID")
-    // }
-
     if (!description) {
         emptyfields.push("description")
     }
@@ -61,11 +57,9 @@ const createProject = async (req, res) => {
     if (emptyfields.length > 0) {
         return res.status(400).json({ error: "Please fill the empty fields", emptyfields })
     }
-
     try {
         const project = await Project.create({
             title,
-            // projectID,
             description,
             prerequisite,
             projectType,
@@ -75,7 +69,6 @@ const createProject = async (req, res) => {
         })
         res.status(200).json({
             title,
-            // projectID,
             description,
             prerequisite,
             projectType,
