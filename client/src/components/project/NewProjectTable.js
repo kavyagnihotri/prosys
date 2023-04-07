@@ -8,7 +8,13 @@ import Title from "../Title"
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined"
 import Button from "@mui/material/Button"
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined"
-import { useEffect } from "react"
+import TextField from "@mui/material/TextField"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
+import { useState, useEffect } from "react"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
@@ -16,6 +22,22 @@ import { serverURL } from "../../utils/constants"
 export default function NewProjectTable() {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
+    const [open, setOpen] = React.useState(false)
+    const [textInput, setTextInput] = useState("")
+    const [pid, setPid] = useState(null)
+
+    const handleClickOpen = (id) => {
+        setPid(id)
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false)
+    }
+
+    const handleTextInputChange = (event) => {
+        setTextInput(event.target.value)
+    }
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -59,13 +81,16 @@ export default function NewProjectTable() {
     }
 
     const onReject = async (id) => {
-        // e.preventDefault()s
-
+        // if (id != null && textInput != "") {
         await fetch(serverURL + "/augsd/reject", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: id }),
+            body: JSON.stringify({ id: id, recommendation: textInput }),
         })
+        setPid(null)
+        setTextInput("")
+        handleClose()
+        // }
         const fetchProjects = async () => {
             const response = await fetch(serverURL + "/projects/", {
                 method: "GET",
@@ -77,7 +102,6 @@ export default function NewProjectTable() {
                 dispatch({ type: "SET_PROJECTS", payload: json })
             }
         }
-
         if (user) {
             fetchProjects()
         }
@@ -90,7 +114,6 @@ export default function NewProjectTable() {
                 <TableHead>
                     <TableRow>
                         <TableCell>Project Title</TableCell>
-                        <TableCell>Project ID</TableCell>
                         <TableCell>Project Type</TableCell>
                         <TableCell>Professor Name</TableCell>
                         <TableCell>Description</TableCell>
@@ -106,7 +129,6 @@ export default function NewProjectTable() {
                                 project.approved === 0 && (
                                     <TableRow key={project._id}>
                                         <TableCell>{project.title}</TableCell>
-                                        <TableCell>{project.projectID}</TableCell>
                                         <TableCell>{project.projectType}</TableCell>
                                         <TableCell>{project.professorEmail}</TableCell>
                                         <TableCell>{project.description}</TableCell>
@@ -125,7 +147,7 @@ export default function NewProjectTable() {
                                                 size="large"
                                                 startIcon={<CancelOutlinedIcon />}
                                                 type="submit"
-                                                onClick={(e) => onReject(project._id)}
+                                                onClick={(e) => handleClickOpen(project._id)}
                                             >
                                                 REJECT
                                             </Button>
@@ -135,6 +157,28 @@ export default function NewProjectTable() {
                         )}
                 </TableBody>
             </Table>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Make Recommendations</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Make recommendations to the project proposal before rejecting it so that professors can improve
+                        their proposal.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        label="Recommendations"
+                        fullWidth
+                        variant="standard"
+                        onChange={handleTextInputChange}
+                        required
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={(e) => onReject(pid)}>Reject</Button>
+                </DialogActions>
+            </Dialog>
         </React.Fragment>
     )
 }

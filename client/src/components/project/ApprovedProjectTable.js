@@ -5,7 +5,7 @@ import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Title from "../Title"
-import { useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
@@ -39,7 +39,6 @@ export default function NewProjectTable() {
                 <TableHead>
                     <TableRow>
                         <TableCell>Project Title</TableCell>
-                        <TableCell>Project ID</TableCell>
                         <TableCell>Project Type</TableCell>
                         <TableCell>Professor Email</TableCell>
                         <TableCell>Description</TableCell>
@@ -54,7 +53,6 @@ export default function NewProjectTable() {
                                 project.approved === 1 && (
                                     <TableRow key={project._id}>
                                         <TableCell>{project.title}</TableCell>
-                                        <TableCell>{project.projectID}</TableCell>
                                         <TableCell>{project.projectType}</TableCell>
                                         <TableCell>{project.professorEmail}</TableCell>
                                         <TableCell>{project.description}</TableCell>

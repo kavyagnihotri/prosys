@@ -29,6 +29,7 @@ const Project = ({ onViewApplication, project, tab }) => {
                     ></Button>
                 </TableCell>
             )}
+            {tab === -1 && <TableCell align="center">{project.recommendation}</TableCell>}
         </TableRow>
     )
 }

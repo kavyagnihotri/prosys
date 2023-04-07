@@ -184,7 +184,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
 
     return (
         <React.Fragment>
-            <Title>Informal Applicants for Project</Title>
+            <Title>Formal Applicants for Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>

@@ -28,9 +28,6 @@ const ProjectDetails = ({ project }) => {
         <div className="project-details">
             <h4>{project.title}</h4>
             <p>
-                <strong>{project.projectID}</strong>
-            </p>
-            <p>
                 <strong>Description</strong>
             </p>
             <p>{project.description}</p>

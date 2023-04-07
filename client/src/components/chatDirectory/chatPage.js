@@ -28,6 +28,10 @@ const mdTheme = createTheme()
 
 const ChatsPage = (props) => {
     const { user } = useAuthContext()
+    const [name, setName] = useState(null)
+    const { logout } = useLogout()
+    const navigate = useNavigate()
+    const [open, setOpen] = React.useState(true)
     var title = ""
     if (user.role === "1") {
         title = "Professor Chat Portal"
@@ -35,9 +39,6 @@ const ChatsPage = (props) => {
     if (user.role === "2") {
         title = "Student Chat Portal"
     }
-    const { logout } = useLogout()
-    const navigate = useNavigate()
-    const [open, setOpen] = React.useState(true)
     const toggleDrawer = () => {
         if (user.role === "1") {
             navigate("/prof/dashboard")
@@ -49,7 +50,43 @@ const ChatsPage = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         logout()
+        if (user.role === "1") {
+            navigate("/prof/login")
+        }
+        if (user.role === "2") {
+            navigate("/student/login")
+        }
     }
+
+    useEffect(() => {
+        const fetchProf = async () => {
+            const response = await fetch(`/prof/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            if (response.ok) {
+                setName(json.name)
+            }
+        }
+
+        const fetchStudent = async () => {
+            const response = await fetch(`/student/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            if (response.ok) {
+                setName(json.name)
+            }
+        }
+
+        if (user.role === "1") {
+            fetchProf()
+        }
+        if (user.role === "2") {
+            fetchStudent()
+        }
+    }, [user])
+
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: "flex" }}>
@@ -63,8 +100,13 @@ const ChatsPage = (props) => {
                             {title}
                         </Typography>
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                            {user.name}
+                            {name}
                         </Typography>
+                        <Box component="form" noValidate onSubmit={handleSubmit}>
+                            <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
+                                LogOut
+                            </Button>
+                        </Box>
                     </Toolbar>
                 </AppBar>
                 <Box

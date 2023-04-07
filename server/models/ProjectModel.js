@@ -28,6 +28,10 @@ const projectSchema = new Schema(
             type: String,
             required: true,
         },
+        recommendation: {
+            type: String,
+            default: "",
+        },
         numberOfStudents: {
             type: Number,
             required: true,
@@ -37,6 +41,11 @@ const projectSchema = new Schema(
             default: 0,
         },
         applicants: [
+            {
+                type: String,
+            },
+        ],
+        acceptedStudents: [
             {
                 type: String,
             },

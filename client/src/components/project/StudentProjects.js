@@ -16,7 +16,6 @@ import { serverURL } from "../../utils/constants"
 export default function Orders() {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
-    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchProjects = async () => {

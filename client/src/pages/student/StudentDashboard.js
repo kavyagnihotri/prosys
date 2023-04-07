@@ -23,7 +23,8 @@ import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
 import { useLogout } from "../../hooks/useLogout"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import StudentProfile from "../../components/dashboard/StudentUpdateProfile"
 
 const mdTheme = createTheme()
 
@@ -33,6 +34,7 @@ function DashboardContent() {
     const { logout } = useLogout()
     const [open, setOpen] = React.useState(true)
     const [selectedContent, setSelectedContent] = useState("dashboard")
+    const [name, setName] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -49,8 +51,23 @@ function DashboardContent() {
 
     const handleClick = (event) => {
         event.preventDefault()
-        navigate("/student/dashboard")
     }
+
+    useEffect(() => {
+        const fetchStudent = async () => {
+            const response = await fetch(`/student/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            if (response.ok) {
+                setName(json.name)
+            }
+        }
+
+        if (user) {
+            fetchStudent()
+        }
+    })
 
     return (
         <ThemeProvider theme={mdTheme}>
@@ -70,9 +87,15 @@ function DashboardContent() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Button onClick={handleClick} component="h1" variant="h6" noWrap color="inherit" size="large">
+                        <Typography
+                            component="h1"
+                            variant="h6"
+                            color="inherit"
+                            align="center"
+                            noWrap
+                        >
                             ProSys - Student
-                        </Button>
+                        </Typography>
                         <Typography
                             component="h1"
                             variant="h6"
@@ -81,7 +104,7 @@ function DashboardContent() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            {user.email}
+                            {name}
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
@@ -120,14 +143,14 @@ function DashboardContent() {
                     }}
                 >
                     <Toolbar />
-                    {selectedContent === "dashboard" && (
-                        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                            <Grid container spacing={3}>
-                                <Grid item xs={12}>
-                                    <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                        <Projects />
-                                    </Paper>
-                                </Grid>
+                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                                    {selectedContent === "dashboard" && <Projects />}
+                                    {selectedContent === "applications" && <Applications />}
+                                    {selectedContent === "studentprofile" && <StudentProfile />}
+                                </Paper>
                             </Grid>
                         </Container>
                     )}
