@@ -56,7 +56,7 @@ const addScore = async (req, res) => {
         // console.log(appToUpdate)
         appToUpdate.score = newScore
         appToUpdate.save()
-        res.send("updated")
+        // res.send("updated")
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
