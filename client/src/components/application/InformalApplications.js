@@ -124,6 +124,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
         const response = await fetch(serverURL + "/student/score", {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+            mode: "no-cors", // set the mode property to 'no-cors'
             body: JSON.stringify({ appId: appId, newScore: newScore }),
         })
         const json = await response.json()
@@ -136,6 +137,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
         const response = await fetch(serverURL + "/student/status", {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+            mode: "no-cors", // set the mode property to 'no-cors'
             body: JSON.stringify({ appId: appId, status: appStatus }),
         })
         const json = await response.json()
