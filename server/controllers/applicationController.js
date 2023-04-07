@@ -52,10 +52,10 @@ const addScore = async (req, res) => {
     // console.log(req.body)
     // console.log(appId, newScore)
     try {
-        appToUpdate = await Application.findById(appId)
+        const application = await Application.findOne({ _id: appId })
         // console.log(appToUpdate)
-        appToUpdate.score = newScore
-        await appToUpdate.save()
+        application.score = newScore
+        await application.save()
         // res.send("updated")
         res.status(200)
     } catch (error) {
@@ -67,11 +67,10 @@ const updateStatus = async (req, res) => {
     const { appId, status } = req.body
     // console.log(req.body)
     try {
-        appToUpdate = await Application.findById(appId)
+        const application = await Application.findOne({ _id: appId })
         // console.log(appToUpdate)
-        appToUpdate.status = status
-        await appToUpdate.save()
-        console.log("sup, pls pls pls pls pls pls pls pls work")
+        application.status = status
+        await application.save()
         // res.status(200).json("Updated")
         res.status(200)
     } catch (error) {

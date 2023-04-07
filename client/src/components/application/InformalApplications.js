@@ -61,7 +61,7 @@ const branches = [
     },
 ]
 
-export default function FormalApplications({ projectID, numberOfStudents, onListItemClick }) {
+export default function InformalApplications({ projectID, numberOfStudents, onListItemClick }) {
     var { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
@@ -98,7 +98,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
 
         const fetchProfs = async () => {
             const response = await fetch(serverURL + "/prof/", {
-                method: "POST",
+                method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -115,10 +115,6 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
             console.log(profs)
         }
     }, [dispatch2, dispatch1, user])
-
-    // const handleListItemClick = (content) => {
-    //     onListItemClick(content)
-    // }
 
     const addScore = async (newScore, appId) => {
         const response = await fetch(serverURL + "/student/score", {
@@ -156,7 +152,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     const changeStatus = async () => {
         const response = await fetch(serverURL + "/student/rank/", {
             method: "GET",
-            headers: { Authorization: `Bearer ${user.token}` },
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
         })
         const json = await response.json()
 
