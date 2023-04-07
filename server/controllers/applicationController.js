@@ -55,7 +55,7 @@ const addScore = async (req, res) => {
         appToUpdate = await Application.findById(appId)
         // console.log(appToUpdate)
         appToUpdate.score = newScore
-        appToUpdate.save()
+        await appToUpdate.save()
         // res.send("updated")
         res.status(200)
     } catch (error) {
@@ -70,7 +70,8 @@ const updateStatus = async (req, res) => {
         appToUpdate = await Application.findById(appId)
         // console.log(appToUpdate)
         appToUpdate.status = status
-        appToUpdate.save()
+        await appToUpdate.save()
+        console.log("sup, pls pls pls pls pls pls pls pls work")
         // res.status(200).json("Updated")
         res.status(200)
     } catch (error) {
