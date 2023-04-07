@@ -49,7 +49,7 @@ function DashboardContent() {
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: "flex" }}>
                 <CssBaseline />
-                <AppBar position="absolute">
+                <AppBar position="absolute" open={open} sx={{ bgcolor: "#0e5ec7" }}>
                     <Toolbar
                         sx={{
                             justifyContent: "space-between",

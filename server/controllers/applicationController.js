@@ -70,7 +70,7 @@ const updateStatus = async (req, res) => {
         // console.log(appToUpdate)
         appToUpdate.status = status
         appToUpdate.save()
-        res.status(200).json("Updated")
+        // res.status(200).json("Updated")
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -102,7 +102,7 @@ const acceptApplication = async (req, res) => {
 
         await project.save()
 
-        res.send("Updated")
+        // res.send("Updated")
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -124,7 +124,7 @@ const rejectApplication = async (req, res) => {
         // project.applicants.splice(index, 1)
         // await project.save()
 
-        res.send("Updated")
+        // res.send("Updated")
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

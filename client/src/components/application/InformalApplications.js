@@ -161,7 +161,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                     a.profEmail === user.email &&
                     a.projectID === id &&
                     a.type === 0 &&
-                    a.score !== -1 &&
+                    a.score != -1 &&
                     count < NoStudents
                 ) {
                     students &&
@@ -170,7 +170,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                                 profs &&
                                     profs.map((prof) => {
                                         if (prof.email === user.email && prof.dept === s.dept) updateStatus(a._id, 1)
-                                        else if (prof.email === user.email && prof.dept !== s.dept)
+                                        else if (prof.email === user.email && prof.dept != s.dept)
                                             updateStatus(a._id, 3)
                                     })
                             }
@@ -180,7 +180,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                     a.profEmail === user.email &&
                     a.projectID === id &&
                     a.type === 0 &&
-                    a.score !== -1 &&
+                    a.score != -1 &&
                     count >= NoStudents
                 ) {
                     updateStatus(a._id, 2)
@@ -250,7 +250,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                                                         </TextField>
                                                     </TableCell>
                                                 )}
-                                                {app.score !== -1 && (
+                                                {app.score != -1 && (
                                                     <TableCell>
                                                         <TextField
                                                             id="score"
