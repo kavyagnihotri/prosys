@@ -7,6 +7,7 @@ import ApplicationDetails from "./ApplicationDetails"
 import { useEffect } from "react"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 
 export default function Orders() {
     const { applications, dispatch2 } = useApplicationsContext()
@@ -14,7 +15,7 @@ export default function Orders() {
 
     useEffect(() => {
         const fetchApplications = async () => {
-            const response = await fetch("/student/applications", {
+            const response = await fetch(serverURL + "/student/applications", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })

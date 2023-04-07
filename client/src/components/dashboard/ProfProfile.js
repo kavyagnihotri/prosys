@@ -18,6 +18,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
+import { serverURL } from "../../utils/constants"
 
 const theme = createTheme()
 
@@ -35,7 +36,7 @@ export default function Profile({ onUpdateProfileClick }) {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch(`/prof/${user.email}`, {
+            const response = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -82,7 +83,7 @@ export default function Profile({ onUpdateProfileClick }) {
             hod: form.hod,
         }
 
-        await fetch(`/prof/${id}`, {
+        await fetch(serverURL + `/prof/${id}`, {
             method: "PUT",
             body: JSON.stringify(editedProf),
             headers: {

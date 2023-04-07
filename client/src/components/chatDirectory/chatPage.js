@@ -24,6 +24,7 @@ import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
+import { serverURL } from "../../utils/constants"
 const mdTheme = createTheme()
 
 const ChatsPage = (props) => {
@@ -60,7 +61,7 @@ const ChatsPage = (props) => {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch(`/prof/${user.email}`, {
+            const response = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -70,7 +71,7 @@ const ChatsPage = (props) => {
         }
 
         const fetchStudent = async () => {
-            const response = await fetch(`/student/${user.email}`, {
+            const response = await fetch(serverURL + `/student/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()

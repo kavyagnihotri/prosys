@@ -18,6 +18,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useState, useEffect } from "react"
+import { serverURL } from "../../utils/constants"
 
 const theme = createTheme()
 
@@ -35,7 +36,7 @@ export default function StudentProfile({ onUpdateProfileClick }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`/student/${user.email}`, {
+            const response = await fetch(serverURL + `/student/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const record = await response.json()
@@ -82,7 +83,7 @@ export default function StudentProfile({ onUpdateProfileClick }) {
             aoi: change.aoi,
         }
 
-        await fetch(`/student/${id}`, {
+        await fetch(serverURL + `/student/${id}`, {
             method: "PUT",
             body: JSON.stringify(editedStudent),
             headers: {

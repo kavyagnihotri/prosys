@@ -67,7 +67,7 @@ const ProjectForm = () => {
         }
 
         const fetchProf = async () => {
-            const response = await fetch(`/prof/${user.email}`, {
+            const response = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -159,7 +159,7 @@ const ProjectForm = () => {
                                 color="inherit"
                                 size="large"
                             >
-                                <ChevronLeftIcon/>
+                                <ChevronLeftIcon />
                                 ProSys - Professor
                             </Button>
                             <Typography

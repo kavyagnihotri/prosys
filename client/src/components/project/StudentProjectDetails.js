@@ -12,7 +12,7 @@ const Project = ({ project }) => {
 
     useEffect(() => {
         const fetchProfessors = async () => {
-            const response = await fetch("/prof", {
+            const response = await fetch(serverURL + "/prof", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
