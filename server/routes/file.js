@@ -1,10 +1,12 @@
+const CLIENT_URL = "http://localhost:3000"
+// use https://prosys-client.vercel.app
 const express = require("express")
 const filestack = require("filestack-js")
 const multer = require("multer")
 const streamifier = require("streamifier")
 const cors = require("cors")
 const corsOptions = {
-    origin: "https://prosys-client.vercel.app",
+    origin: CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     // exposedHeaders: ["Authorization"],
