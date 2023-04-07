@@ -26,6 +26,7 @@ router.post("/createApplication", createApplication)
 router.post("/score", addScore)
 router.get("/rank", getRanked)
 router.post("/status", updateStatus)
+router.delete("/applications/:id", deleteApplication)
 
 router.get("/", getStudents)
 router.get("/:id", getStudent)
