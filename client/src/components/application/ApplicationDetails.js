@@ -11,6 +11,7 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import Title from "../Title"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 import { Button } from "@mui/material"
 
 export default function Orders({ status }) {
@@ -20,7 +21,7 @@ export default function Orders({ status }) {
 
     useEffect(() => {
         const fetchApplications = async () => {
-            const response = await fetch("/student/applications", {
+            const response = await fetch(serverURL + "/student/applications", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -32,7 +33,7 @@ export default function Orders({ status }) {
         }
 
         const fetchProfessors = async () => {
-            const response = await fetch("/prof", {
+            const response = await fetch(serverURL + "/prof", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -61,7 +62,7 @@ export default function Orders({ status }) {
     }
 
     const onAccept = async (id) => {
-        await fetch("/student/accept", {
+        await fetch(serverURL + "/student/accept", {
             method: "POST",
             headers: { Authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
             body: JSON.stringify({ id: id }),
@@ -70,14 +71,13 @@ export default function Orders({ status }) {
     }
 
     const onReject = async (id) => {
-        await fetch("/student/reject", {
+        await fetch(serverURL + "/student/reject", {
             method: "POST",
             headers: { Authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
             body: JSON.stringify({ id: id }),
         })
         window.location.reload()
     }
-
     return (
         <React.Fragment>
             <Title>

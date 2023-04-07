@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useAuthContext } from "./useAuthContext";
+import { useState } from "react"
+import { useAuthContext } from "./useAuthContext"
+import { serverURL } from "../utils/constants"
 
 // email, password, name, dept, chamber, researchInterest, websites, hod
 
@@ -13,28 +14,27 @@ export const useProfSignup = () => {
         setError(null)
         hod = false // by default
 
-        const response = await fetch('/prof/signup', {
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password, name, dept, chamber, researchInterest, websites, hod})
+        const response = await fetch(serverURL + "/prof/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password, name, dept, chamber, researchInterest, websites, hod }),
         })
 
         const json = await response.json()
 
-        if(!response.ok) {
+        if (!response.ok) {
             setIsLoading(false)
             setError(json.error)
         }
 
-        if(response.ok) {
+        if (response.ok) {
             // save user to local storage, from auth context we get the email and the token
-            localStorage.setItem('user', JSON.stringify(json))
+            localStorage.setItem("user", JSON.stringify(json))
 
             // update the authContext
-            dispatch({type: 'LOGIN', payload: json})
+            dispatch({ type: "LOGIN", payload: json })
 
             setIsLoading(false)
-
         }
     }
     return { signup, error, isLoading }

@@ -152,8 +152,9 @@ function DashboardContent() {
                                     {selectedContent === "studentprofile" && <StudentProfile />}
                                 </Paper>
                             </Grid>
-                        </Grid>
-                    </Container>
+                        </Container>
+                    )}
+                    {selectedContent === "applications" && <Applications />}
                 </Box>
             </Box>
         </ThemeProvider>

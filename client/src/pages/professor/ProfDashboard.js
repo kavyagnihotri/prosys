@@ -1,3 +1,5 @@
+import { serverURL } from "../../utils/constants"
+
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -22,7 +24,6 @@ import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 
 const mdTheme = createTheme()
@@ -60,7 +61,7 @@ function DashboardContent() {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch(`/prof/${user.email}`, {
+            const response = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()

@@ -8,6 +8,7 @@ import Title from "../Title"
 import { useState, useEffect, useRef } from "react"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 
 function preventDefault(event) {
     event.preventDefault()
@@ -19,7 +20,7 @@ export default function NewProjectTable() {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response = await fetch("/projects/", {
+            const response = await fetch(serverURL + "/projects/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })

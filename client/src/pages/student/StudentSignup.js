@@ -1,4 +1,5 @@
-import { useStudentSignup } from "../../hooks/useStudentSignup"
+import { serverURL } from "../../utils/constants"
+
 import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Avatar from "@mui/material/Avatar"
@@ -17,9 +18,11 @@ import HomeIcon from "@mui/icons-material/Home"
 import Input from "@mui/material/Input"
 import InputLabel from "@mui/material/InputLabel"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { useStudentSignup } from "../../hooks/useStudentSignup"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+
 const theme = createTheme()
 
 const branches = [
@@ -86,7 +89,7 @@ const StudentSignup = () => {
 
         var formData = new FormData()
         formData.append("file", file)
-        const response = await fetch("/file/upload", {
+        const response = await fetch(serverURL + "/file/upload", {
             method: "POST",
             body: formData,
         })
@@ -100,7 +103,7 @@ const StudentSignup = () => {
 
         const formData2 = new FormData()
         formData2.append("file", perFile)
-        const response2 = await fetch("/file/upload", {
+        const response2 = await fetch(serverURL + "/file/upload", {
             method: "POST",
             body: formData2,
         })

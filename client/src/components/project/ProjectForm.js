@@ -18,6 +18,7 @@ import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useLogout } from "../../hooks/useLogout"
+import { serverURL } from "../../utils/constants"
 
 const theme = createTheme()
 
@@ -45,7 +46,7 @@ const ProjectForm = () => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response1 = await fetch(`/prof/${user.email}`, {
+            const response1 = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json1 = await response1.json()
@@ -55,7 +56,7 @@ const ProjectForm = () => {
                 dispatch({ type: "SET_PROF", payload: json1 })
             }
 
-            const response = await fetch("/student/projects", {
+            const response = await fetch(serverURL + "/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -111,7 +112,7 @@ const ProjectForm = () => {
             approved,
         }
 
-        const response = await fetch("/projects", {
+        const response = await fetch(serverURL + "/projects", {
             method: "POST",
             body: JSON.stringify(project),
             headers: {
