@@ -57,6 +57,7 @@ const addScore = async (req, res) => {
         appToUpdate.score = newScore
         appToUpdate.save()
         // res.send("updated")
+        res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -71,6 +72,7 @@ const updateStatus = async (req, res) => {
         appToUpdate.status = status
         appToUpdate.save()
         // res.status(200).json("Updated")
+        res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -103,6 +105,7 @@ const acceptApplication = async (req, res) => {
         await project.save()
 
         // res.send("Updated")
+        res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -125,6 +128,7 @@ const rejectApplication = async (req, res) => {
         // await project.save()
 
         // res.send("Updated")
+        res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
