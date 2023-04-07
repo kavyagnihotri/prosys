@@ -24,7 +24,27 @@ const Project = ({ onViewApplication, project, tab }) => {
             headers: { 'Authorization': `Bearer ${user.token}` }
         })
         const json = await response.json()
+    }
 
+    const deletion = async (id) => {
+        const response = fetch(`/student/applications/${id}`, {
+            method: "DELETE",
+            headers: {'Authorization': `Bearer ${user.token}`}
+        })
+        if (response.ok) {
+            alert("Done")
+        }
+    }
+    const deleteApplication = async (id) => {
+        const response1 = await fetch(`/student/applications`, {
+            headers: { 'Authorization': `Bearer ${user.token}` }
+        })
+        const json = await response1.json()
+        json.forEach((j) => {
+            if (j.projectID === id) {
+                deletion(j._id)
+            }
+        })
     }
 
     return (
@@ -49,10 +69,11 @@ const Project = ({ onViewApplication, project, tab }) => {
                         size="large"
                         startIcon={<DeleteIcon />}
                         type="submit"
-                    onClick={(e) => {
-                        deleteProject(project._id)
-                        window.location.reload(true)
-                    }}
+                        onClick={(e) => {
+                            deleteApplication(project._id)
+                            deleteProject(project._id)
+                            window.location.reload(true)
+                        }}
                 ></Button>
             </TableCell>
             {tab === -1 && <TableCell align="center">{project.recommendation}</TableCell>}
