@@ -138,8 +138,6 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${user.token}`,
-                // "Access-Control-Allow-Origin": "*",
-                // "Access-Control-Allow-Methods": "POST,PATCH,OPTIONS",
             },
             body: JSON.stringify({ appId: appId, status: appStatus }),
         })
@@ -150,7 +148,7 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
     }
 
     const changeStatus = async () => {
-        const response = await fetch(serverURL + "/student/rank/", {
+        const response = await fetch(serverURL + "/student/rank", {
             method: "GET",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
         })

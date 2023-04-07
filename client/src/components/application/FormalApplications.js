@@ -141,7 +141,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     }
 
     const changeStatus = async () => {
-        const response = await fetch(serverURL + "/student/rank/", {
+        const response = await fetch(serverURL + "/student/rank", {
             method: "GET",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
         })
