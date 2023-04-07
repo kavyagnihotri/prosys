@@ -1,5 +1,3 @@
-import { serverURL } from "../../utils/constants"
-
 import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Avatar from "@mui/material/Avatar"
@@ -22,6 +20,7 @@ import { useStudentSignup } from "../../hooks/useStudentSignup"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { serverURL } from "../../utils/constants"
 
 const theme = createTheme()
 

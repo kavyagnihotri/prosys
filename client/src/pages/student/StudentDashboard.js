@@ -1,5 +1,4 @@
 import * as React from "react"
-import axios from "axios"
 import CssBaseline from "@mui/material/CssBaseline"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
@@ -15,14 +14,12 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import Button from "@mui/material/Button"
 import Projects from "../../components/project/StudentProjects"
 import Applications from "../../components/application/Applications"
-import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import ListItems from "../../components/dashboard/ListItems"
 import LogoutIcon from "@mui/icons-material/Logout"
 import StudentProfile from "../../components/dashboard/StudentUpdateProfile"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { useNavigate } from "react-router-dom"
 import { useLogout } from "../../hooks/useLogout"
 import { useEffect, useState } from "react"
 import { serverURL } from "../../utils/constants"
@@ -30,7 +27,6 @@ import { serverURL } from "../../utils/constants"
 const mdTheme = createTheme()
 
 function DashboardContent() {
-    const navigate = useNavigate()
     const { user } = useAuthContext()
     const { logout } = useLogout()
     const [open, setOpen] = React.useState(true)
@@ -48,10 +44,6 @@ function DashboardContent() {
 
     const toggleDrawer = () => {
         setOpen(!open)
-    }
-
-    const handleClick = (event) => {
-        event.preventDefault()
     }
 
     useEffect(() => {
@@ -149,7 +141,7 @@ function DashboardContent() {
                             </Grid>
                         </Grid>
                     </Container>
-                    {selectedContent === "applications" && <Applications />}
+                    {/* {selectedContent === "applications" && <Applications />} */}
                 </Box>
             </Box>
         </ThemeProvider>

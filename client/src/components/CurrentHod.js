@@ -1,5 +1,3 @@
-import { serverURL } from "../utils/constants"
-
 import * as React from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
@@ -9,9 +7,10 @@ import TableRow from "@mui/material/TableRow"
 import Button from "@mui/material/Button"
 import Title from "./Title"
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove"
-import { useState, useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { useProjectsContext } from "../hooks/useProjectsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
+import { serverURL } from "../utils/constants"
 
 export default function CurrentHod() {
     const { projects, dispatch } = useProjectsContext()

@@ -1,5 +1,4 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -7,12 +6,12 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined"
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined"
-
 import Title from "../Title"
+import { Button } from "@mui/material"
+import { useEffect, useState } from "react"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
-import { Button } from "@mui/material"
 
 export default function Orders({ status }) {
     const { applications, dispatch } = useApplicationsContext()

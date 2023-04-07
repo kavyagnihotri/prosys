@@ -1,5 +1,4 @@
 import * as React from "react"
-import { useEffect } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -9,18 +8,14 @@ import Title from "../Title"
 import Paper from "@mui/material/Paper"
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
-
 import Projects from "./ProfProjectDetails"
+import { useEffect } from "react"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 
 const tables = [-1, 0, 1]
 const status = ["Rejected", "Pending", "Approved"]
-
-function preventDefault(event) {
-    event.preventDefault()
-}
 
 export default function Orders({ onViewApplicationClick }) {
     const { projects, dispatch } = useProjectsContext()

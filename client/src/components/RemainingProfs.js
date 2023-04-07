@@ -1,5 +1,3 @@
-import { serverURL } from "../utils/constants"
-
 import * as React from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
@@ -8,25 +6,20 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Button from "@mui/material/Button"
 import Title from "./Title"
-import { useState, useEffect, useRef } from "react"
-import { useProjectsContext } from "../hooks/useProjectsContext"
-import { useAuthContext } from "../hooks/useAuthContext"
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1"
 import Dialog from "@mui/material/Dialog"
 import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
 import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
-import { useNavigate } from "react-router-dom"
-
-function preventDefault(event) {
-    event.preventDefault()
-}
+import { useEffect } from "react"
+import { useProjectsContext } from "../hooks/useProjectsContext"
+import { useAuthContext } from "../hooks/useAuthContext"
+import { serverURL } from "../utils/constants"
 
 export default function RemainingProfs() {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
-    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -49,10 +42,6 @@ export default function RemainingProfs() {
     const [open, setOpen] = React.useState(true)
     var change = -1
     var disAl = -1
-
-    const handleClickOpen = () => {
-        setOpen(true)
-    }
 
     const handleNo = () => {
         change = -1
@@ -82,7 +71,7 @@ export default function RemainingProfs() {
                 change = -1
             }
         })
-        if (change == 0) {
+        if (change === 0) {
             await fetch(serverURL + "/prof/appoint", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -104,7 +93,7 @@ export default function RemainingProfs() {
                 change = -1
                 fetchProjects()
             }
-        } else if (change == 1) {
+        } else if (change === 1) {
             await fetch(serverURL + "/prof/appoint", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

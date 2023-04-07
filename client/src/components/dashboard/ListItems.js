@@ -1,36 +1,26 @@
 import * as React from "react"
+import axios from "axios"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
 import ListSubheader from "@mui/material/ListSubheader"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 import PeopleIcon from "@mui/icons-material/People"
-import LayersIcon from "@mui/icons-material/Layers"
-import LogoutIcon from "@mui/icons-material/Logout"
 import Divider from "@mui/material/Divider"
 import AssignmentIcon from "@mui/icons-material/Assignment"
-import Link from "@mui/material/Link"
-import { useLogout } from "../../hooks/useLogout"
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 
 export default function ListItems({ onListItemClick }) {
     const navigate = useNavigate()
     const { user } = useAuthContext()
-    const { logout } = useLogout()
     const handleListItemClick = (content) => {
         onListItemClick(content)
     }
     const goChat = async (e) => {
         axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
         navigate("/chatPage")
-    }
-
-    const handleLogout = async (e) => {
-        e.preventDefault()
-        logout()
     }
 
     return (
@@ -59,7 +49,7 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Chat Portal" />
             </ListItemButton>
-            <ListItemButton  button onClick={() => handleListItemClick("studentprofile")}>
+            <ListItemButton button onClick={() => handleListItemClick("studentprofile")}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>

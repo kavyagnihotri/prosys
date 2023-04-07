@@ -1,6 +1,4 @@
 import * as React from "react"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { useLogout } from "../../hooks/useLogout"
 import CssBaseline from "@mui/material/CssBaseline"
 import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
@@ -17,10 +15,11 @@ import RejectedProjectTable from "../../components/project/RejectedProjectTable"
 import LogoutIcon from "@mui/icons-material/Logout"
 import HomeIcon from "@mui/icons-material/Home"
 import HowToRegIcon from "@mui/icons-material/HowToReg"
-import { useNavigate } from "react-router-dom"
-import { AppBar } from "../../components/dashboard/Objects"
-import { Drawer } from "../../components/dashboard/Drawer"
 import List from "@mui/material/List"
+import { useNavigate } from "react-router-dom"
+import { AppBar, Drawer } from "../../components/dashboard/Objects"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { useLogout } from "../../hooks/useLogout"
 
 const mdTheme = createTheme()
 

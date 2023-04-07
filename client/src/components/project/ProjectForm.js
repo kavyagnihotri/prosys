@@ -10,7 +10,6 @@ import TextField from "@mui/material/TextField"
 import Toolbar from "@mui/material/Toolbar"
 import LogoutIcon from "@mui/icons-material/Logout"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
-
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -238,6 +237,7 @@ const ProjectForm = () => {
                                             fullWidth
                                             variant="standard"
                                             className={emptyfields.includes("description") ? "error" : ""}
+                                            multiline
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -249,6 +249,7 @@ const ProjectForm = () => {
                                             fullWidth
                                             variant="standard"
                                             className={emptyfields.includes("prerequisite") ? "error" : ""}
+                                            multiline
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>

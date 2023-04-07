@@ -236,6 +236,7 @@ const ApplicationForm = () => {
                                             label="Statement of Purpose"
                                             fullWidth
                                             variant="standard"
+                                            multiline
                                         />
                                     </Grid>
                                     <Grid item xs={12}>

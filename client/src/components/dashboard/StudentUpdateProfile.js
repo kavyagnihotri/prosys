@@ -1,31 +1,17 @@
 import * as React from "react"
 import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
-import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
-import Link from "@mui/material/Link"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
+import PersonIcon from "@mui/icons-material/Person"
 import Typography from "@mui/material/Typography"
-import Container from "@mui/material/Container"
-import MenuItem from "@mui/material/MenuItem"
-import Toolbar from "@mui/material/Toolbar"
-import Paper from "@mui/material/Paper"
-import HomeIcon from "@mui/icons-material/Home"
-import { AppBar } from "./Objects"
-import { useParams, useNavigate } from "react-router-dom"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useState, useEffect } from "react"
 import { serverURL } from "../../utils/constants"
 
-const theme = createTheme()
-
 export default function StudentProfile({ onUpdateProfileClick }) {
-    const navigate = useNavigate()
     const { user } = useAuthContext()
-    // const params = useParams()
     const [form, setForm] = useState({})
     const [change, setChange] = useState({
         cgpa: "",
@@ -105,7 +91,7 @@ export default function StudentProfile({ onUpdateProfileClick }) {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: "#0e5ec7" }}>
-                    <LockOutlinedIcon />
+                    <PersonIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Student Profile Update

@@ -4,22 +4,19 @@ import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemText from "@mui/material/ListItemText"
+import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+import MenuItem from "@mui/material/MenuItem"
 import Title from "../Title"
 import { useEffect } from "react"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useStudentsContext } from "../../hooks/useStudentsContext"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemText from "@mui/material/ListItemText"
-import TextField from "@mui/material/TextField"
-import Button from "@mui/material/Button"
-
-import { serverURL } from "../../utils/constants"
-
-import MenuItem from "@mui/material/MenuItem"
 import { useNavigate } from "react-router-dom"
 import { useProfContext } from "../../hooks/useProfContext"
-import setSelectedContent from "../../pages/professor/ProfDashboard"
+import { serverURL } from "../../utils/constants"
 
 const branches = [
     {
@@ -119,9 +116,9 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
         }
     }, [dispatch2, dispatch1, user])
 
-    const handleListItemClick = (content) => {
-        onListItemClick(content)
-    }
+    // const handleListItemClick = (content) => {
+    //     onListItemClick(content)
+    // }
 
     const addScore = async (newScore, appId) => {
         const response = await fetch(serverURL + "/student/score", {
@@ -164,7 +161,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                     a.profEmail === user.email &&
                     a.projectID === id &&
                     a.type === 0 &&
-                    a.score != -1 &&
+                    a.score !== -1 &&
                     count < NoStudents
                 ) {
                     students &&
@@ -173,7 +170,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                                 profs &&
                                     profs.map((prof) => {
                                         if (prof.email === user.email && prof.dept === s.dept) updateStatus(a._id, 1)
-                                        else if (prof.email === user.email && prof.dept != s.dept)
+                                        else if (prof.email === user.email && prof.dept !== s.dept)
                                             updateStatus(a._id, 3)
                                     })
                             }
@@ -183,7 +180,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                     a.profEmail === user.email &&
                     a.projectID === id &&
                     a.type === 0 &&
-                    a.score != -1 &&
+                    a.score !== -1 &&
                     count >= NoStudents
                 ) {
                     updateStatus(a._id, 2)
@@ -253,7 +250,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
                                                         </TextField>
                                                     </TableCell>
                                                 )}
-                                                {app.score != -1 && (
+                                                {app.score !== -1 && (
                                                     <TableCell>
                                                         <TextField
                                                             id="score"

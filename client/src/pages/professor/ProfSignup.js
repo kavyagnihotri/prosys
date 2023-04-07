@@ -1,4 +1,3 @@
-import { useProfSignup } from "../../hooks/useProfSignup"
 import * as React from "react"
 import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
@@ -15,6 +14,7 @@ import Toolbar from "@mui/material/Toolbar"
 import Paper from "@mui/material/Paper"
 import HomeIcon from "@mui/icons-material/Home"
 import { AppBar } from "../../components/dashboard/Objects"
+import { useProfSignup } from "../../hooks/useProfSignup"
 import { useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 
@@ -56,10 +56,6 @@ const ProfSignup = () => {
         navigate("/")
     }
 
-    // const [age, setAge] = React.useState("")
-    // const handleChange = (event: SelectChangeEvent) => {
-    //     setAge(event.target.value)
-    // }
     const handleSubmit = async (event) => {
         event.preventDefault()
 

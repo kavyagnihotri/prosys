@@ -1,32 +1,19 @@
 import * as React from "react"
 import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
-import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
-import Link from "@mui/material/Link"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
+import PersonIcon from "@mui/icons-material/Person"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
-import MenuItem from "@mui/material/MenuItem"
-import Toolbar from "@mui/material/Toolbar"
 import Paper from "@mui/material/Paper"
-import HomeIcon from "@mui/icons-material/Home"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { useParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { serverURL } from "../../utils/constants"
 
-const theme = createTheme()
-
 export default function Profile({ onUpdateProfileClick }) {
-    const navigate = useNavigate()
     const { user } = useAuthContext()
-    const { dispatch } = useProjectsContext()
-    // const params = useParams()
     const [form, setForm] = useState([])
     const [change, setChange] = useState({
         chamber: "",
@@ -48,9 +35,9 @@ export default function Profile({ onUpdateProfileClick }) {
         }
     })
 
-    const [chamber, setChamber] = useState(form.chamber)
-    const [researchInterest, setresearchInterest] = useState(form.researchInterest)
-    const [websites, setwebsites] = useState(form.websites)
+    // const [chamber, setChamber] = useState(form.chamber)
+    // const [researchInterest, setresearchInterest] = useState(form.researchInterest)
+    // const [websites, setwebsites] = useState(form.websites)
 
     const handleInputChange = (event) => {
         const { name, value } = event.target
@@ -108,7 +95,7 @@ export default function Profile({ onUpdateProfileClick }) {
                         <Grid item xs={12}>
                             <Paper sx={{ p: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
                                 <Avatar sx={{ m: 1, bgcolor: "#0e5ec7" }}>
-                                    <LockOutlinedIcon />
+                                    <PersonIcon />
                                 </Avatar>
                                 <Typography component="h1" variant="h5">
                                     Your Profile
