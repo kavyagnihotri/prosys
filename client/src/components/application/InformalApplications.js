@@ -123,7 +123,10 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     const addScore = async (newScore, appId) => {
         const response = await fetch(serverURL + "/student/score", {
             method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`,
+            },
             body: JSON.stringify({ appId: appId, newScore: newScore }),
         })
         const json = await response.json()
@@ -133,9 +136,15 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     }
 
     const updateStatus = async (appId, appStatus) => {
+        console.log(appId, appStatus)
         const response = await fetch(serverURL + "/student/status", {
             method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`,
+                // "Access-Control-Allow-Origin": "*",
+                // "Access-Control-Allow-Methods": "POST,PATCH,OPTIONS",
+            },
             body: JSON.stringify({ appId: appId, status: appStatus }),
         })
         const json = await response.json()
