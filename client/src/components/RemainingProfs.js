@@ -24,7 +24,7 @@ export default function RemainingProfs() {
     useEffect(() => {
         const fetchProjects = async () => {
             const response = await fetch(serverURL + "/prof/", {
-                method: "POST",
+                method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -79,7 +79,7 @@ export default function RemainingProfs() {
             })
             const fetchProjects = async () => {
                 const response = await fetch(serverURL + "/prof/", {
-                    method: "POST",
+                    method: "GET",
                     headers: { Authorization: `Bearer ${user.token}` },
                 })
                 const json = await response.json()
@@ -106,7 +106,7 @@ export default function RemainingProfs() {
             })
             const fetchProjects = async () => {
                 const response = await fetch(serverURL + "/prof/", {
-                    method: "POST",
+                    method: "GET",
                     headers: { Authorization: `Bearer ${user.token}` },
                 })
                 const json = await response.json()

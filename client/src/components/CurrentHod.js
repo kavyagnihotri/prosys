@@ -19,7 +19,7 @@ export default function CurrentHod() {
     useEffect(() => {
         const fetchProjects = async () => {
             const response = await fetch(serverURL + "/prof/", {
-                method: "POST",
+                method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -42,7 +42,7 @@ export default function CurrentHod() {
         })
         const fetchProjects = async () => {
             const response = await fetch(serverURL + "/prof/", {
-                method: "POST",
+                method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
