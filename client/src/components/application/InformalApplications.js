@@ -201,9 +201,9 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
                         count >= NoStudents
                     ) {
                         await updateStatus(a._id, 2)
+                        window.location.reload()
                     }
                 })
-                navigate(0)
             }
         } catch (error) {
             console.error(error)
