@@ -1,29 +1,21 @@
-import { PrettyChatWindow } from "react-chat-engine-pretty"
-import { useAuthContext } from "../../hooks/useAuthContext"
-import { ChatEngine } from "react-chat-engine"
 import * as React from "react"
-import { useEffect, useState } from "react"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
-import List from "@mui/material/List"
 import Typography from "@mui/material/Typography"
-import Divider from "@mui/material/Divider"
 import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import LogoutIcon from "@mui/icons-material/Logout"
 import Button from "@mui/material/Button"
-import { TableContainer } from "@mui/material"
-import { mainListItems, secondaryListItems } from "../../components/dashboard/profListItems"
-import Projects from "../../components/project/ProfProjects"
-import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
-import { AppBar, Drawer } from "../../components/dashboard/Objects"
+import { useAuthContext } from "../../hooks/useAuthContext"
+import { ChatEngine } from "react-chat-engine"
+import { useEffect, useState } from "react"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { AppBar } from "../../components/dashboard/Objects"
 import { useLogout } from "../../hooks/useLogout"
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import { useProjectsContext } from "../../hooks/useProjectsContext"
+import { serverURL } from "../../utils/constants"
+
 const mdTheme = createTheme()
 
 const ChatsPage = (props) => {
@@ -31,7 +23,6 @@ const ChatsPage = (props) => {
     const [name, setName] = useState(null)
     const { logout } = useLogout()
     const navigate = useNavigate()
-    const [open, setOpen] = React.useState(true)
     var title = ""
     if (user.role === "1") {
         title = "Professor Chat Portal"
@@ -60,7 +51,7 @@ const ChatsPage = (props) => {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch(`/prof/${user.email}`, {
+            const response = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -70,7 +61,7 @@ const ChatsPage = (props) => {
         }
 
         const fetchStudent = async () => {
-            const response = await fetch(`/student/${user.email}`, {
+            const response = await fetch(serverURL + `/student/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()

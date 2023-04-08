@@ -1,5 +1,4 @@
 import * as React from "react"
-import axios from "axios"
 import CssBaseline from "@mui/material/CssBaseline"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
@@ -15,21 +14,19 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import Button from "@mui/material/Button"
 import Projects from "../../components/project/StudentProjects"
 import Applications from "../../components/application/Applications"
-import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import ListItems from "../../components/dashboard/ListItems"
 import LogoutIcon from "@mui/icons-material/Logout"
+import StudentProfile from "../../components/dashboard/StudentUpdateProfile"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { useNavigate } from "react-router-dom"
 import { useLogout } from "../../hooks/useLogout"
 import { useEffect, useState } from "react"
-import StudentProfile from "../../components/dashboard/StudentUpdateProfile"
+import { serverURL } from "../../utils/constants"
 
 const mdTheme = createTheme()
 
 function DashboardContent() {
-    const navigate = useNavigate()
     const { user } = useAuthContext()
     const { logout } = useLogout()
     const [open, setOpen] = React.useState(true)
@@ -49,13 +46,9 @@ function DashboardContent() {
         setOpen(!open)
     }
 
-    const handleClick = (event) => {
-        event.preventDefault()
-    }
-
     useEffect(() => {
         const fetchStudent = async () => {
-            const response = await fetch(`/student/${user.email}`, {
+            const response = await fetch(serverURL + `/student/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -87,13 +80,7 @@ function DashboardContent() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            color="inherit"
-                            align="center"
-                            noWrap
-                        >
+                        <Typography component="h1" variant="h6" color="inherit" align="center" noWrap>
                             ProSys - Student
                         </Typography>
                         <Typography
@@ -154,6 +141,7 @@ function DashboardContent() {
                             </Grid>
                         </Grid>
                     </Container>
+                    {/* {selectedContent === "applications" && <Applications />} */}
                 </Box>
             </Box>
         </ThemeProvider>

@@ -17,10 +17,7 @@ import DialogTitle from "@mui/material/DialogTitle"
 import { useState, useEffect } from "react"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
-
-function preventDefault(event) {
-    event.preventDefault()
-}
+import { serverURL } from "../../utils/constants"
 
 export default function NewProjectTable() {
     const { projects, dispatch } = useProjectsContext()
@@ -44,7 +41,7 @@ export default function NewProjectTable() {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response = await fetch("/projects/", {
+            const response = await fetch(serverURL + "/projects/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -61,13 +58,13 @@ export default function NewProjectTable() {
     }, [dispatch, user])
 
     const onAccept = async (id) => {
-        await fetch("/augsd/accept", {
+        await fetch(serverURL + "/augsd/accept", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: id }),
         })
         const fetchProjects = async () => {
-            const response = await fetch("/projects/", {
+            const response = await fetch(serverURL + "/projects/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -85,7 +82,7 @@ export default function NewProjectTable() {
 
     const onReject = async (id) => {
         // if (id != null && textInput != "") {
-        await fetch("/augsd/reject", {
+        await fetch(serverURL + "/augsd/reject", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: id, recommendation: textInput }),
@@ -95,7 +92,7 @@ export default function NewProjectTable() {
         handleClose()
         // }
         const fetchProjects = async () => {
-            const response = await fetch("/projects/", {
+            const response = await fetch(serverURL + "/projects/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -105,7 +102,6 @@ export default function NewProjectTable() {
                 dispatch({ type: "SET_PROJECTS", payload: json })
             }
         }
-
         if (user) {
             fetchProjects()
         }

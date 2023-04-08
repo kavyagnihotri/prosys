@@ -1,5 +1,6 @@
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 
 const ProjectDetails = ({ project }) => {
     const { dispatch } = useProjectsContext()
@@ -10,7 +11,7 @@ const ProjectDetails = ({ project }) => {
             return
         }
 
-        const response = await fetch("/projects/" + project._id, {
+        const response = await fetch(serverURL + "/projects/" + project._id, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${user.token}`,

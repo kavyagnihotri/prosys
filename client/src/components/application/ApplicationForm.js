@@ -10,8 +10,6 @@ import TextField from "@mui/material/TextField"
 import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import Toolbar from "@mui/material/Toolbar"
-import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useState, useEffect } from "react"
@@ -21,6 +19,7 @@ import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useLogout } from "../../hooks/useLogout"
+import { serverURL } from "../../utils/constants"
 
 const theme = createTheme()
 
@@ -53,15 +52,14 @@ const ApplicationForm = () => {
         navigate("/student/dashboard")
     }
 
-    // fetching cuz once you go back to the dashboard we need the projects and the applications
     useEffect(() => {
         const fetchProject = async () => {
-            fetch(`/projects/${id}`, {
+            fetch(serverURL + `/projects/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    // Update project title state with fetched data
+                    // Update project title state with acquired data
                     setProjectID(data.projectID)
                     setProjectTitle(data.title)
                 })
@@ -71,7 +69,7 @@ const ApplicationForm = () => {
         }
 
         const fetchProjects = async () => {
-            const response = await fetch("/student/projects", {
+            const response = await fetch(serverURL + "/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -82,7 +80,7 @@ const ApplicationForm = () => {
         }
 
         const fetchApplications = async () => {
-            const response = await fetch("/student/applications", {
+            const response = await fetch(serverURL + "/student/applications", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -117,7 +115,7 @@ const ApplicationForm = () => {
 
         const application = { projectID, studentEmail, type, sop }
 
-        const response = await fetch("/student/createApplication", {
+        const response = await fetch(serverURL + "/student/createApplication", {
             method: "POST",
             body: JSON.stringify(application),
             headers: {
@@ -238,6 +236,7 @@ const ApplicationForm = () => {
                                             label="Statement of Purpose"
                                             fullWidth
                                             variant="standard"
+                                            multiline
                                         />
                                     </Grid>
                                     <Grid item xs={12}>

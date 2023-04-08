@@ -1,6 +1,4 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
@@ -12,23 +10,22 @@ import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import LogoutIcon from "@mui/icons-material/Logout"
 import Button from "@mui/material/Button"
-import { TableContainer } from "@mui/material"
 import ListItems from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
 import ViewApplications from "../../components/application/ViewApplications"
 import Profile from "../../components/dashboard/ProfProfile"
-import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
+import { TableContainer } from "@mui/material"
+import { useEffect, useState } from "react"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useLogout } from "../../hooks/useLogout"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
+import { serverURL } from "../../utils/constants"
 
 const mdTheme = createTheme()
 
 function DashboardContent() {
-    const navigate = useNavigate()
     const { dispatch } = useProjectsContext()
     const { user } = useAuthContext()
     const { logout } = useLogout()
@@ -36,7 +33,6 @@ function DashboardContent() {
     const [selectedContent, setSelectedContent] = useState("dashboard")
     const [projectID, setProjectID] = useState(null)
     const [numberOfStudents, setNumberOfStudents] = useState(null)
-    const [profID, setProfID] = useState(null)
     const [name, setName] = useState(null)
 
     const handleViewApplicationClick = (content, content1) => {
@@ -60,7 +56,7 @@ function DashboardContent() {
 
     useEffect(() => {
         const fetchProf = async () => {
-            const response = await fetch(`/prof/${user.email}`, {
+            const response = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -80,7 +76,8 @@ function DashboardContent() {
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: "flex" }}>
                 <CssBaseline />
-                <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
+                <AppBar position="absolute" open={open} sx={{ bgcolor: "#0e5ec7" }}>
+                    {/* <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}> */}
                     <Toolbar
                         sx={{
                             pr: "24px", // keep right padding when drawer closed
@@ -145,7 +142,13 @@ function DashboardContent() {
                         {selectedContent === "dashboard" && (
                             <Projects onViewApplicationClick={handleViewApplicationClick} />
                         )}
-                        {selectedContent === "application" && <ViewApplications projectID={projectID} numberOfStudents={numberOfStudents} onListItemClick={handleListItemClick} />}
+                        {selectedContent === "application" && (
+                            <ViewApplications
+                                projectID={projectID}
+                                numberOfStudents={numberOfStudents}
+                                onListItemClick={handleListItemClick}
+                            />
+                        )}
                         {selectedContent === "profile" && <Profile />}
                     </TableContainer>
                 </Box>

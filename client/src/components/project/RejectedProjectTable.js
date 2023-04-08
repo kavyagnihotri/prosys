@@ -5,13 +5,10 @@ import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Title from "../Title"
-import { useState, useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
-
-function preventDefault(event) {
-    event.preventDefault()
-}
+import { serverURL } from "../../utils/constants"
 
 export default function NewProjectTable() {
     const { projects, dispatch } = useProjectsContext()
@@ -19,7 +16,7 @@ export default function NewProjectTable() {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response = await fetch("/projects/", {
+            const response = await fetch(serverURL + "/projects/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })

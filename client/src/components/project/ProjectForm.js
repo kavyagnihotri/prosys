@@ -10,7 +10,6 @@ import TextField from "@mui/material/TextField"
 import Toolbar from "@mui/material/Toolbar"
 import LogoutIcon from "@mui/icons-material/Logout"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
-
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -18,6 +17,7 @@ import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useLogout } from "../../hooks/useLogout"
+import { serverURL } from "../../utils/constants"
 
 const theme = createTheme()
 
@@ -45,7 +45,7 @@ const ProjectForm = () => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response1 = await fetch(`/prof/${user.email}`, {
+            const response1 = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json1 = await response1.json()
@@ -55,7 +55,7 @@ const ProjectForm = () => {
                 dispatch({ type: "SET_PROF", payload: json1 })
             }
 
-            const response = await fetch("/student/projects", {
+            const response = await fetch(serverURL + "/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -66,7 +66,7 @@ const ProjectForm = () => {
         }
 
         const fetchProf = async () => {
-            const response = await fetch(`/prof/${user.email}`, {
+            const response = await fetch(serverURL + `/prof/${user.email}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -111,7 +111,7 @@ const ProjectForm = () => {
             approved,
         }
 
-        const response = await fetch("/projects", {
+        const response = await fetch(serverURL + "/projects", {
             method: "POST",
             body: JSON.stringify(project),
             headers: {
@@ -158,7 +158,7 @@ const ProjectForm = () => {
                                 color="inherit"
                                 size="large"
                             >
-                                <ChevronLeftIcon/>
+                                <ChevronLeftIcon />
                                 ProSys - Professor
                             </Button>
                             <Typography
@@ -237,6 +237,7 @@ const ProjectForm = () => {
                                             fullWidth
                                             variant="standard"
                                             className={emptyfields.includes("description") ? "error" : ""}
+                                            multiline
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -248,6 +249,7 @@ const ProjectForm = () => {
                                             fullWidth
                                             variant="standard"
                                             className={emptyfields.includes("prerequisite") ? "error" : ""}
+                                            multiline
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>

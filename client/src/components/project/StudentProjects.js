@@ -1,5 +1,4 @@
 import * as React from "react"
-import { useEffect } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -7,9 +6,10 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Title from "../Title"
 import Projects from "./StudentProjectDetails"
-
+import { useEffect } from "react"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 
 export default function Orders() {
     const { projects, dispatch } = useProjectsContext()
@@ -17,7 +17,7 @@ export default function Orders() {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response = await fetch("/student/projects", {
+            const response = await fetch(serverURL + "/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()

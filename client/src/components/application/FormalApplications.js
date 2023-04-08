@@ -5,19 +5,18 @@ import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Title from "../Title"
-import { useState, useEffect, useRef } from "react"
-import { useApplicationsContext } from "../../hooks/useApplicationsContext"
-import { useAuthContext } from "../../hooks/useAuthContext"
-import { useParams } from "react-router-dom"
-import { useStudentsContext } from "../../hooks/useStudentsContext"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import MenuItem from "@mui/material/MenuItem"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useProfContext } from "../../hooks/useProfContext"
-import setSelectedContent from "../../pages/professor/ProfDashboard"
+import { useStudentsContext } from "../../hooks/useStudentsContext"
+import { useApplicationsContext } from "../../hooks/useApplicationsContext"
+import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 
 const branches = [
     {
@@ -74,7 +73,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
 
     useEffect(() => {
         const fetchApplications = async () => {
-            const response = await fetch("/student/applications/", {
+            const response = await fetch(serverURL + "/student/applications/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -87,7 +86,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
         }
 
         const fetchStudents = async () => {
-            const response = await fetch("/student/", {
+            const response = await fetch(serverURL + "/student/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
@@ -98,8 +97,8 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
         }
 
         const fetchProfs = async () => {
-            const response = await fetch("/prof/", {
-                method: "POST",
+            const response = await fetch(serverURL + "/prof/", {
+                method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
@@ -117,12 +116,8 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
         }
     }, [dispatch2, dispatch1, user])
 
-    const handleListItemClick = (content) => {
-        onListItemClick(content)
-    }
-
     const addScore = async (newScore, appId) => {
-        const response = await fetch("/student/score", {
+        const response = await fetch(serverURL + "/student/score", {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
             body: JSON.stringify({ appId: appId, newScore: newScore }),
@@ -134,7 +129,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     }
 
     const updateStatus = async (appId, appStatus) => {
-        const response = await fetch("/student/status", {
+        const response = await fetch(serverURL + "/student/status", {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
             body: JSON.stringify({ appId: appId, status: appStatus }),
@@ -146,9 +141,9 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
     }
 
     const changeStatus = async () => {
-        const response = await fetch("/student/rank/", {
+        const response = await fetch(serverURL + "/student/rank", {
             method: "GET",
-            headers: { Authorization: `Bearer ${user.token}` },
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
         })
         const json = await response.json()
 

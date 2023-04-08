@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useAuthContext } from "./useAuthContext"
+import { serverURL } from "../utils/constants"
 
 export const useStudentLogin = () => {
     const [error, setError] = useState(null)
@@ -10,7 +11,7 @@ export const useStudentLogin = () => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch("/student/login", {
+        const response = await fetch(serverURL + "/student/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password }),

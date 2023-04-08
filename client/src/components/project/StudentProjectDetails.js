@@ -4,6 +4,7 @@ import Button from "@mui/material/Button"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { serverURL } from "../../utils/constants"
 
 const Project = ({ project }) => {
     const { user } = useAuthContext()
@@ -12,7 +13,7 @@ const Project = ({ project }) => {
 
     useEffect(() => {
         const fetchProfessors = async () => {
-            const response = await fetch("/prof", {
+            const response = await fetch(serverURL + "/prof", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })

@@ -2,14 +2,10 @@ import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
 import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import Button from "@mui/material/Button"
-import { useNavigate } from "react-router-dom"
 
 const Project = ({ onViewApplication, project, tab }) => {
-    const navigate = useNavigate()
-
     const onView = async (id, numberOfStudents) => {
         onViewApplication(id, numberOfStudents)
-        // navigate("/prof/project/view/" + id)
     }
 
     return (
