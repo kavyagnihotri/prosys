@@ -20,7 +20,7 @@ router.post("/login", loginProf)
 // signup
 router.post("/signup", signupProf)
 
-router.post("/", getProfs)
+router.get("/", getProfs)
 
 router.get("/:id", getProf)
 

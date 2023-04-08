@@ -28,6 +28,7 @@
     "nodemon": "^2.0.20",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
+    "streamifier": "^0.1.1",
     "validator": "^13.9.0"
   },
   "resolutions": {

@@ -1,7 +1,6 @@
 require("dotenv").config()
 const express = require("express")
 const mongoose = require("mongoose")
-const bodyParser = require("body-parser")
 const cors = require("cors")
 
 // express app
@@ -13,15 +12,14 @@ const profRoutes = require("./routes/prof")
 const fileRoutes = require("./routes/file")
 
 // middleware
-// app.use(bodyParser())
 app.use(express.json())
+
 app.use(cors())
 app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     next()
 })
-// app.use(bodyParser.json())
-
-// app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes
 app.use("/projects", projectRoutes)
@@ -30,7 +28,7 @@ app.use("/augsd", augsdRoutes)
 app.use("/prof", profRoutes)
 app.use("/file", fileRoutes)
 
-// db connect and listen for reqs
+// db connect and listen for requests
 mongoose.set("strictQuery", false)
 mongoose
     .connect(process.env.MONGO_URL, {

@@ -52,11 +52,12 @@ const addScore = async (req, res) => {
     // console.log(req.body)
     // console.log(appId, newScore)
     try {
-        appToUpdate = await Application.findById(appId)
+        const application = await Application.findOne({ _id: appId })
         // console.log(appToUpdate)
-        appToUpdate.score = newScore
-        appToUpdate.save()
-        res.send("updated")
+        application.score = newScore
+        await application.save()
+        // res.send("updated")
+        res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -66,11 +67,12 @@ const updateStatus = async (req, res) => {
     const { appId, status } = req.body
     // console.log(req.body)
     try {
-        appToUpdate = await Application.findById(appId)
+        const application = await Application.findOne({ _id: appId })
         // console.log(appToUpdate)
-        appToUpdate.status = status
-        appToUpdate.save()
-        res.status(200).json("Updated")
+        application.status = status
+        await application.save()
+        // res.status(200).json("Updated")
+        res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -102,7 +104,8 @@ const acceptApplication = async (req, res) => {
 
         await project.save()
 
-        res.send("Updated")
+        // res.send("Updated")
+        res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -124,7 +127,8 @@ const rejectApplication = async (req, res) => {
         // project.applicants.splice(index, 1)
         // await project.save()
 
-        res.send("Updated")
+        // res.send("Updated")
+        res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
