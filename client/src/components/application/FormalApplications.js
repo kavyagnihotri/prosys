@@ -61,7 +61,7 @@ const branches = [
     },
 ]
 
-export default function FormalApplications({ projectID, numberOfStudents, onListItemClick }) {
+export default function FormalApplications({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
     var { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
@@ -112,7 +112,6 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
             fetchApplications()
             fetchStudents()
             fetchProfs()
-            console.log(profs)
         }
     }, [dispatch2, dispatch1, user])
 
@@ -187,7 +186,7 @@ export default function FormalApplications({ projectID, numberOfStudents, onList
 
     return (
         <React.Fragment>
-            <Title>Formal Applicants for Project</Title>
+            <Title>Formal Applicants for {projectTitle} Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>

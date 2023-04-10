@@ -22,6 +22,7 @@ import { useAuthContext } from "../../hooks/useAuthContext"
 import { useLogout } from "../../hooks/useLogout"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { serverURL } from "../../utils/constants"
+import HoDApproval from "../../components/application/HoDApproval"
 
 const mdTheme = createTheme()
 
@@ -33,12 +34,15 @@ function DashboardContent() {
     const [selectedContent, setSelectedContent] = useState("dashboard")
     const [projectID, setProjectID] = useState(null)
     const [numberOfStudents, setNumberOfStudents] = useState(null)
+    const [projectTitle, setProjectTitle] = useState(null)
     const [name, setName] = useState(null)
 
-    const handleViewApplicationClick = (content, content1) => {
+    const handleViewApplicationClick = (content, content1, content2) => {
         setSelectedContent("application")
         setProjectID(content)
         setNumberOfStudents(content1)
+        console.log(content, content1, content2)
+        setProjectTitle(content2)
     }
 
     const handleListItemClick = (content) => {
@@ -146,10 +150,12 @@ function DashboardContent() {
                             <ViewApplications
                                 projectID={projectID}
                                 numberOfStudents={numberOfStudents}
+                                projectTitle={projectTitle}
                                 onListItemClick={handleListItemClick}
                             />
                         )}
                         {selectedContent === "profile" && <Profile />}
+                        {selectedContent === "approve" && <HoDApproval />}
                     </TableContainer>
                 </Box>
             </Box>

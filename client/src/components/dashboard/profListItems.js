@@ -12,10 +12,15 @@ import Link from "@mui/material/Link"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { useProfContext } from "../../hooks/useProfContext"
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn"
+import { serverURL } from "../../utils/constants"
 
 export default function ListItems({ onListItemClick }) {
     const navigate = useNavigate()
     const { user } = useAuthContext()
+    const { profs, dispatch } = useProfContext()
     const handleListItemClick = (content) => {
         onListItemClick(content)
     }
@@ -23,6 +28,22 @@ export default function ListItems({ onListItemClick }) {
         axios.post("/authenticate", { username: user.email }).catch((e) => console.log("Auth Error", e))
         navigate("/chatPage")
     }
+
+    useEffect(() => {
+        const fetchProf = async () => {
+            const response = await fetch(serverURL + `/prof/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            if (response.ok) {
+                dispatch({ type: "SET_PROF", payload: json })
+            }
+        }
+
+        if (user) {
+            fetchProf()
+        }
+    })
 
     return (
         <React.Fragment>
@@ -48,6 +69,17 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Add Projects" />
             </ListItemButton>
+            {profs && profs.hod === true && (
+                <ListItemButton button onClick={() => handleListItemClick("approve")}>
+                    <ListItemIcon>
+                        <AssignmentTurnedInIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                        primary="Approve Interdisciplinary Projects"
+                        primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
+                    />
+                </ListItemButton>
+            )}
             <ListItemButton button onClick={() => goChat()}>
                 <ListItemIcon>
                     <MarkChatReadIcon />

@@ -1,13 +1,11 @@
 import * as React from "react"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
-import FormalApplications from "./FormalApplications"
-import InformalApplications from "./InformalApplications"
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 
-export default function Orders({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
+export default function Orders() {
     return (
         <React.Fragment>
             <Box
@@ -25,12 +23,11 @@ export default function Orders({ projectID, numberOfStudents, projectTitle, onLi
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                <FormalApplications
+                                {/* <FormalApplications
                                     projectID={projectID}
                                     numberOfStudents={numberOfStudents}
-                                    projectTitle={projectTitle}
                                     onListItemClick={onListItemClick}
-                                />
+                                /> */}
                             </Paper>
                         </Grid>
                     </Grid>
@@ -40,12 +37,11 @@ export default function Orders({ projectID, numberOfStudents, projectTitle, onLi
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                <InformalApplications
+                                {/* <InformalApplications
                                     projectID={projectID}
                                     numberOfStudents={numberOfStudents}
-                                    projectTitle={projectTitle}
                                     onListItemClick={onListItemClick}
-                                />
+                                /> */}
                             </Paper>
                         </Grid>
                     </Grid>

@@ -4,8 +4,8 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import Button from "@mui/material/Button"
 
 const Project = ({ onViewApplication, project, tab }) => {
-    const onView = async (id, numberOfStudents) => {
-        onViewApplication(id, numberOfStudents)
+    const onView = async (id, numberOfStudents, projectTitle) => {
+        onViewApplication(id, numberOfStudents, projectTitle)
     }
 
     return (
@@ -21,7 +21,7 @@ const Project = ({ onViewApplication, project, tab }) => {
                         size="large"
                         startIcon={<OpenInNewIcon />}
                         type="submit"
-                        onClick={(e) => onView(project._id, project.numberOfStudents)}
+                        onClick={(e) => onView(project._id, project.numberOfStudents, project.title)}
                     ></Button>
                 </TableCell>
             )}

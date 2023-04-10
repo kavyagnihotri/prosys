@@ -61,7 +61,7 @@ const branches = [
     },
 ]
 
-export default function InformalApplications({ projectID, numberOfStudents, onListItemClick }) {
+export default function InformalApplications({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
     const { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
@@ -121,7 +121,6 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
             fetchApplications()
             fetchStudents()
             fetchProfs()
-            console.log(profs)
         }
     }, [dispatch2, dispatch1, user])
 
@@ -212,7 +211,7 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
 
     return (
         <React.Fragment>
-            <Title>Informal Applicants for Project</Title>
+            <Title>Informal Applicants for {projectTitle} Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
