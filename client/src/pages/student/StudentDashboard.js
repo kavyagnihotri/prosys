@@ -16,7 +16,8 @@ import Projects from "../../components/project/StudentProjects"
 import Applications from "../../components/application/Applications"
 import ListItems from "../../components/dashboard/ListItems"
 import LogoutIcon from "@mui/icons-material/Logout"
-import StudentProfile from "../../components/dashboard/StudentUpdateProfile"
+import StudentProfile from "../../components/profile/StudentProfile"
+import ProfessorDetails from "../../components/profile/ProfDetails"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -29,8 +30,9 @@ const mdTheme = createTheme()
 function DashboardContent() {
     const { user } = useAuthContext()
     const { logout } = useLogout()
-    const [open, setOpen] = React.useState(true)
     const [selectedContent, setSelectedContent] = useState("dashboard")
+    const [profEmail, setProfEmail] = useState(null)
+    const [open, setOpen] = React.useState(true)
     const [name, setName] = useState(null)
 
     const handleSubmit = async (e) => {
@@ -44,6 +46,11 @@ function DashboardContent() {
 
     const toggleDrawer = () => {
         setOpen(!open)
+    }
+
+    const handleViewProfDetails = (content) => {
+        setSelectedContent("profDetails")
+        setProfEmail(content)
     }
 
     useEffect(() => {
@@ -133,11 +140,18 @@ function DashboardContent() {
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
-                                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                    {selectedContent === "dashboard" && <Projects />}
-                                    {selectedContent === "applications" && <Applications />}
-                                    {selectedContent === "studentprofile" && <StudentProfile />}
-                                </Paper>
+                                {selectedContent !== "profDetails" && (
+                                    <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                                        {selectedContent === "dashboard" && (
+                                            <Projects onViewProfDetailsClick={handleViewProfDetails} />
+                                        )}
+                                        {selectedContent === "applications" && (
+                                            <Applications onViewProfDetailsClick={handleViewProfDetails} />
+                                        )}
+                                        {selectedContent === "studentprofile" && <StudentProfile />}
+                                    </Paper>
+                                )}
+                                {selectedContent === "profDetails" && <ProfessorDetails profEmail={profEmail} />}
                             </Grid>
                         </Grid>
                     </Container>

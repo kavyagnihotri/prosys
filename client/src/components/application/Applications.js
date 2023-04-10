@@ -9,9 +9,13 @@ import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 
-export default function Orders() {
+export default function Orders({ onViewProfDetailsClick }) {
     const { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
+
+    const handleViewProfDetailsClick = (content) => {
+        onViewProfDetailsClick(content)
+    }
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -42,7 +46,11 @@ export default function Orders() {
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                <ApplicationDetails key={index} status={value} />
+                                <ApplicationDetails
+                                    onViewProfDetails={handleViewProfDetailsClick}
+                                    key={index}
+                                    status={value}
+                                />
                             </Paper>
                         </Grid>
                     </Grid>

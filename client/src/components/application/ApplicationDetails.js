@@ -4,6 +4,7 @@ import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
+import PersonIcon from "@mui/icons-material/Person"
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined"
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined"
 import Title from "../Title"
@@ -13,7 +14,7 @@ import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 
-export default function Orders({ status }) {
+export default function Orders({ onViewProfDetails, status }) {
     const { applications, dispatch } = useApplicationsContext()
     const { user } = useAuthContext()
     const [professors, setProfessors] = useState({})
@@ -60,6 +61,10 @@ export default function Orders({ status }) {
         return professors[email] || ""
     }
 
+    const onView = async (profEmail) => {
+        onViewProfDetails(profEmail)
+    }
+
     const onAccept = async (id) => {
         await fetch(serverURL + "/student/accept", {
             method: "POST",
@@ -104,7 +109,22 @@ export default function Orders({ status }) {
                                 application.status === status && (
                                     <TableRow key={application._id}>
                                         <TableCell>{application.projectTitle}</TableCell>
-                                        <TableCell>{getProfessorName(application.profEmail)}</TableCell>
+                                        <TableCell>
+                                            <Button
+                                                fullWidth
+                                                startIcon={<PersonIcon />}
+                                                sx={{
+                                                    color: "black",
+                                                    transition: "border-color 0.3s ease",
+                                                    "&:hover": {
+                                                        border: "1px solid #e4e7ed",
+                                                    },
+                                                }}
+                                                onClick={() => onView(application.profEmail)}
+                                            >
+                                                {getProfessorName(application.profEmail)}
+                                            </Button>
+                                        </TableCell>
                                         <TableCell>{application.sop}</TableCell>
                                         <TableCell>{application.type === 1 ? "Formal" : "Informal"}</TableCell>
                                         {application.status === 0 && (
