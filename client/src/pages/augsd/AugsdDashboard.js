@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useLogout } from "../../hooks/useLogout"
+import AugsdApplications from "../../pages/augsd/AugsdApplication"
 
 const mdTheme = createTheme()
 
@@ -43,6 +44,11 @@ function DashboardContent() {
     const goHOD = async (e) => {
         e.preventDefault()
         navigate("/augsd/hod")
+    }
+
+    const goApplication = async (e) => {
+        e.preventDefault()
+        navigate("/augsd/application")
     }
 
     return (
@@ -99,6 +105,8 @@ function DashboardContent() {
                         <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit" onClick={goHOD}>
                             Mark HOD
                         </Button>
+                        <br></br>
+                        <AugsdApplications></AugsdApplications>
                     </List>
                 </Drawer>
 

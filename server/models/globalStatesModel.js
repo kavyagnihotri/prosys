@@ -5,10 +5,9 @@ const globalStatesModel = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
     },
     applicationStatus: {
         type: Boolean,
     },
 })
-module.exports = mongoose.model("globalStates", globalStatesModel)
+module.exports = mongoose.model("globalState", globalStatesModel)

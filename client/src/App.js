@@ -7,6 +7,7 @@ import StudentLogin from "./pages/student/StudentLogin"
 import StudentSignup from "./pages/student/StudentSignup"
 import AugsdLogin from "./pages/augsd/AugsdLogin"
 import AugsdDashboard from "./pages/augsd/AugsdDashboard"
+import AugsdApplications from "./pages/augsd/AugsdApplication"
 import ProfLogin from "./pages/professor/ProfLogin"
 import ProfSignup from "./pages/professor/ProfSignup"
 import HomePage from "./components/muiButton"
@@ -49,6 +50,17 @@ function App() {
                             path="/augsd/hod"
                             element={
                                 user && user.email === "augsd@gmail.com" ? <AugsdHod /> : <Navigate to="/augsd/login" />
+                            }
+                        />
+
+                        <Route
+                            path="/augsd/application"
+                            element={
+                                user && user.email === "augsd@gmail.com" ? (
+                                    <AugsdApplications />
+                                ) : (
+                                    <Navigate to="/augsd/login" />
+                                )
                             }
                         />
 

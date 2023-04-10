@@ -5,7 +5,7 @@ const { getGlobals, updateStatus } = require("../controllers/globalStatesControl
 
 const router = express.Router()
 
-router.post("/getglobals", getGlobals)
+router.get("/getglobals", getGlobals)
 
 router.post("/updateglobals", updateStatus)
 

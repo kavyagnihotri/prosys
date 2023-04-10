@@ -44,6 +44,10 @@ function HodContent() {
         e.preventDefault()
         navigate("/augsd/hod")
     }
+    const goApplication = async (e) => {
+        e.preventDefault()
+        navigate("/augsd/application")
+    }
 
     return (
         <ThemeProvider theme={mdTheme}>
@@ -98,6 +102,16 @@ function HodContent() {
                     <List>
                         <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit" onClick={goHOD}>
                             Mark HOD
+                        </Button>
+                        <br></br>
+                        <Button
+                            color="inherit"
+                            size="large"
+                            startIcon={<HowToRegIcon />}
+                            type="submit"
+                            onClick={goApplication}
+                        >
+                            Start/End Period
                         </Button>
                     </List>
                 </Drawer>
