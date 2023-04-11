@@ -29,10 +29,12 @@ import { AppBar } from "../../components/dashboard/Objects"
 import { Drawer } from "../../components/dashboard/Drawer"
 import AugsdLogin from "./AugsdLogin"
 import List from "@mui/material/List"
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 const mdTheme = createTheme()
 
 function DashboardContent() {
+    const { user } = useAuthContext()
     const { logout } = useLogout()
     const navigate = useNavigate()
     const [open, setOpen] = React.useState(true)
@@ -52,6 +54,37 @@ function DashboardContent() {
     const goHOD = async (e) => {
         e.preventDefault()
         navigate("/augsd/hod")
+    }
+
+    const update = async (id, editedStudent) => {
+        await fetch(`/student/${id}`, {
+            method: "PUT",
+            body: JSON.stringify(editedStudent),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`
+            },
+        })
+    }
+
+    const notifyall = async (e) => {
+        e.preventDefault()
+        const response1 = await fetch(`/student/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`
+            },
+        })
+        const json = await response1.json()
+        console.log(json)
+        if (response1.ok) {
+            json.map((j) => {
+                j.notify = 1
+                update(j._id, j)
+            })
+        }
+        alert("Notified to students for profile updation")
     }
 
     return (
@@ -107,6 +140,11 @@ function DashboardContent() {
                     <List>
                         <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit" onClick={goHOD}>
                             Mark HOD
+                        </Button>
+                    </List>
+                    <List>
+                        <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit" onClick={notifyall}>
+                            Notify to Update
                         </Button>
                     </List>
                 </Drawer>
