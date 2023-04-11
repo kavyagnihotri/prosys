@@ -92,6 +92,7 @@ const updateProfile = async(req, res) => {
                 cv_link: req.body.cv_link,
                 per_link: req.body.per_link,
                 aoi: req.body.aoi,
+                notify: req.body.notify,
             },
         }
     )
