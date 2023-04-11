@@ -50,6 +50,10 @@ const studentSchema = new Schema({
         // area of interset
         type: String,
         required: true,
+    },
+    notify: {
+        type: Number,
+        required: true
     }
 })
 
