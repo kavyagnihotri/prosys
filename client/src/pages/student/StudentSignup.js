@@ -112,7 +112,7 @@ const StudentSignup = () => {
             per_link = json2["url"]
         }
 
-        await signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi)
+        await signup(email, password, name, studentID, dept, cgpa, cv_link, per_link, aoi, 0)
     }
     return (
         <ThemeProvider theme={theme}>
