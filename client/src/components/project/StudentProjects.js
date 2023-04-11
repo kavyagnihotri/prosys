@@ -11,9 +11,13 @@ import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 
-export default function Orders() {
+export default function Orders({ onViewProfDetailsClick }) {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
+
+    const handleViewProfDetailsClick = (content) => {
+        onViewProfDetailsClick(content)
+    }
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -51,7 +55,13 @@ export default function Orders() {
                 {projects &&
                     projects.map((project) => (
                         <TableBody>
-                            {project.approved === 1 && <Projects key={project._id} project={project} />}
+                            {project.approved === 1 && (
+                                <Projects
+                                    onViewProfDetails={handleViewProfDetailsClick}
+                                    key={project._id}
+                                    project={project}
+                                />
+                            )}
                         </TableBody>
                     ))}
             </Table>

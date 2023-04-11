@@ -1,15 +1,22 @@
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
 import Button from "@mui/material/Button"
+import PersonIcon from "@mui/icons-material/Person"
+import AddIcon from "@mui/icons-material/Add"
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { serverURL } from "../../utils/constants"
 
-const Project = ({ project }) => {
+const Project = ({ onViewProfDetails, project }) => {
+    const navigate = useNavigate()
     const { user } = useAuthContext()
     const [professors, setProfessors] = useState({})
-    const navigate = useNavigate()
+
+    const onView = async (profEmail) => {
+        onViewProfDetails(profEmail)
+    }
 
     useEffect(() => {
         const fetchProfessors = async () => {
@@ -48,29 +55,47 @@ const Project = ({ project }) => {
 
     return (
         <TableRow key={project._id}>
-            {/* <TableCell>{project.projectID}</TableCell> */}
             <TableCell>{project.title}</TableCell>
             <TableCell>{project.projectType}</TableCell>
             <TableCell>{project.description}</TableCell>
             <TableCell>{project.prerequisite}</TableCell>
-            <TableCell>{getProfessorName(project.professorEmail)}</TableCell>
+            <TableCell>
+                <Button
+                    fullWidth
+                    startIcon={<PersonIcon />}
+                    sx={{
+                        height: 100,
+                        color: "black",
+                        transition: "border-color 0.3s ease",
+                        "&:hover": {
+                            border: "1px solid #e4e7ed",
+                        },
+                    }}
+                    onClick={() => onView(project.professorEmail)}
+                >
+                    {getProfessorName(project.professorEmail)}
+                </Button>
+            </TableCell>
             <TableCell>{project.numberOfStudents}</TableCell>
             <TableCell>
                 {isUserApplicant ? (
-                    <Button
-                        fullWidth
-                        variant="outline"
-                        style={{ backgroundColor: "#defae0", color: "green", border: "1px solid green" }}
-                        disabled
-                    >
+                    <Button fullWidth startIcon={<CheckCircleIcon />} style={{ color: "green" }} disabled>
                         Applied
                     </Button>
                 ) : (
                     <Button
                         fullWidth
-                        variant="outline"
-                        style={{ backgroundColor: "#deeafa", color: "#0e5ec7", border: "1px solid #0e5ec7" }}
-                        onClick={(e) => handleApply(project._id)}
+                        startIcon={<AddIcon />}
+                        sx={{
+                            backgroundColor: "#edf4fc",
+                            color: "#0e5ec7",
+                            border: "none",
+                            transition: "border-color 0.3s ease",
+                            "&:hover": {
+                                border: "1px solid #106be3",
+                            },
+                        }}
+                        onClick={() => handleApply(project._id)}
                     >
                         Apply
                     </Button>
