@@ -13,7 +13,6 @@ const { getProjects, getProject } = require("../controllers/projectController")
 const {
     getApplications,
     createApplication,
-    deleteApplication,
     addScore,
     getRanked,
     updateStatus,

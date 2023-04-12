@@ -2,15 +2,11 @@ const Application = require("../models/applicationModel")
 const Student = require("../models/studentModel")
 const Project = require("../models/ProjectModel")
 
-// projectTitle, projectID(num), profEmail, studentEmail, type(num), sop, status(num)
-
-// GET all applications
 const getApplications = async (req, res) => {
     const applications = await Application.find({}).sort({ createdAt: -1 })
     res.status(200).json(applications)
 }
 
-// Create an application
 const createApplication = async (req, res) => {
     const { projectID, studentEmail, type, sop } = req.body
     try {
@@ -32,8 +28,6 @@ const createApplication = async (req, res) => {
             return res.status(400).json({ error: "Not a valid Project ID" })
         }
 
-        // studentEmail from the studentLogged in sent by frontend
-        // projectID, profEmail from the project
         const project = await Project.findOne({ _id: projectID })
         const profEmail = project["professorEmail"]
         const projectTitle = project["title"]
@@ -49,14 +43,10 @@ const createApplication = async (req, res) => {
 
 const addScore = async (req, res) => {
     const { appId, newScore } = req.body
-    // console.log(req.body)
-    // console.log(appId, newScore)
     try {
         const application = await Application.findOne({ _id: appId })
-        // console.log(appToUpdate)
         application.score = newScore
         await application.save()
-        // res.send("updated")
         res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -103,8 +93,6 @@ const acceptApplication = async (req, res) => {
         // project.applicants.splice(index, 1)
 
         await project.save()
-
-        // res.send("Updated")
         res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -120,31 +108,31 @@ const rejectApplication = async (req, res) => {
         application.status = 4
         await application.save()
 
-        // const studentEmail = application["studentEmail"]
-        // const projectID = application["projectID"]
-        // const project = await Project.findOne({ _id: projectID })
-        // const index = project.applicants.indexOf(studentEmail)
-        // project.applicants.splice(index, 1)
-        // await project.save()
+        // filter the applications by the status as undefined
+        const applications = await Application.find({})
+        const filteredApplications = applications.filter((app) => app.status === 0 && app.score !== -1)
 
-        // res.send("Updated")
+        // sort decreasing order applications by score, then createdAt
+        filteredApplications.sort((a, b) => {
+            if (b.score !== a.score) {
+                return b.score - a.score
+            }
+            return new Date(b.createdAt) - new Date(a.createdAt)
+        })
+
+        // send next accepted
+        if (filteredApplications.length > 0) {
+            const highestScore = filteredApplications[0].score
+            const topApplication = filteredApplications.find((app) => app.score === highestScore)
+            topApplication.status = 1
+            await topApplication.save()
+        }
+
         res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
-// delete an applciation
-// const deleteApplication = async (req, res) => {
-// const { id } = req.params
-// if(!mongoose.Types.ObjectId.isValid(id)) {
-//     return res.status(404).json({error: "No such project"})
-// }
-// const applicaiton = await Application.findOneAndDelete({_id: id})
-// if(!applicaiton) {
-//     return res.status(404).json({error: "No such applicaiton"})
-// }
-// res.status(200).json(applicaiton)
-// }
 
 module.exports = {
     getApplications,
