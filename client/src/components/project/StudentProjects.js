@@ -4,13 +4,11 @@ import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
-import Paper from "@mui/material/Paper"
 import Grid from "@mui/material/Grid"
-import Typography from "@mui/material/Typography"
 import Title from "../Title"
 import Projects from "./StudentProjectDetails"
 import { useEffect, useState } from "react"
-import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core"
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
@@ -19,7 +17,7 @@ export default function Orders({ onViewProfDetailsClick }) {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
     const [selectedDept, setSelectedDept] = useState("")
-    const [selectedProf, setSelectedProf] = useState("")
+    const [selectedProfEmail, setSelectedProfEmail] = useState("")
     const [professors, setProfessors] = useState({})
     const [professorsMap, setProfessorsMap] = useState({})
     const depts = ["CS", "ECE", "ENI", "EEE", "Mech", "Civil"]
@@ -29,7 +27,7 @@ export default function Orders({ onViewProfDetailsClick }) {
     }
 
     const handleProfChange = (event) => {
-        setSelectedProf(event.target.value)
+        setSelectedProfEmail(event.target.value)
     }
 
     const handleViewProfDetailsClick = (content) => {
@@ -74,40 +72,21 @@ export default function Orders({ onViewProfDetailsClick }) {
         }
     }, [dispatch, user])
 
-    // const filteredProjects = projects.filter((project) => {
-    //     if (selectedDept && selectedProf) {
-    //         const professor = professors[project.professorEmail]
-    //         return professor.dept === selectedDept && project.professorEmail === selectedProf
-    //     } else if (selectedDept) {
-    //         // Filter based on department of the professor associated with the project
-    //         const professorsInDept = professors.filter((prof) => prof.dept === selectedDept)
-    //         return (
-    //             professorsInDept.some((prof) => prof.email === project.professorEmail) &&
-    //             project.department === selectedDept
-    //         )
-    //     } else if (selectedProf) {
-    //         return project.professorEmail === selectedProf
-    //     } else {
-    //         return true
-    //     }
-    // })
-
-    // const filteredProjects = projects.filter((project) => {
-    //     // get the professor object associated with the project
-
-    //     if (selectedDept && selectedProf) {
-    //         const professor = professors[project.professorEmail]
-    //         return professor.dept === selectedDept && project.professorEmail === selectedProf
-    //     } else if (selectedDept) {
-    //         const professorsInDept = professors.filter((professor) => professor.dept === selectedDept)
-    //         console.log(professorsInDept)
-    //         // return professor.dept === selectedDept
-    //     } else if (selectedProf) {
-    //         return project.professorEmail === selectedProf
-    //     } else {
-    //         return true
-    //     }
-    // })
+    const filteredProjects =
+        projects &&
+        projects.filter((project) => {
+            if (selectedDept && selectedProfEmail) {
+                const professor = professors.find((professor) => professor.email === selectedProfEmail)
+                return professor.dept === selectedDept && project.professorEmail === selectedProfEmail
+            } else if (selectedDept) {
+                const professorsInDept = professors.filter((prof) => prof.dept === selectedDept)
+                return professorsInDept.some((prof) => prof.email === project.professorEmail)
+            } else if (selectedProfEmail) {
+                return project.professorEmail === selectedProfEmail
+            } else {
+                return true
+            }
+        })
 
     return (
         <React.Fragment>
@@ -131,7 +110,12 @@ export default function Orders({ onViewProfDetailsClick }) {
                 <Grid item xs={6}>
                     <FormControl fullWidth>
                         <InputLabel id="prof-label">Professor</InputLabel>
-                        <Select labelId="prof-label" id="prof-select" value={selectedProf} onChange={handleProfChange}>
+                        <Select
+                            labelId="prof-label"
+                            id="prof-select"
+                            value={selectedProfEmail}
+                            onChange={handleProfChange}
+                        >
                             <MenuItem value="">
                                 <em>All Professors</em>
                             </MenuItem>
@@ -156,15 +140,15 @@ export default function Orders({ onViewProfDetailsClick }) {
                         <TableCell>Status</TableCell>
                     </TableRow>
                 </TableHead>
-                {projects &&
-                    projects.map((project) => (
+                {filteredProjects &&
+                    filteredProjects.map((project) => (
                         <TableBody>
                             {project.approved === 1 && (
                                 <Projects
                                     onViewProfDetails={handleViewProfDetailsClick}
                                     key={project._id}
                                     project={project}
-                                    professors={professorsMap}
+                                    professorsMap={professorsMap}
                                 />
                             )}
                         </TableBody>
