@@ -2,6 +2,7 @@ import * as React from "react"
 import Typography from "@mui/material/Typography"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
+import Link from "@mui/material/Link"
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
@@ -70,10 +71,19 @@ export default function ProfDetails({ profEmail }) {
 
                     <Grid container>
                         <Grid item xs={6} sx={{ flexBasis: "20%", color: "#363a40" }}>
-                            <Typography gutterBottom>Webistes: </Typography>
+                            <Typography gutterBottom>Websites: </Typography>
                         </Grid>
                         <Grid item xs={6} sx={{ flexBasis: "80%" }}>
-                            <Typography gutterBottom>{prof.websites}</Typography>
+                            <Typography gutterBottom>
+                                {prof.websites &&
+                                    prof.websites.split("\n").map((website, index) => (
+                                        <Typography key={index} component="div" sx={{ display: "block" }}>
+                                            <Link href={website.trim()} target="_blank" rel="noopener">
+                                                {website}
+                                            </Link>
+                                        </Typography>
+                                    ))}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>

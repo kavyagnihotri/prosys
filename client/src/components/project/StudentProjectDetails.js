@@ -6,42 +6,14 @@ import AddIcon from "@mui/icons-material/Add"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { serverURL } from "../../utils/constants"
 
-const Project = ({ onViewProfDetails, project }) => {
+const Project = ({ onViewProfDetails, project, professorsMap }) => {
     const navigate = useNavigate()
     const { user } = useAuthContext()
-    const [professors, setProfessors] = useState({})
 
     const onView = async (profEmail) => {
         onViewProfDetails(profEmail)
     }
-
-    useEffect(() => {
-        const fetchProfessors = async () => {
-            const response = await fetch(serverURL + "/prof", {
-                method: "GET",
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                const professorsMap = json.reduce(
-                    (acc, professor) => ({
-                        ...acc,
-                        [professor.email]: professor.name,
-                    }),
-                    {}
-                )
-                setProfessors(professorsMap)
-            }
-        }
-
-        if (user) {
-            fetchProfessors()
-        }
-    })
 
     const handleApply = async (id) => {
         navigate("/student/createApplication/" + id)
@@ -50,7 +22,7 @@ const Project = ({ onViewProfDetails, project }) => {
     const isUserApplicant = project.applicants.includes(user.email)
 
     const getProfessorName = (email) => {
-        return professors[email] || ""
+        return professorsMap[email] || ""
     }
 
     return (
