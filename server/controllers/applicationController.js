@@ -101,8 +101,11 @@ const acceptApplication = async (req, res) => {
 
         // const index = project.applicants.indexOf(studentEmail)
         // project.applicants.splice(index, 1)
+        const student = await Student.findOne({ email: studentEmail })
+        student.acceptedProjects.push(projectID)
 
         await project.save()
+        await student.save()
 
         // res.send("Updated")
         res.status(200)
