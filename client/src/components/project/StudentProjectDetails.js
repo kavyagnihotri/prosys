@@ -9,8 +9,21 @@ const Project = ({ project }) => {
     const { user } = useAuthContext()
     const [professors, setProfessors] = useState({})
     const navigate = useNavigate()
+    const [applications, setApplications] = useState(0)
+    let status = false
 
     useEffect(() => {
+        const application = async () => {
+            const response = await fetch("/globals/getglobals", {
+                method: "GET",
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+
+            if (json.applicationStatus) {
+                setApplications(1)
+            }
+        }
         const fetchProfessors = async () => {
             const response = await fetch("/prof", {
                 method: "GET",
@@ -32,6 +45,7 @@ const Project = ({ project }) => {
 
         if (user) {
             fetchProfessors()
+            application()
         }
     })
 
@@ -45,6 +59,10 @@ const Project = ({ project }) => {
         return professors[email] || ""
     }
 
+    if (applications) {
+        status = true
+    }
+    
     return (
         <TableRow key={project._id}>
             {/* <TableCell>{project.projectID}</TableCell> */}
@@ -64,7 +82,7 @@ const Project = ({ project }) => {
                     >
                         Applied
                     </Button>
-                ) : (
+                ) : status ? (
                     <Button
                         fullWidth
                         variant="outline"
@@ -73,7 +91,15 @@ const Project = ({ project }) => {
                     >
                         Apply
                     </Button>
-                )}
+                ) : <Button
+                        fullWidth
+                        variant="outline"
+                        style={{ backgroundColor: "#fffaef", color: "red", border: "1px solid red" }}
+                        disabled
+                    >
+                        Closed
+                    </Button>
+                }
             </TableCell>
         </TableRow>
     )
