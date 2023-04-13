@@ -29,7 +29,11 @@ import { AppBar } from "../../components/dashboard/Objects"
 import { Drawer } from "../../components/dashboard/Drawer"
 import AugsdLogin from "./AugsdLogin"
 import List from "@mui/material/List"
+import Switch from '@mui/material/Switch'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import { useAuthContext } from "../../hooks/useAuthContext"
+import Applications from "../../components/dashboard/Toggle.js"
 
 const mdTheme = createTheme()
 
@@ -38,6 +42,8 @@ function DashboardContent() {
     const { logout } = useLogout()
     const navigate = useNavigate()
     const [open, setOpen] = React.useState(true)
+    const [applications, setApplications] = React.useState(0)
+
     const toggleDrawer = () => {
         setOpen(!open)
     }
@@ -51,9 +57,14 @@ function DashboardContent() {
         e.preventDefault()
         navigate("/augsd/dashboard")
     }
+
     const goHOD = async (e) => {
         e.preventDefault()
         navigate("/augsd/hod")
+    }
+
+    const handleChange = async () => {
+        setApplications(!applications)
     }
 
     const update = async (id, editedStudent) => {
@@ -86,6 +97,10 @@ function DashboardContent() {
         }
         alert("Notified to students for profile updation")
     }
+
+    // React.useEffect(() => {
+    //     setApplications(!applications)
+    // }, [applications])
 
     return (
         <ThemeProvider theme={mdTheme}>
@@ -146,6 +161,9 @@ function DashboardContent() {
                         <Button color="inherit" size="large" startIcon={<HowToRegIcon />} type="submit" onClick={notifyall}>
                             Notify to Update
                         </Button>
+                    </List>
+                    <List>
+                        <Applications></Applications>
                     </List>
                 </Drawer>
 
