@@ -134,17 +134,17 @@ const rejectApplication = async (req, res) => {
     }
 }
 // delete an applciation
-// const deleteApplication = async (req, res) => {
-// const { id } = req.params
-// if(!mongoose.Types.ObjectId.isValid(id)) {
-//     return res.status(404).json({error: "No such project"})
-// }
-// const applicaiton = await Application.findOneAndDelete({_id: id})
-// if(!applicaiton) {
-//     return res.status(404).json({error: "No such applicaiton"})
-// }
-// res.status(200).json(applicaiton)
-// }
+const deleteApplication = async (req, res) => {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "No such application" })
+    }
+    const applicaiton = await Application.findOneAndDelete({ _id: id })
+    if (!applicaiton) {
+        return res.status(404).json({ error: "No such applicaiton" })
+    }
+    res.status(200).json(applicaiton)
+}
 
 module.exports = {
     getApplications,
@@ -154,4 +154,5 @@ module.exports = {
     updateStatus,
     acceptApplication,
     rejectApplication,
+    deleteApplication,
 }

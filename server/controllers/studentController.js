@@ -76,7 +76,7 @@ const getName = async (req, res) => {
     res.status(200).json(student)
 }
 
-const updateProfile = async(req, res) => {
+const updateProfile = async (req, res) => {
     const id = req.params.id
 
     Student.findByIdAndUpdate(
@@ -92,6 +92,7 @@ const updateProfile = async(req, res) => {
                 cv_link: req.body.cv_link,
                 per_link: req.body.per_link,
                 aoi: req.body.aoi,
+                notify: req.body.notify,
             },
         }
     )
@@ -107,4 +108,4 @@ const updateProfile = async(req, res) => {
         })
 }
 
-module.exports = { signupStudent, loginStudent, getStudents, getStudent, updateProfile, getName}
+module.exports = { signupStudent, loginStudent, getStudents, getStudent, updateProfile, getName }

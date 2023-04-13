@@ -6,10 +6,31 @@ import AddIcon from "@mui/icons-material/Add"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
 
 const Project = ({ onViewProfDetails, project, professorsMap }) => {
     const navigate = useNavigate()
     const { user } = useAuthContext()
+    const [applications, setApplications] = useState(0)
+    let status = false
+
+    useEffect(() => {
+        const application = async () => {
+            const response = await fetch("/globals/getglobals", {
+                method: "GET",
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+
+            if (json.applicationStatus) {
+                setApplications(1)
+            }
+        }
+
+        if (user) {
+            application()
+        }
+    })
 
     const onView = async (profEmail) => {
         onViewProfDetails(profEmail)
@@ -23,6 +44,10 @@ const Project = ({ onViewProfDetails, project, professorsMap }) => {
 
     const getProfessorName = (email) => {
         return professorsMap[email] || ""
+    }
+
+    if (applications) {
+        status = true
     }
 
     return (
@@ -54,7 +79,7 @@ const Project = ({ onViewProfDetails, project, professorsMap }) => {
                     <Button fullWidth startIcon={<CheckCircleIcon />} style={{ color: "green" }} disabled>
                         Applied
                     </Button>
-                ) : (
+                ) : status ? (
                     <Button
                         fullWidth
                         startIcon={<AddIcon />}
@@ -70,6 +95,15 @@ const Project = ({ onViewProfDetails, project, professorsMap }) => {
                         onClick={() => handleApply(project._id)}
                     >
                         Apply
+                    </Button>
+                ) : (
+                    <Button
+                        fullWidth
+                        variant="outline"
+                        style={{ backgroundColor: "#fffaef", color: "red", border: "1px solid red" }}
+                        disabled
+                    >
+                        Closed
                     </Button>
                 )}
             </TableCell>
