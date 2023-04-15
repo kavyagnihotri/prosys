@@ -1,6 +1,7 @@
 const Application = require("../models/applicationModel")
 const Student = require("../models/studentModel")
 const Project = require("../models/ProjectModel")
+const Professor = require("../models/profModel")
 
 const getApplications = async (req, res) => {
     const applications = await Application.find({}).sort({ createdAt: -1 })
@@ -100,35 +101,41 @@ const acceptApplication = async (req, res) => {
 }
 
 const rejectApplication = async (req, res) => {
-    const id = req.body.id
+    const { id } = req.body
 
     try {
-        const application = await Application.findOne({ _id: id })
-        application.studentStatus = 0
-        application.status = 4
-        await application.save()
+        const application = await Application.findByIdAndUpdate(id, { studentStatus: 0, status: 4 }, { new: true })
 
-        // filter the applications by the status as undefined
-        const applications = await Application.find({})
-        const filteredApplications = applications.filter((app) => app.status === 0 && app.score !== -1)
+        // Filter the remaining applications by project and professor email, and sort by score
+        const remainingApplications = await Application.find({
+            status: 2,
+            score: { $ne: -1 },
+            profEmail: application.profEmail,
+            projectID: application.projectID,
+        }).sort({ score: -1, createdAt: -1 })
 
-        // sort decreasing order applications by score, then createdAt
-        filteredApplications.sort((a, b) => {
-            if (b.score !== a.score) {
-                return b.score - a.score
+        // If there are any remaining applications, select the top one by score and process it
+        if (remainingApplications.length > 0) {
+            const topApplication = remainingApplications[0]
+            const { studentEmail, profEmail } = topApplication
+
+            try {
+                // Find the student and professor objects corresponding to the top application
+                const student = await Student.findOne({ email: studentEmail }).exec()
+                const prof = await Professor.findOne({ email: profEmail }).exec()
+
+                if (student.dept === prof.dept) {
+                    topApplication.status = 1
+                } else {
+                    topApplication.status = 3
+                }
+                await topApplication.save()
+            } catch (error) {
+                console.log(error)
             }
-            return new Date(b.createdAt) - new Date(a.createdAt)
-        })
-
-        // send next accepted
-        if (filteredApplications.length > 0) {
-            const highestScore = filteredApplications[0].score
-            const topApplication = filteredApplications.find((app) => app.score === highestScore)
-            topApplication.status = 1
-            await topApplication.save()
         }
 
-        res.status(200)
+        res.status(200).json({ message: "Application rejected successfully" })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
