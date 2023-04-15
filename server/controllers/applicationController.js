@@ -87,13 +87,15 @@ const acceptApplication = async (req, res) => {
         const studentEmail = application["studentEmail"]
         const projectID = application["projectID"]
         const project = await Project.findOne({ _id: projectID })
-
+        const student = await Student.findOne({ email: studentEmail })
         project.acceptedStudents.push(studentEmail)
+        student.acceptedProjects.push(project._id)
 
         // const index = project.applicants.indexOf(studentEmail)
         // project.applicants.splice(index, 1)
 
         await project.save()
+        await student.save()
         res.status(200)
     } catch (error) {
         res.status(400).json({ error: error.message })
