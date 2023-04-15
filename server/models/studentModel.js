@@ -53,7 +53,7 @@ const studentSchema = new Schema({
     },
     acceptedProjects: [
         {
-            type: Number,
+            type: String,
         },
     ],
 })
