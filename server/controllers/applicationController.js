@@ -149,5 +149,4 @@ module.exports = {
     updateStatus,
     acceptApplication,
     rejectApplication,
-    deleteApplication,
 }
