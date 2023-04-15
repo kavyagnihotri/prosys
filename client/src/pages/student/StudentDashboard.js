@@ -34,6 +34,7 @@ function DashboardContent() {
     const [profEmail, setProfEmail] = useState(null)
     const [open, setOpen] = React.useState(true)
     const [name, setName] = useState(null)
+    const [update, setUpdate] = useState(0)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -62,10 +63,16 @@ function DashboardContent() {
             if (response.ok) {
                 setName(json.name)
             }
+            if (json.notify) {
+                setUpdate(1)
+            }
         }
 
         if (user) {
             fetchStudent()
+        }
+        if (update) {
+            alert("Update your profile")
         }
     })
 

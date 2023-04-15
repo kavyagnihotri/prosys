@@ -67,6 +67,7 @@ export default function StudentProfile({ onUpdateProfileClick }) {
             cv_link: change.cv_link,
             per_link: change.per_link,
             aoi: change.aoi,
+            notify: 0,
         }
 
         await fetch(serverURL + `/student/${id}`, {

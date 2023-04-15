@@ -7,7 +7,6 @@ const {
     getStudents,
     getStudent,
     updateProfile,
-    getName,
 } = require("../controllers/studentController")
 const { getProjects, getProject } = require("../controllers/projectController")
 const {
@@ -43,12 +42,10 @@ router.get("/rank", getRanked)
 router.post("/status", updateStatus)
 router.post("/accept", acceptApplication)
 router.post("/reject", rejectApplication)
+router.delete("/applications/:id", deleteApplication)
 
 router.get("/", getStudents)
 router.get("/:id", getStudent)
-
 router.put("/:id", updateProfile)
-
-// router.get("/:id", getName)
 
 module.exports = router

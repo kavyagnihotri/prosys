@@ -74,16 +74,7 @@ const createProject = async (req, res) => {
             numberOfStudents,
             approved,
         })
-        res.status(200).json({
-            title,
-            projectID,
-            description,
-            prerequisite,
-            projectType,
-            professorEmail,
-            numberOfStudents,
-            approved,
-        })
+        res.status(200).json(project)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

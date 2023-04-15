@@ -60,6 +60,15 @@ export default function Orders({ onViewApplicationClick }) {
                                                 <TableCell align="center">Prerequisite(s)</TableCell>
                                                 <TableCell align="center">Number of Students</TableCell>
                                                 {table === 1 && <TableCell align="center">View Application</TableCell>}
+                                                {table === 1 && (
+                                                    <TableCell align="center">
+                                                        Delete Project
+                                                        <em> and all applications</em>
+                                                    </TableCell>
+                                                )}
+                                                {(table === 0 || table == -1) && (
+                                                    <TableCell align="center">Delete Project</TableCell>
+                                                )}
                                                 {table === -1 && <TableCell align="center">Recommendations</TableCell>}
                                             </TableRow>
                                         </TableHead>
