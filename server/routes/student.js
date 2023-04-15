@@ -42,7 +42,6 @@ router.get("/rank", getRanked)
 router.post("/status", updateStatus)
 router.post("/accept", acceptApplication)
 router.post("/reject", rejectApplication)
-router.delete("/applications/:id", deleteApplication)
 
 router.get("/", getStudents)
 router.get("/:id", getStudent)
