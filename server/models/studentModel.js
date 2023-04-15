@@ -55,6 +55,11 @@ const studentSchema = new Schema({
         type: Number,
         required: true,
     },
+    acceptedProjects: [
+        {
+            type: String,
+        },
+    ],
 })
 
 // static signup method
