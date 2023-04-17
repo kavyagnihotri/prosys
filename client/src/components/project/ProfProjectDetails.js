@@ -11,8 +11,8 @@ const Project = ({ onViewApplication, project, tab }) => {
     const { user } = useAuthContext()
     const { dispatch } = useProjectsContext()
 
-    const onView = async (id, numberOfStudents) => {
-        onViewApplication(id, numberOfStudents)
+    const onView = async (id, numberOfStudents, projectTitle) => {
+        onViewApplication(id, numberOfStudents, projectTitle)
     }
 
     const deleteProject = async (id) => {
@@ -58,7 +58,7 @@ const Project = ({ onViewApplication, project, tab }) => {
                         size="large"
                         startIcon={<OpenInNewIcon />}
                         type="submit"
-                        onClick={(e) => onView(project._id, project.numberOfStudents)}
+                        onClick={(e) => onView(project._id, project.numberOfStudents, project.title)}
                     ></Button>
                 </TableCell>
             )}

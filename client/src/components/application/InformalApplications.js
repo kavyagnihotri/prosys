@@ -61,13 +61,14 @@ const branches = [
     },
 ]
 
-export default function InformalApplications({ projectID, numberOfStudents, onListItemClick }) {
+export default function InformalApplications({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
     const { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
     const { students, dispatch1 } = useStudentsContext()
     const { profs, dispatch } = useProfContext()
     const NoStudents = numberOfStudents
+    const title = projectTitle
     let count = 0
     const navigate = useNavigate()
 
@@ -212,7 +213,7 @@ export default function InformalApplications({ projectID, numberOfStudents, onLi
 
     return (
         <React.Fragment>
-            <Title>Informal Applicants for Project</Title>
+            <Title>Informal Applicants for {title} Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
