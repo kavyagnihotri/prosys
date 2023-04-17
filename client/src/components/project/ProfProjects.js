@@ -21,8 +21,8 @@ export default function Orders({ onViewApplicationClick }) {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
 
-    const handleViewApplicationClick = (content, content1) => {
-        onViewApplicationClick(content, content1)
+    const handleViewApplicationClick = (content, content1, content2) => {
+        onViewApplicationClick(content, content1, content2)
     }
 
     useEffect(() => {
@@ -80,6 +80,7 @@ export default function Orders({ onViewApplicationClick }) {
                                                             onViewApplication={handleViewApplicationClick}
                                                             key={project._id}
                                                             project={project}
+                                                            projectTitle={project.projectTitle}
                                                             tab={table}
                                                         />
                                                     )}

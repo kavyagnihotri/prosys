@@ -69,6 +69,7 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
     const { profs, dispatch } = useProfContext()
     const NoStudents = numberOfStudents
     let count = 0
+    const title = projectTitle
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -212,7 +213,7 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
 
     return (
         <React.Fragment>
-            <Title>Formal Applicants for {projectTitle} Project</Title>
+            <Title>Formal Applicants for {title} Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
