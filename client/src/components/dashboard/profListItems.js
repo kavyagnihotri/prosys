@@ -54,6 +54,12 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Chat Portal" />
             </ListItemButton>
+            <ListItemButton button onClick={() => handleListItemClick("projects")}>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="My Projects" />
+            </ListItemButton>
             <ListItemButton button onClick={() => handleListItemClick("profile")}>
                 <ListItemIcon>
                     <PeopleIcon />

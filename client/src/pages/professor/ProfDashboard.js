@@ -12,6 +12,8 @@ import LogoutIcon from "@mui/icons-material/Logout"
 import Button from "@mui/material/Button"
 import ListItems from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
+import MyProjects from "../../components/project/MyProjectProf"
+import ProjectDesc from "../../components/project/ProjectDescription"
 import ViewApplications from "../../components/application/ViewApplications"
 import Profile from "../../components/profile/ProfProfile"
 import { TableContainer } from "@mui/material"
@@ -37,6 +39,12 @@ function DashboardContent() {
 
     const handleViewApplicationClick = (content, content1) => {
         setSelectedContent("application")
+        setProjectID(content)
+        setNumberOfStudents(content1)
+    }
+
+    const handleViewMyProjectClick = (content, content1) => {
+        setSelectedContent("oneproject")
         setProjectID(content)
         setNumberOfStudents(content1)
     }
@@ -149,6 +157,10 @@ function DashboardContent() {
                                 onListItemClick={handleListItemClick}
                             />
                         )}
+                        {selectedContent === "projects" && (
+                            <MyProjects onViewApplicationClick={handleViewMyProjectClick} />
+                        )}
+                        {selectedContent === "oneproject" && <ProjectDesc ID={projectID} />}
                         {selectedContent === "profile" && <Profile />}
                     </TableContainer>
                 </Box>
