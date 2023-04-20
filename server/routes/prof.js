@@ -10,6 +10,8 @@ const {
     updateProfile,
     getName,
     getProf,
+    hodAccept,
+    hodReject,
     getHoDApprovalApplications,
 } = require("../controllers/profController")
 
@@ -30,6 +32,10 @@ router.post("/dissmiss", dissmissProf)
 router.post("/appoint", appointHOD)
 
 router.put("/:id", updateProfile)
+
+router.post("/hodaccept/:id", hodAccept)
+
+router.post("/hodreject/:id", hodReject)
 
 router.get("/approve/:id", getHoDApprovalApplications)
 // router.get("/:id", getName)

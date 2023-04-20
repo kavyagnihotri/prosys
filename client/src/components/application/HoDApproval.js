@@ -57,36 +57,6 @@ export default function InformalApplications() {
     }
 
     useEffect(() => {
-        const fetchApplications = async () => {
-            try {
-                const response = await fetch(serverURL + "/student/applications/", {
-                    method: "GET",
-                    headers: { Authorization: `Bearer ${user.token}` },
-                })
-                const json = await response.json()
-                if (response.ok) {
-                    dispatch2({ type: "SET_APPLICATIONS", payload: json })
-                }
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        const fetchStudents = async () => {
-            try {
-                const response = await fetch(serverURL + "/student/", {
-                    method: "GET",
-                    headers: { Authorization: `Bearer ${user.token}` },
-                })
-                const json = await response.json()
-                if (response.ok) {
-                    dispatch1({ type: "SET_STUDENTS", payload: json })
-                }
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
         const fetchProfs = async () => {
             try {
                 const response = await fetch(serverURL + "/prof/", {
@@ -111,32 +81,43 @@ export default function InformalApplications() {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${user.token}`,
                     },
-                    // body: JSON.stringify({ email: user.email }),
                 })
                 const json = await response.json()
                 setInfo(json)
-                // console.log(json)
-                // if (response.ok) {
-                //     dispatch2({ type: "SET_APPLICATIONS", payload: json })
-                // }
             } catch (error) {
                 console.error(error)
             }
         }
 
         if (user) {
-            // fetchApplications()
-            // fetchStudents()
-            // profs &&
-            //     profs.map((hod) => {
-            //         if (hod.hod === true && hod.email === user.email) setDept(hod.dept)
-            //     })
-            // console.log(applications, students, profs, dept)
             fetchDeptApplications()
-            console.log(info)
             fetchProfs()
         }
     }, [dispatch2, dispatch1, user])
+
+    const onAccept = async (Aid) => {
+        await fetch(serverURL + `/prof/hodaccept/${Aid}`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
+        }).then((response) => {
+            // console.log("Response received!")
+        })
+        // console.log("Navigating")
+        // navigate("/prof/project/approve")
+        window.location.reload()
+    }
+
+    const onReject = async (Aid) => {
+        // console.log(id)
+        await fetch(serverURL + `/prof/hodreject/${Aid}`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
+        }).then((response) => {
+            // console.log("Response received!")
+        })
+        // navigate("/prof/project/approve")
+        window.location.reload()
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -233,7 +214,7 @@ export default function InformalApplications() {
                                                     size="large"
                                                     startIcon={<CheckCircleOutlineOutlinedIcon />}
                                                     type="submit"
-                                                    // onClick={(e) => onAccept(project._id)}
+                                                    onClick={(e) => onAccept(i.id)}
                                                 >
                                                     ACCEPT
                                                 </Button>
@@ -241,7 +222,7 @@ export default function InformalApplications() {
                                                     size="large"
                                                     startIcon={<CancelOutlinedIcon />}
                                                     type="submit"
-                                                    // onClick={(e) => handleClickOpen(project._id)}
+                                                    onClick={(e) => onReject(i.id)}
                                                 >
                                                     REJECT
                                                 </Button>

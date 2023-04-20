@@ -150,6 +150,38 @@ const getHoDApprovalApplications = async (req, res) => {
     res.status(200).json(result)
 }
 
+const hodAccept = async (req, res) => {
+    // if (req.params.body !== null) console.log("not null")
+
+    // console.log(req.params.body)
+
+    const id = req.params.id
+    try {
+        // console.log(id)
+        const application = await Application.findById(id)
+        // console.log(application)
+        application.status = 1
+        application.save()
+        res.status(200).json({ message: "Updated" })
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const hodReject = async (req, res) => {
+    // console.log(req.params.body)
+    try {
+        const id = req.params.id
+        // console.log(id)
+        const application = await Application.findById(id)
+        application.status = 2
+        application.save()
+        res.status(200).json({ message: "Updated" })
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 const updateProfile = async (req, res) => {
     const id = req.params.id
 
@@ -189,5 +221,7 @@ module.exports = {
     updateProfile,
     getName,
     getProf,
+    hodAccept,
     getHoDApprovalApplications,
+    hodReject,
 }
