@@ -10,6 +10,7 @@ const {
     updateProfile,
     getName,
     getProf,
+    getHoDApprovalApplications,
 } = require("../controllers/profController")
 
 const router = express.Router()
@@ -30,6 +31,7 @@ router.post("/appoint", appointHOD)
 
 router.put("/:id", updateProfile)
 
+router.get("/approve/:id", getHoDApprovalApplications)
 // router.get("/:id", getName)
 
 module.exports = router

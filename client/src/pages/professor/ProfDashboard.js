@@ -13,6 +13,7 @@ import Button from "@mui/material/Button"
 import ListItems from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
 import ViewApplications from "../../components/application/ViewApplications"
+import HoDApproval from "../../components/application/HoDApproval"
 import Profile from "../../components/profile/ProfProfile"
 import { TableContainer } from "@mui/material"
 import { useEffect, useState } from "react"
@@ -153,6 +154,7 @@ function DashboardContent() {
                             />
                         )}
                         {selectedContent === "profile" && <Profile />}
+                        {selectedContent === "approve" && <HoDApproval />}
                     </TableContainer>
                 </Box>
             </Box>

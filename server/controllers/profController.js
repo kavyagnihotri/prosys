@@ -1,6 +1,8 @@
 const Prof = require("../models/profModel")
 const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
+const Application = require("../models/applicationModel")
+const Student = require("../models/studentModel")
 
 const createToken = (id) => {
     return jwt.sign({ _id: id, role: "1" }, process.env.SECRET, { expiresIn: "3d" })
@@ -96,6 +98,56 @@ const getName = async (req, res) => {
     res.status(200).json(prof)
 }
 
+const getHoDApprovalApplications = async (req, res) => {
+    const email = req.params.id
+    // console.log(email)
+    const p = await Prof.findOne({ email: email })
+    const dept = p.dept
+    // console.log(p, dept)
+    const profs = await Prof.find({ dept: dept })
+    // console.log(profs)
+    const pEmail = profs.map((p) => p.email)
+    // console.log(pEmail)
+    const applications = await Application.find({ profEmail: { $in: pEmail }, status: 3 })
+    // console.log(applications)
+    const sEmail = applications.map((app) => app.studentEmail)
+    const students = await Student.find({ email: { $in: sEmail } })
+    // console.log(students)
+    const result1 = applications.map((application) => {
+        const student = students.find((student) => student.email === application.studentEmail)
+        return {
+            email: student.email,
+            studName: student.name,
+            studDept: student.dept,
+            cgpa: student.cgpa,
+            cv_link: student.cv_link,
+            per_link: student.per_link,
+            aoi: student.aoi,
+            profEmail: application.profEmail,
+            title: application.projectTitle,
+            sop: application.sop,
+        }
+    })
+    // console.log(result1)
+    const result = result1.map((r) => {
+        const prof = profs.find((prof) => prof.email === r.profEmail)
+        return {
+            email: r.email,
+            studName: r.studName,
+            studDept: r.studDept,
+            cgpa: r.cgpa,
+            cv_link: r.cv_link,
+            per_link: r.per_link,
+            aoi: r.aoi,
+            profName: prof.name,
+            title: r.title,
+            sop: r.sop,
+        }
+    })
+    // console.log(result)
+    res.status(200).json(result)
+}
+
 const updateProfile = async (req, res) => {
     const id = req.params.id
 
@@ -126,4 +178,14 @@ const updateProfile = async (req, res) => {
         })
 }
 
-module.exports = { signupProf, loginProf, getProfs, dissmissProf, appointHOD, updateProfile, getName, getProf }
+module.exports = {
+    signupProf,
+    loginProf,
+    getProfs,
+    dissmissProf,
+    appointHOD,
+    updateProfile,
+    getName,
+    getProf,
+    getHoDApprovalApplications,
+}

@@ -15,6 +15,7 @@ import ProfDashboard from "./pages/professor/ProfDashboard"
 import ApplicationForm from "./components/application/ApplicationForm"
 import AugsdHod from "./pages/augsd/AugsdHod"
 import ChatPage from "./components/chatDirectory/chatPage"
+import HoDApproval from "./components/application/HoDApproval"
 import ViewApplications from "./components/application/ViewApplications"
 
 function App() {
@@ -98,6 +99,8 @@ function App() {
                             element= {<ProfUpdate />}
                         /> */}
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
+
+                        <Route path="/prof/project/approve" element={<HoDApproval />} />
 
                         <Route
                             path="/prof/project/view/:id"
