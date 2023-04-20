@@ -6,8 +6,33 @@ import InformalApplications from "./InformalApplications"
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
+import { useEffect, useState } from "react"
+import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 
 export default function Orders({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
+    // const [project, setProject] = useState({})
+    const { user } = useAuthContext()
+    const [scoreReleased, setProjectStatus] = useState(null)
+    const [informalScoreReleased, setInformalProjectStatus] = useState(null)
+
+    useEffect(() => {
+        const fetchProjectStatus = async () => {
+            const response = await fetch(serverURL + "/projects/" + projectID, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            console.log(json)
+            if (response.ok) {
+                setProjectStatus(json.scoreReleased)
+                setInformalProjectStatus(json.informalScoreReleased)
+            }
+        }
+        if (user) {
+            fetchProjectStatus()
+        }
+    })
+
     return (
         <React.Fragment>
             <Box
@@ -30,6 +55,7 @@ export default function Orders({ projectID, numberOfStudents, projectTitle, onLi
                                     numberOfStudents={numberOfStudents}
                                     projectTitle={projectTitle}
                                     onListItemClick={onListItemClick}
+                                    scoreReleased={scoreReleased}
                                 />
                             </Paper>
                         </Grid>
@@ -45,6 +71,7 @@ export default function Orders({ projectID, numberOfStudents, projectTitle, onLi
                                     numberOfStudents={numberOfStudents}
                                     projectTitle={projectTitle}
                                     onListItemClick={onListItemClick}
+                                    scoreReleased={informalScoreReleased}
                                 />
                             </Paper>
                         </Grid>

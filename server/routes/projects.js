@@ -6,7 +6,8 @@ const {
     deleteProject,
     getApprovedProjects,
     getPendingProjects,
-    updateProject,
+    updateFormalProjectStatus,
+    updateInformalProjectStatus,
 } = require("../controllers/projectController")
 const requireAuth = require("../middleware/requireAuth")
 
@@ -32,6 +33,7 @@ router.post("/", createProject)
 router.delete("/:id", deleteProject)
 
 // UPDATE a post
-router.patch("/:id", updateProject)
+router.post("/formal/:id", updateFormalProjectStatus)
+router.post("/informal/:id", updateInformalProjectStatus)
 
 module.exports = router

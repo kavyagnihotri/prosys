@@ -98,7 +98,7 @@ const deleteProject = async (req, res) => {
 }
 
 // update a project
-const updateProject = async (req, res) => {
+const updateFormalProjectStatus = async (req, res) => {
     const { id } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -107,10 +107,28 @@ const updateProject = async (req, res) => {
 
     const project = await Project.findOneAndUpdate(
         { _id: id },
-        {
-            ...req.body,
-            // title: 'monkeys'
-        }
+        { scoreReleased: 1 },
+        { new: true } // Return the updated document
+    )
+
+    if (!project) {
+        return res.status(404).json({ error: "No such project" })
+    }
+
+    res.status(200).json(project)
+}
+
+const updateInformalProjectStatus = async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "No such project" })
+    }
+
+    const project = await Project.findOneAndUpdate(
+        { _id: id },
+        { informalScoreReleased: 1 },
+        { new: true } // Return the updated document
     )
 
     if (!project) {
@@ -125,7 +143,8 @@ module.exports = {
     getProjects,
     getProject,
     deleteProject,
-    updateProject,
+    updateFormalProjectStatus,
+    updateInformalProjectStatus,
     getApprovedProjects,
     getPendingProjects,
 }

@@ -40,6 +40,14 @@ const projectSchema = new Schema(
             type: Number,
             default: 0,
         },
+        scoreReleased: {
+            type: Number,
+            default: 0,
+        },
+        informalScoreReleased: {
+            type: Number,
+            default: 0,
+        },
         applicants: [
             {
                 type: String,
