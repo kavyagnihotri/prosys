@@ -116,6 +116,7 @@ const getHoDApprovalApplications = async (req, res) => {
     const result1 = applications.map((application) => {
         const student = students.find((student) => student.email === application.studentEmail)
         return {
+            id: application._id,
             email: student.email,
             studName: student.name,
             studDept: student.dept,
@@ -132,6 +133,7 @@ const getHoDApprovalApplications = async (req, res) => {
     const result = result1.map((r) => {
         const prof = profs.find((prof) => prof.email === r.profEmail)
         return {
+            id: r.id,
             email: r.email,
             studName: r.studName,
             studDept: r.studDept,

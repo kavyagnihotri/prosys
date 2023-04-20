@@ -210,7 +210,7 @@ export default function InformalApplications() {
                             <TableBody>
                                 {info &&
                                     info.map((i) => (
-                                        <TableRow key={i.email}>
+                                        <TableRow key={i.id}>
                                             <TableCell>{i.title}</TableCell>
                                             <TableCell>{i.profName}</TableCell>
                                             <TableCell>{i.studName}</TableCell>
