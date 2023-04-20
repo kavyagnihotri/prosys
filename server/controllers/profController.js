@@ -176,6 +176,57 @@ const hodReject = async (req, res) => {
         const application = await Application.findById(id)
         application.status = 2
         application.save()
+        const remainingApplications = await Application.find({
+            status: 2,
+            score: { $ne: -1 },
+            profEmail: application.profEmail,
+            projectID: application.projectID,
+        }).sort({ score: -1, createdAt: -1 })
+
+        // If there are any remaining applications, select the top one by score and process it
+        if (remainingApplications.length > 0) {
+            const topApplication = remainingApplications[0]
+            const { studentEmail, profEmail } = topApplication
+
+            try {
+                // Find the student and professor objects corresponding to the top application
+                const student = await Student.findOne({ email: studentEmail }).exec()
+                const prof = await Prof.findOne({ email: profEmail }).exec()
+
+                if (student.dept === prof.dept) {
+                    topApplication.status = 1
+                } else {
+                    topApplication.status = 3
+                }
+                await topApplication.save()
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        // const pid = application.projectID
+        // const apps = await Application.find({ projectID: pid, type: 1 }).sort({ score: "desc" })
+        // console.log(apps)
+        // var found = 0
+        // var app = null
+        // apps.forEach((a) => {
+        //     if (a === application) {
+        //         console.log("same")
+        //         found = 1
+        //     }
+        //     if (found === 1 && a !== application && a.status === 2) {
+        //         console.log("Matched")
+        //         app = a
+        //     }
+        // })
+        // console.log(a)
+        // const student = await Student.find({ email: app.studentEmail })
+        // const prof = await Prof.find({ email: application.profEmail })
+        // if (student.dept === prof.dept) {
+        //     app.status = 1
+        // } else {
+        //     app.status = 3
+        // }
+        // app.save()
         res.status(200).json({ message: "Updated" })
     } catch (error) {
         res.status(400).json({ error: error.message })
