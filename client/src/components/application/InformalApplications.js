@@ -10,7 +10,12 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import MenuItem from "@mui/material/MenuItem"
 import Title from "../Title"
-import { useEffect } from "react"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
+import { useEffect, useState } from "react"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useStudentsContext } from "../../hooks/useStudentsContext"
@@ -19,58 +24,29 @@ import { useProfContext } from "../../hooks/useProfContext"
 import { serverURL } from "../../utils/constants"
 
 const branches = [
-    {
-        value: 1,
-        label: "1",
-    },
-    {
-        value: 2,
-        label: "2",
-    },
-    {
-        value: 3,
-        label: "3",
-    },
-    {
-        value: 4,
-        label: "4",
-    },
-    {
-        value: 5,
-        label: "5",
-    },
-    {
-        value: 6,
-        label: "6",
-    },
-    {
-        value: 7,
-        label: "7",
-    },
-    {
-        value: 8,
-        label: "8",
-    },
-    {
-        value: 9,
-        label: "9",
-    },
-    {
-        value: 10,
-        label: "10",
-    },
+    { value: 1, label: "1" },
+    { value: 2, label: "2" },
+    { value: 3, label: "3" },
+    { value: 4, label: "4" },
+    { value: 5, label: "5" },
+    { value: 6, label: "6" },
+    { value: 7, label: "7" },
+    { value: 8, label: "8" },
+    { value: 9, label: "9" },
+    { value: 10, label: "10" },
 ]
 
-export default function InformalApplications({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
-    const { applications, dispatch2 } = useApplicationsContext()
-    const { user } = useAuthContext()
-    const id = projectID
-    const { students, dispatch1 } = useStudentsContext()
-    const { profs, dispatch } = useProfContext()
+export default function InformalApplications({ projectID, numberOfStudents, projectTitle, scoreReleased }) {
+    const navigate = useNavigate()
     const NoStudents = numberOfStudents
     const title = projectTitle
+    const id = projectID
     let count = 0
-    const navigate = useNavigate()
+    const { applications, dispatch2 } = useApplicationsContext()
+    const { students, dispatch1 } = useStudentsContext()
+    const { profs, dispatch } = useProfContext()
+    const { user } = useAuthContext()
+    const [open, setopen] = useState(false)
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -204,11 +180,33 @@ export default function InformalApplications({ projectID, numberOfStudents, proj
                         await updateStatus(a._id, 2)
                     }
                 })
+
+                try {
+                    const response = await fetch(serverURL + "/projects/informal/" + projectID, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+                    })
+                    const json = await response.json()
+                    if (json.ok) {
+                        console.log("Project Closed")
+                    }
+                } catch (error) {
+                    console.error(error)
+                }
+
                 navigate(0)
             }
         } catch (error) {
             console.error(error)
         }
+    }
+
+    const handleClickOpen = () => {
+        setopen(true)
+    }
+
+    const handleClose = () => {
+        setopen(false)
     }
 
     return (
@@ -296,9 +294,35 @@ export default function InformalApplications({ projectID, numberOfStudents, proj
                         )}
                 </TableBody>
             </Table>
-            <Button color="inherit" size="large" type="submit" variant="outlined" onClick={changeStatus}>
-                Approve Score
-            </Button>
+            {scoreReleased == 0 && (
+                <Button
+                    color="inherit"
+                    size="large"
+                    type="submit"
+                    variant="outlined"
+                    onClick={(e) => handleClickOpen()}
+                >
+                    Release Score
+                </Button>
+            )}
+            {scoreReleased == 1 && (
+                <Button color="inherit" size="large" type="submit" variant="outlined" disabled>
+                    Released!
+                </Button>
+            )}
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Warning!</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        You can only approve the score once. Are you sure you want to approve the score?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={changeStatus}>Release Score</Button>
+                </DialogActions>
+            </Dialog>
         </React.Fragment>
     )
 }
