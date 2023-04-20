@@ -5,29 +5,23 @@ import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import IconButton from "@mui/material/IconButton"
-import Container from "@mui/material/Container"
-import Grid from "@mui/material/Grid"
-import Paper from "@mui/material/Paper"
 import Divider from "@mui/material/Divider"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import MenuIcon from "@mui/icons-material/Menu"
-import HowToRegIcon from "@mui/icons-material/HowToReg"
-import NewProjectTable from "../../components/project/NewProjectTable"
-import ApprovedProjectTable from "../../components/project/ApprovedProjectTable"
-import RejectedProjectTable from "../../components/project/RejectedProjectTable"
 import LogoutIcon from "@mui/icons-material/Logout"
 import List from "@mui/material/List"
-import Applications from "../../components/dashboard/Toggle.js"
 import ListItems from "../../components/dashboard/AugsdListItems"
 import MarkHoD from "../../components/profile/MarkHoD"
+import CustomContainer from "../../components/CustomContainer"
+import ProjectTable from "../../components/project/ProjectTable"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useLogout } from "../../hooks/useLogout"
-import { useAuthContext } from "../../hooks/useAuthContext"
 
 const mdTheme = createTheme()
+
+const types = [0, 1, -1]
 
 function DashboardContent() {
     const { logout } = useLogout()
@@ -112,33 +106,9 @@ function DashboardContent() {
                 >
                     {selectedContent === "dashboard" && (
                         <Box>
-                            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                            <NewProjectTable />
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                            <ApprovedProjectTable />
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                            <RejectedProjectTable />
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            </Container>
+                            <CustomContainer customComponent={<ProjectTable type={0} />} />
+                            <CustomContainer customComponent={<ProjectTable type={1} />} />
+                            <CustomContainer customComponent={<ProjectTable type={-1} />} />
                         </Box>
                     )}
                     {selectedContent === "markHoD" && <MarkHoD />}
