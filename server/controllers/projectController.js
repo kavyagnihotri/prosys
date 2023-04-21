@@ -1,4 +1,7 @@
 const Project = require("../models/ProjectModel")
+const Application = require("../models/applicationModel")
+const Professor = require("../models/profModel")
+const Student = require("../models/studentModel")
 const mongoose = require("mongoose")
 
 // GET all projects
@@ -110,7 +113,36 @@ const updateFormalProjectStatus = async (req, res) => {
         { scoreReleased: 1 },
         { new: true } // Return the updated document
     )
+    const applications = await Application.find({ type: 1, projectID: id, score: { $ne: -1 } }).sort({
+        score: -1,
+        createdAt: -1,
+    })
+    const studNo = project.numberOfStudents
+    const pEmail = project.professorEmail
+    const prof = await Professor.find({ email: pEmail })
+    const pDept = prof.dept
+    var count = 0
 
+    while (applications.length > 0 && count < studNo) {
+        const currApplication = applications[count]
+        const { studentEmail } = currApplication
+        const student = await Student.find({ email: studentEmail })
+        const sDept = student.dept
+        if (sDept !== pDept) {
+            currApplication.status = 3
+            await currApplication.save()
+        } else {
+            currApplication.status = 1
+            await currApplication.save()
+        }
+        count += 1
+    }
+    while (count < applications.length) {
+        const currApplication = applications[count]
+        currApplication.status = 2
+        await currApplication.save()
+        count += 1
+    }
     if (!project) {
         return res.status(404).json({ error: "No such project" })
     }
