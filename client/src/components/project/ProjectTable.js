@@ -19,7 +19,7 @@ import { useProjectsContext } from "../../hooks/useProjectsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 
-export default function NewProjectTable() {
+export default function ProjectTable({ type }) {
     const { projects, dispatch } = useProjectsContext()
     const { user } = useAuthContext()
     const [open, setOpen] = React.useState(false)
@@ -81,7 +81,6 @@ export default function NewProjectTable() {
     }
 
     const onReject = async (id) => {
-        // if (id != null && textInput != "") {
         await fetch(serverURL + "/augsd/reject", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -90,7 +89,6 @@ export default function NewProjectTable() {
         setPid(null)
         setTextInput("")
         handleClose()
-        // }
         const fetchProjects = async () => {
             const response = await fetch(serverURL + "/projects/", {
                 method: "GET",
@@ -109,7 +107,12 @@ export default function NewProjectTable() {
 
     return (
         <React.Fragment>
-            <Title>New Projects</Title>
+            <Title>
+                {type === -1 && "Rejected "}
+                {type === 0 && "New "}
+                {type === 1 && "Approved "}
+                Projects
+            </Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -119,14 +122,14 @@ export default function NewProjectTable() {
                         <TableCell>Description</TableCell>
                         <TableCell>Pre-requisites</TableCell>
                         <TableCell>No. of Students</TableCell>
-                        <TableCell>Operations</TableCell>
+                        {type === 0 && <TableCell>Operations</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {projects &&
                         projects.map(
                             (project) =>
-                                project.approved === 0 && (
+                                project.approved === type && (
                                     <TableRow key={project._id}>
                                         <TableCell>{project.title}</TableCell>
                                         <TableCell>{project.projectType}</TableCell>
@@ -134,24 +137,32 @@ export default function NewProjectTable() {
                                         <TableCell>{project.description}</TableCell>
                                         <TableCell>{project.prerequisite}</TableCell>
                                         <TableCell>{project.numberOfStudents}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                size="large"
-                                                startIcon={<CheckCircleOutlineOutlinedIcon />}
-                                                type="submit"
-                                                onClick={(e) => onAccept(project._id)}
-                                            >
-                                                ACCEPT
-                                            </Button>
-                                            <Button
-                                                size="large"
-                                                startIcon={<CancelOutlinedIcon />}
-                                                type="submit"
-                                                onClick={(e) => handleClickOpen(project._id)}
-                                            >
-                                                REJECT
-                                            </Button>
-                                        </TableCell>
+                                        {type === 0 && (
+                                            <TableCell>
+                                                <Button
+                                                    size="large"
+                                                    startIcon={<CheckCircleOutlineOutlinedIcon />}
+                                                    type="submit"
+                                                    onClick={(e) => onAccept(project._id)}
+                                                    style={{
+                                                        color: "green",
+                                                    }}
+                                                >
+                                                    Accept
+                                                </Button>
+                                                <Button
+                                                    size="large"
+                                                    startIcon={<CancelOutlinedIcon />}
+                                                    type="submit"
+                                                    onClick={(e) => handleClickOpen(project._id)}
+                                                    style={{
+                                                        color: "red",
+                                                    }}
+                                                >
+                                                    Reject
+                                                </Button>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
                                 )
                         )}
@@ -176,7 +187,14 @@ export default function NewProjectTable() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={(e) => onReject(pid)}>Reject</Button>
+                    <Button
+                        style={{
+                            color: "red",
+                        }}
+                        onClick={(e) => onReject(pid)}
+                    >
+                        Reject
+                    </Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>
