@@ -119,26 +119,6 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
         }
     }
 
-    const updateStatus = async (appId, appStatus) => {
-        console.log(appId, appStatus)
-        try {
-            const response = await fetch(serverURL + "/student/status", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.token}`,
-                },
-                body: JSON.stringify({ appId: appId, status: appStatus }),
-            })
-            const json = await response.json()
-            if (response.ok) {
-                dispatch2({ type: "SET_APPLICATIONS", payload: json })
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
     const changeStatus = async () => {
         try {
             const response = await fetch(serverURL + "/projects/formal/" + projectID, {
