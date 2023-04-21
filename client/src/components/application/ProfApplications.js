@@ -36,17 +36,18 @@ const branches = [
     { value: 10, label: "10" },
 ]
 
-export default function InformalApplications({ projectID, numberOfStudents, projectTitle, scoreReleased }) {
+export default function Applications({ projectID, projectTitle, scoreReleased, applicationType }) {
     const navigate = useNavigate()
-    const NoStudents = numberOfStudents
-    const title = projectTitle
-    const id = projectID
-    let count = 0
+    const tableTitle = applicationType.charAt(0).toUpperCase() + applicationType.slice(1)
     const { applications, dispatch2 } = useApplicationsContext()
     const { students, dispatch1 } = useStudentsContext()
     const { profs, dispatch } = useProfContext()
     const { user } = useAuthContext()
     const [open, setopen] = useState(false)
+    var applicationTypeNum = 0
+    if (applicationType === "formal") {
+        applicationTypeNum = 1
+    }
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -98,7 +99,6 @@ export default function InformalApplications({ projectID, numberOfStudents, proj
             fetchApplications()
             fetchStudents()
             fetchProfs()
-            console.log(profs)
         }
     }, [dispatch2, dispatch1, user])
 
@@ -122,47 +122,8 @@ export default function InformalApplications({ projectID, numberOfStudents, proj
     }
 
     const changeStatus = async () => {
-        // try {
-        // const response = await fetch(serverURL + "/student/rank", {
-        //     method: "GET",
-        //     headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
-        // })
-        // const json = await response.json()
-
-        // if (response.ok) {
-        //     dispatch2({ type: "SET_APPLICATIONS", payload: json })
-        //     const applications = json
-        //     applications.forEach(async (a) => {
-        //         if (
-        //             a.profEmail === user.email &&
-        //             a.projectID === id &&
-        //             a.type === 0 &&
-        //             a.score != -1 &&
-        //             count < NoStudents
-        //         ) {
-        //             students.forEach(async (s) => {
-        //                 if (s.email === a.studentEmail) {
-        //                     profs.forEach(async (prof) => {
-        //                         if (prof.email === user.email && prof.dept === s.dept) await updateStatus(a._id, 1)
-        //                         else if (prof.email === user.email && prof.dept !== s.dept)
-        //                             await updateStatus(a._id, 3)
-        //                     })
-        //                 }
-        //             })
-        //             count += 1
-        //         } else if (
-        //             a.profEmail === user.email &&
-        //             a.projectID === id &&
-        //             a.type === 0 &&
-        //             a.score != -1 &&
-        //             count >= NoStudents
-        //         ) {
-        //             await updateStatus(a._id, 2)
-        //         }
-        //     })
-
         try {
-            const response = await fetch(serverURL + "/projects/informal/" + projectID, {
+            const response = await fetch(serverURL + "/projects/" + applicationType + "/" + projectID, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
             })
@@ -175,10 +136,6 @@ export default function InformalApplications({ projectID, numberOfStudents, proj
         }
 
         navigate(0)
-        //     }
-        // } catch (error) {
-        //     console.error(error)
-        // }
     }
 
     const handleClickOpen = () => {
@@ -191,7 +148,9 @@ export default function InformalApplications({ projectID, numberOfStudents, proj
 
     return (
         <React.Fragment>
-            <Title>Informal Applicants for {title} Project</Title>
+            <Title>
+                {tableTitle} Applicants for {projectTitle} Project
+            </Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -210,8 +169,8 @@ export default function InformalApplications({ projectID, numberOfStudents, proj
                         applications.map(
                             (app) =>
                                 app.profEmail === user.email &&
-                                app.projectID === id &&
-                                app.type === 0 &&
+                                app.projectID === projectID &&
+                                app.type === applicationTypeNum &&
                                 students &&
                                 students.map(
                                     (stud) =>
@@ -295,7 +254,7 @@ export default function InformalApplications({ projectID, numberOfStudents, proj
                 <DialogTitle>Warning!</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        You can only approve the score once. Are you sure you want to approve the score?
+                        You can only approve the score ONCE. Are you sure you want to continue?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

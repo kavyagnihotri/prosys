@@ -1,17 +1,13 @@
 import * as React from "react"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
-import FormalApplications from "./FormalApplications"
-import InformalApplications from "./InformalApplications"
-import Container from "@mui/material/Container"
-import Grid from "@mui/material/Grid"
-import Paper from "@mui/material/Paper"
+import CustomContainer from "../CustomContainer"
+import Applications from "../application/ProfApplications"
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 
 export default function Orders({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
-    // const [project, setProject] = useState({})
     const { user } = useAuthContext()
     const [scoreReleased, setProjectStatus] = useState(null)
     const [informalScoreReleased, setInformalProjectStatus] = useState(null)
@@ -46,37 +42,30 @@ export default function Orders({ projectID, numberOfStudents, projectTitle, onLi
                 }}
             >
                 <Toolbar />
-                <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                <FormalApplications
-                                    projectID={projectID}
-                                    numberOfStudents={numberOfStudents}
-                                    projectTitle={projectTitle}
-                                    onListItemClick={onListItemClick}
-                                    scoreReleased={scoreReleased}
-                                />
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </Container>
-
-                <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                                <InformalApplications
-                                    projectID={projectID}
-                                    numberOfStudents={numberOfStudents}
-                                    projectTitle={projectTitle}
-                                    onListItemClick={onListItemClick}
-                                    scoreReleased={informalScoreReleased}
-                                />
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </Container>
+                <CustomContainer
+                    customComponent={
+                        <Applications
+                            projectID={projectID}
+                            numberOfStudents={numberOfStudents}
+                            projectTitle={projectTitle}
+                            onListItemClick={onListItemClick}
+                            scoreReleased={scoreReleased}
+                            applicationType={"formal"}
+                        />
+                    }
+                />
+                <CustomContainer
+                    customComponent={
+                        <Applications
+                            projectID={projectID}
+                            numberOfStudents={numberOfStudents}
+                            projectTitle={projectTitle}
+                            onListItemClick={onListItemClick}
+                            scoreReleased={informalScoreReleased}
+                            applicationType={"informal"}
+                        />
+                    }
+                />
             </Box>
         </React.Fragment>
     )
