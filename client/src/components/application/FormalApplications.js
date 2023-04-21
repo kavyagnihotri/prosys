@@ -119,85 +119,20 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
         }
     }
 
-    const updateStatus = async (appId, appStatus) => {
-        console.log(appId, appStatus)
-        try {
-            const response = await fetch(serverURL + "/student/status", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.token}`,
-                },
-                body: JSON.stringify({ appId: appId, status: appStatus }),
-            })
-            const json = await response.json()
-            if (response.ok) {
-                dispatch2({ type: "SET_APPLICATIONS", payload: json })
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
     const changeStatus = async () => {
         try {
-            const response = await fetch(serverURL + "/student/rank", {
-                method: "GET",
+            const response = await fetch(serverURL + "/projects/formal/" + projectID, {
+                method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
-
-            if (response.ok) {
-                dispatch2({ type: "SET_APPLICATIONS", payload: json })
-                const applications = json
-                applications.forEach(async (a) => {
-                    if (
-                        a.profEmail === user.email &&
-                        a.projectID === id &&
-                        a.type === 1 &&
-                        a.score != -1 &&
-                        count < NoStudents
-                    ) {
-                        students.forEach(async (s) => {
-                            if (s.email === a.studentEmail) {
-                                profs.forEach(async (prof) => {
-                                    if (prof.email === user.email && prof.dept === s.dept) await updateStatus(a._id, 1)
-                                    else if (prof.email === user.email && prof.dept !== s.dept)
-                                        await updateStatus(a._id, 3)
-                                })
-                            }
-                        })
-                        // updateStatus(a._id, 1)
-                        count += 1
-                    } else if (
-                        a.profEmail === user.email &&
-                        a.projectID === id &&
-                        a.type === 1 &&
-                        a.score != -1 &&
-                        count >= NoStudents
-                    ) {
-                        await updateStatus(a._id, 2)
-                    }
-                })
-
-                try {
-                    const response = await fetch(serverURL + "/projects/formal/" + projectID, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
-                    })
-                    const json = await response.json()
-                    if (json.ok) {
-                        console.log("Project Closed")
-                    }
-                } catch (error) {
-                    console.error(error)
-                }
-
-                navigate(0)
+            if (json.ok) {
+                console.log("Project Closed")
             }
         } catch (error) {
             console.error(error)
         }
+        navigate(0)
     }
 
     const handleClickOpen = () => {
