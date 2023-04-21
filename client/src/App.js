@@ -13,7 +13,6 @@ import HomePage from "./components/muiButton"
 import StudentDashboard from "./pages/student/StudentDashboard"
 import ProfDashboard from "./pages/professor/ProfDashboard"
 import ApplicationForm from "./components/application/ApplicationForm"
-import AugsdHod from "./pages/augsd/AugsdHod"
 import ChatPage from "./components/chatDirectory/chatPage"
 import ViewApplications from "./components/application/ViewApplications"
 
@@ -43,13 +42,6 @@ function App() {
                         <Route
                             path="/augsd/dashboard"
                             element={user && user.role === "0" ? <AugsdDashboard /> : <Navigate to="/augsd/login" />}
-                        />
-
-                        <Route
-                            path="/augsd/hod"
-                            element={
-                                user && user.email === "augsd@gmail.com" ? <AugsdHod /> : <Navigate to="/augsd/login" />
-                            }
                         />
 
                         <Route
