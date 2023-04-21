@@ -128,9 +128,7 @@ const updateFormalProjectStatus = async (req, res) => {
         const { studentEmail } = currApplication
         const student = await Student.find({ email: studentEmail })
         const sDept = student.dept
-        console.log(student[0].dept, prof[0].dept)
         if (student[0].dept !== prof[0].dept) {
-            console.log("here")
             currApplication.status = 3
             await currApplication.save()
         } else {
@@ -165,17 +163,18 @@ const updateInformalProjectStatus = async (req, res) => {
         { new: true } // Return the updated document
     )
 
-    const applications = await Application.find({ type: 1, projectID: id, score: { $ne: -1 } }).sort({
+    const applications = await Application.find({ type: 0, projectID: id, score: { $ne: -1 } }).sort({
         score: -1,
         createdAt: -1,
     })
     const studNo = project.numberOfStudents
     var count = 0
-
+    console.log(applications)
     while (applications.length > 0 && count < studNo) {
         const currApplication = applications[count]
         currApplication.status = 1
         await currApplication.save()
+        count += 1
     }
     while (count < applications.length) {
         const currApplication = applications[count]
@@ -187,7 +186,7 @@ const updateInformalProjectStatus = async (req, res) => {
     if (!project) {
         return res.status(404).json({ error: "No such project" })
     }
-
+    console.log("done")
     res.status(200).json(project)
 }
 
