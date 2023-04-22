@@ -33,31 +33,14 @@ const Project = ({ onViewApplication, project, tab }) => {
         }
     }
 
-    const deleteApplication = async (id) => {
-        const response1 = await fetch(serverURL + `/student/applications`, {
-            headers: { Authorization: `Bearer ${user.token}` },
-        })
-        if (response1.ok) {
-            const json = await response1.json()
-            json.forEach((j) => {
-                if (j.projectID === id) {
-                    deletion(j._id)
-                }
-            })
-        } else {
-            throw new Error("An error occurred while deleting the applicaitions.")
-        }
-    }
-
-    const deletion = async (id) => {
-        const response = await fetch(serverURL + `/student/applications/${id}`, {
+    const deleteApplications = async (id) => {
+        const response = await fetch(serverURL + "/prof/deleteApplications/" + id, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${user.token}` },
         })
-        if (response.ok) {
-            alert("Done")
-        } else {
-            throw new Error("An error occurred while deleting.")
+        if (!response.ok) {
+            const errorData = await response.json()
+            throw new Error(errorData.message)
         }
     }
 
@@ -84,7 +67,7 @@ const Project = ({ onViewApplication, project, tab }) => {
                     startIcon={<DeleteIcon />}
                     type="submit"
                     onClick={async (e) => {
-                        await deleteApplication(project._id)
+                        await deleteApplications(project._id)
                         await deleteProject(project._id)
                         window.location.reload(true)
                     }}
