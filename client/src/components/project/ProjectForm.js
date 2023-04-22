@@ -30,6 +30,7 @@ const ProjectForm = () => {
     const [isLoading, setIsLoading] = useState(null)
     const [error, setError] = useState(null)
     const [emptyfields, setEmptyFields] = useState([])
+    const [projectIDs, setProjectIDs] = useState([])
     const [name, setName] = useState("")
 
     const handleLogout = async (e) => {
@@ -45,22 +46,14 @@ const ProjectForm = () => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const response1 = await fetch(serverURL + `/prof/${user.email}`, {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            const json1 = await response1.json()
-
-            if (response1.ok) {
-                setName(json1.name)
-                dispatch({ type: "SET_PROF", payload: json1 })
-            }
-
             const response = await fetch(serverURL + "/student/projects", {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
 
             if (response.ok) {
+                const projectIDs = json.map((project) => project.projectID)
+                setProjectIDs(projectIDs)
                 dispatch({ type: "SET_PROJECTS", payload: json })
             }
         }
@@ -97,7 +90,6 @@ const ProjectForm = () => {
         const prerequisite = data.get("prerequisite")
         const numberOfStudents = data.get("numberOfStudents")
         const professorEmail = user.email
-        console.log(professorEmail)
         const approved = 0
 
         const project = {
