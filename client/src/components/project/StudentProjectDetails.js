@@ -7,6 +7,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
+import { serverURL } from "../../utils/constants"
 
 const Project = ({ onViewProfDetails, project, professorsMap }) => {
     const navigate = useNavigate()
@@ -16,7 +17,7 @@ const Project = ({ onViewProfDetails, project, professorsMap }) => {
 
     useEffect(() => {
         const application = async () => {
-            const response = await fetch("/globals/getglobals", {
+            const response = await fetch(serverURL + "/globals/getglobals", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
