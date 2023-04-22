@@ -143,6 +143,17 @@ const rejectApplication = async (req, res) => {
     }
 }
 
+// delete all applications with project id = id
+const deleteApplications = async (req, res) => {
+    const { id } = req.params
+    try {
+        await Application.deleteMany({ projectID: id })
+        res.status(200).json({ message: "Applications deleted successfully" })
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong", error: error.message })
+    }
+}
+
 module.exports = {
     getApplications,
     createApplication,
@@ -151,4 +162,5 @@ module.exports = {
     updateStatus,
     acceptApplication,
     rejectApplication,
+    deleteApplications,
 }

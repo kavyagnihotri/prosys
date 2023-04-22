@@ -7,6 +7,7 @@ import PeopleIcon from "@mui/icons-material/People"
 import HowToRegIcon from "@mui/icons-material/HowToReg"
 import Applications from "../../components/dashboard/Toggle.js"
 import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 
 export default function ListItems({ onListItemClick }) {
     const { user } = useAuthContext()
@@ -16,7 +17,7 @@ export default function ListItems({ onListItemClick }) {
 
     const notifyall = async (e) => {
         e.preventDefault()
-        const response1 = await fetch(`/student/`, {
+        const response1 = await fetch(serverURL + `/student/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -35,7 +36,7 @@ export default function ListItems({ onListItemClick }) {
     }
 
     const update = async (id, editedStudent) => {
-        await fetch(`/student/${id}`, {
+        await fetch(serverURL + `/student/${id}`, {
             method: "PUT",
             body: JSON.stringify(editedStudent),
             headers: {

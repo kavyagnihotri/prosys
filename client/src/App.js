@@ -59,11 +59,6 @@ function App() {
                             }
                         />
 
-                        {/* <Route
-                            path="/student/profile/update"
-                            element={<StudentUpdate />}
-                        /> */}
-
                         <Route
                             path="/student/signup"
                             element={!user ? <StudentSignup /> : <Navigate to="/student/dashboard" />}

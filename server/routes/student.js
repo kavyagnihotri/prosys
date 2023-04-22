@@ -21,12 +21,11 @@ const {
 
 const router = express.Router()
 
-// login route
+// login, signup routes
 router.post("/login", loginStudent)
-
-// singup route
 router.post("/signup", signupStudent)
 
+// middleware
 const requireAuth = require("../middleware/requireAuth")
 router.use(requireAuth)
 
@@ -43,6 +42,7 @@ router.post("/status", updateStatus)
 router.post("/accept", acceptApplication)
 router.post("/reject", rejectApplication)
 
+// student profile
 router.get("/", getStudents)
 router.get("/:id", getStudent)
 router.put("/:id", updateProfile)

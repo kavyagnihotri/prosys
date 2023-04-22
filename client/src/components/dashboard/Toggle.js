@@ -5,6 +5,7 @@ import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
+import { serverURL } from "../../utils/constants"
 
 function ApplicationContent() {
     const { user } = useAuthContext()
@@ -13,7 +14,7 @@ function ApplicationContent() {
 
     useEffect(() => {
         const handleAlignment = async () => {
-            const response = await fetch("/globals/getglobals")
+            const response = await fetch(serverURL + "/globals/getglobals")
             const json = await response.json()
 
             if (json.applicationStatus) {
@@ -40,7 +41,7 @@ function ApplicationContent() {
 
         const data = { email: user.email, applicationStatus: applicationStatus }
 
-        const response = await fetch("/globals/updateglobals", {
+        const response = await fetch(serverURL + "/globals/updateglobals", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
