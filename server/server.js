@@ -9,7 +9,6 @@ const projectRoutes = require("./routes/projects")
 const studentRoutes = require("./routes/student")
 const augsdRoutes = require("./routes/augsd")
 const profRoutes = require("./routes/prof")
-const fileRoutes = require("./routes/file")
 const globalStates = require("./routes/globalStates")
 
 // middleware
@@ -27,7 +26,6 @@ app.use("/projects", projectRoutes)
 app.use("/student", studentRoutes)
 app.use("/augsd", augsdRoutes)
 app.use("/prof", profRoutes)
-app.use("/file", fileRoutes)
 app.use("/globals", globalStates)
 
 // db connect and listen for requests
