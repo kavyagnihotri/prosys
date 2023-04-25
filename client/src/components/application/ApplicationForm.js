@@ -36,6 +36,7 @@ const ApplicationForm = () => {
     const [projectTitle, setProjectTitle] = useState("")
     const [project_id, setProjectID] = useState("")
     const { id } = useParams()
+    const [name, setName] = useState(null)
 
     const handleToggle = (event, newAlignment) => {
         setType(newAlignment)
@@ -89,11 +90,24 @@ const ApplicationForm = () => {
                 dispatch2({ type: "SET_APPLICATIONS", payload: json })
             }
         }
+        const fetchStudent = async () => {
+            const response = await fetch(serverURL + `/student/${user.email}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            const json = await response.json()
+            if (response.ok) {
+                setName(json.name)
+            }
+            if (json.notify) {
+                setUpdate(1)
+            }
+        }
 
         if (user) {
             fetchProjects()
             fetchApplications()
             fetchProject()
+            fetchStudent()
         }
     }, [dispatch2, user, id])
 
@@ -171,7 +185,7 @@ const ApplicationForm = () => {
                                 noWrap
                                 sx={{ flexGrow: 1 }}
                             >
-                                {JSON.parse(localStorage.getItem("user")).email}
+                                {name}
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleLogout}>
                                 <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
