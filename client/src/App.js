@@ -16,6 +16,8 @@ import ApplicationForm from "./components/application/ApplicationForm"
 import AugsdHod from "./pages/augsd/AugsdHod"
 import ChatPage from "./components/chatDirectory/chatPage"
 import ViewApplications from "./components/application/ViewApplications"
+import StudentProjectPage from "./components/project/StudentProjectPage"
+import ProfProjectPage from "./components/project/ProfProjectPage"
 
 function App() {
     const { user } = useAuthContext()
@@ -34,7 +36,7 @@ function App() {
                 <div className="pages">
                     <Routes>
                         <Route path="/" element={<HomePage />} />
-
+                        <Route path=""/>
                         <Route
                             path="/augsd/login"
                             element={!user || user.role !== "0" ? <AugsdLogin /> : <Navigate to="/augsd/dashboard" />}
@@ -77,6 +79,10 @@ function App() {
                         />
 
                         <Route path="/student/createApplication/:id" element={<ApplicationForm />} />
+
+                        <Route path="/student/project/:id" element={<StudentProjectPage />} />
+                        
+                        <Route path="/prof/project/:id" element={<ProfProjectPage/> } />
 
                         <Route
                             path="/prof/login"
