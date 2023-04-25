@@ -10,7 +10,9 @@ const studentRoutes = require("./routes/student")
 const augsdRoutes = require("./routes/augsd")
 const profRoutes = require("./routes/prof")
 const fileRoutes = require("./routes/file")
-const globalStates = require("./routes/globalStates")
+const globalStatesRoutes = require("./routes/globalStates")
+const gradeRoutes = require("./routes/grade")
+const submissionRoutes = require("./routes/submission")
 
 // middleware
 app.use(express.json())
@@ -28,7 +30,9 @@ app.use("/student", studentRoutes)
 app.use("/augsd", augsdRoutes)
 app.use("/prof", profRoutes)
 app.use("/file", fileRoutes)
-app.use("/globals", globalStates)
+app.use("/globals", globalStatesRoutes)
+app.use("/grade", gradeRoutes)
+app.use("/submission", submissionRoutes)
 
 // db connect and listen for requests
 mongoose.set("strictQuery", false)
