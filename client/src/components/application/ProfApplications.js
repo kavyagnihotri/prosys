@@ -42,6 +42,7 @@ export default function Applications({ projectID, projectTitle, scoreReleased, a
     const { applications, dispatch2 } = useApplicationsContext()
     const { students, dispatch1 } = useStudentsContext()
     const { profs, dispatch } = useProfContext()
+    const [appStatus, setAppStatus] = useState(false)
     const { user } = useAuthContext()
     const [open, setopen] = useState(false)
     var applicationTypeNum = 0
@@ -95,10 +96,26 @@ export default function Applications({ projectID, projectTitle, scoreReleased, a
             }
         }
 
+        const fetchGlobal = async () => {
+            try {
+                const response = await fetch(serverURL + "/globals/getglobals/", {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${user.token}` },
+                })
+                const json = await response.json()
+                if (response.ok) {
+                    if (json.applicationStatus === true) setAppStatus(true)
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
         if (user) {
             fetchApplications()
             fetchStudents()
             fetchProfs()
+            fetchGlobal()
         }
     }, [dispatch2, dispatch1, user])
 
@@ -233,7 +250,19 @@ export default function Applications({ projectID, projectTitle, scoreReleased, a
                         )}
                 </TableBody>
             </Table>
-            {scoreReleased == 0 && (
+            {appStatus === true && (
+                <Button
+                    color="inherit"
+                    size="large"
+                    type="submit"
+                    variant="outlined"
+                    onClick={(e) => handleClickOpen()}
+                    disabled
+                >
+                    Applications In Progress
+                </Button>
+            )}
+            {appStatus === false && scoreReleased == 0 && (
                 <Button
                     color="inherit"
                     size="large"
@@ -244,7 +273,7 @@ export default function Applications({ projectID, projectTitle, scoreReleased, a
                     Release Score
                 </Button>
             )}
-            {scoreReleased == 1 && (
+            {appStatus === false && scoreReleased == 1 && (
                 <Button color="inherit" size="large" type="submit" variant="outlined" disabled>
                     Released!
                 </Button>
