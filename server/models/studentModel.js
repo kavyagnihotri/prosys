@@ -52,8 +52,8 @@ const studentSchema = new Schema({
         required: true,
     },
     notify: {
+        default: 0,
         type: Number,
-        required: true,
     },
     acceptedProjects: [
         {
