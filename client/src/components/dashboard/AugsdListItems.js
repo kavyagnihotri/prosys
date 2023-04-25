@@ -8,6 +8,7 @@ import HowToRegIcon from "@mui/icons-material/HowToReg"
 import Applications from "../../components/dashboard/Toggle.js"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
+import ToggleOnIcon from "@mui/icons-material/ToggleOn"
 
 export default function ListItems({ onListItemClick }) {
     const { user } = useAuthContext()
@@ -66,11 +67,11 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Notify To Update" />
             </ListItemButton>
+            <ListItemText primary="Set Application Status" sx={{ pl: 6 }}></ListItemText>
             <ListItemButton>
                 <ListItemIcon sx={{ pl: 4 }}>
                     <Applications />
                 </ListItemIcon>
-                <ListItemText primary="" />
             </ListItemButton>
         </React.Fragment>
     )
