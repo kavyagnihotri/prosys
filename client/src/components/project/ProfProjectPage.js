@@ -27,6 +27,9 @@ import { useLogout } from "../../hooks/useLogout"
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import MenuItem from "@mui/material/MenuItem"
 import Title from "../Title"
+import Link from "@mui/material/Link"
+import PersonIcon from "@mui/icons-material/Person"
+import Avatar from "@mui/material/Avatar"
 
 const theme = createTheme()
 
@@ -73,8 +76,10 @@ const ProfProjectPage = () => {
 
     const navigate = useNavigate()
     const [project, setProject] = useState({})
+    const [name, setName] = useState()
+    const [studentName, setStudentName] = useState()
     const [grade, setGrade] = useState([])
-    const [submissionLink, setSubmissionLink] = useState()
+    const [submissionLink, setSubmissionLink] = useState([])
     const [students, setStudents] = useState([])
     const [change, setChange] = useState({
         midsemGrade: "",
@@ -102,6 +107,14 @@ const ProfProjectPage = () => {
             ...prevProps,
             [name]: value,
         }))
+    }
+
+    const fetchName = async () => {
+        const response = await fetch(serverURL + "/prof/" + email)
+        const json = response.json()
+        if (response.ok) {
+            setName(json.name)
+        }
     }
 
     const fetchTitles = async (id) => {
@@ -158,7 +171,6 @@ const ProfProjectPage = () => {
             body: JSON.stringify({ studentemail: email, projectID: id, midsemGrade: midsemGrade })
         })
         const json = await response.json()
-        console.log(json)
     }
 
     const givecompreGrades = async (email, id, compreGrade) => {
@@ -171,7 +183,17 @@ const ProfProjectPage = () => {
             body: JSON.stringify({ studentemail: email, projectID: id, compreGrade: compreGrade })
         })
         const json = await response.json()
-        console.log(json)
+    }
+
+    const fetchStudentName = async (student) => {
+        const response = await fetch(serverURL + `/student/${student}`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${user.token}` },
+        })
+        const json = await response.json()
+        if (response.ok) {
+            setStudentName(json.name)
+        }
     }
 
     const handleSubmit = async (event) => {
@@ -181,7 +203,7 @@ const ProfProjectPage = () => {
     if (user) {
         fetchTitles(id)
         fetchGrades(id)
-        // fetchSubmission(id)
+        fetchName()
     }
 
     return (
@@ -216,7 +238,7 @@ const ProfProjectPage = () => {
                                 noWrap
                                 sx={{ flexGrow: 1 }}
                             >
-                                {JSON.parse(localStorage.getItem("user")).email}
+                                {email}
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleLogout}>
                                 <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
@@ -283,22 +305,31 @@ const ProfProjectPage = () => {
                         </Grid>
                     </Grid>
 
-                    
                     {students.map((student) => (
+                        <Card sx={{ height: "100%", display: "flex", flexDirection: "column", column: "100%" }}>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                        <Title>{student}</Title>
+                                <Typography>
+                                    <Avatar sx={{ m: 1, bgcolor: "#0e5ec7" }}><PersonIcon /></Avatar>
+                                    <Title align="center" startIcon={<PersonIcon />} onChange={fetchStudentName(student)}>{studentName} ({student})</Title>
+                                </Typography>
                         <Table size="small">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>My Submission(s)</TableCell>
+                                    <TableCell>Student Submission(s)</TableCell>
                                 </TableRow>
                             </TableHead>
                                 <TableBody>
-                                    <TableRow onChange={() => (
-                                        fetchSubmission(student, id)
-                                    )}>
-                                        {submissionLink ?
-                                            (<TableCell>{submissionLink}</TableCell>)
+                                    <TableRow onChange={fetchSubmission(student, id)} align="center">
+                                        {submissionLink.length ?
+                                            (submissionLink.map((submission) => (
+                                                (
+                                                    <TableRow align="center">
+                                                    <Link href={submission} target="_blank" rel="noopener">
+                                                    {submission}
+                                                        </Link>
+                                                    </TableRow>
+                                                )
+                                            )))
                                             :
                                             (<TableCell>Not Available</TableCell>)
                                         }
@@ -320,8 +351,8 @@ const ProfProjectPage = () => {
                                                     name="midsemGrade"
                                                     select
                                                     defaultValue={grade.midsemGrade}
-                                                    onChange={() => (
-                                                        givemidGrades(student, id, grade.midsemGrade)
+                                                    onChange={(event) => (
+                                                        givemidGrades(student, id, event.target.value)
                                                     )}
                                             >
                                                 {grades.map((option) => (
@@ -337,8 +368,8 @@ const ProfProjectPage = () => {
                                                     name="compreGrade"
                                                     select
                                                     defaultValue={grade.compreGrade}
-                                                    onChange={() => (
-                                                        givecompreGrades(student, id, grade.compreGrade)
+                                                    onChange={(event) => (
+                                                        givecompreGrades(student, id, event.target.value)
                                                     )}
                                             >
                                                 {grades.map((option) => (
@@ -356,6 +387,7 @@ const ProfProjectPage = () => {
                                 Submit Grade
                             </Button>
                         </Box>
+                        </Card>
                     ))}
                 </Card>
             </Container>
