@@ -17,6 +17,7 @@ import Applications from "../../components/application/Applications"
 import ListItems from "../../components/dashboard/ListItems"
 import LogoutIcon from "@mui/icons-material/Logout"
 import StudentProfile from "../../components/profile/StudentProfile"
+import Project from "../../components/project/MyApprovedProjectTable"
 import ProfessorDetails from "../../components/profile/ProfDetails"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
@@ -156,6 +157,7 @@ function DashboardContent() {
                                             <Applications onViewProfDetailsClick={handleViewProfDetails} />
                                         )}
                                         {selectedContent === "studentprofile" && <StudentProfile />}
+                                        {selectedContent === "projects" && <Project />}
                                     </Paper>
                                 )}
                                 {selectedContent === "profDetails" && <ProfessorDetails profEmail={profEmail} />}
