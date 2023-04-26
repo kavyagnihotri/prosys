@@ -47,7 +47,7 @@ export default function NewProjectTable() {
             const json = await response.json()
             let p = []
             json.forEach((j) => {
-                if (j.professorEmail === user.email) {
+                if (j.professorEmail === user.email && j.approved === 1) {
                     p.push(j)
                 }
             })
