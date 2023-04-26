@@ -34,7 +34,7 @@ const StudentProjectPage = () => {
     const [project, setProject] = useState({})
     const [midsemGrade, setMidsemGrade] = useState()
     const [compreGrade, setCompreGrade] = useState()
-    const [submissionLink, setSubmissionLink] = useState()
+    const [submissionLink, setSubmissionLink] = useState([])
     const [change, setChange] = useState({
         submissionLink: "",
     })
@@ -42,6 +42,7 @@ const StudentProjectPage = () => {
     const { id } = useParams()
     const { user } = useAuthContext()
     let email = user.email
+    const [name, setName] = useState()
 
     const handleLogout = async (e) => {
         e.preventDefault()
@@ -114,6 +115,7 @@ const StudentProjectPage = () => {
             body: JSON.stringify({ studentemail: email, projectID: id, submissionLink: submission })
         })
         const json = await response.json()
+        console.log(json)
     }
 
     const handleSubmit = async (event) => {
@@ -261,10 +263,12 @@ const StudentProjectPage = () => {
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                {submissionLink ?
-                                    (<TableCell>{submissionLink}</TableCell>)
-                                    :
+                                {!submissionLink.length ?
                                     (<TableCell>Not Available</TableCell>)
+                                    :
+                                    (submissionLink.map(submission => (
+                                        <TableCell>{submission}</TableCell>)
+                                    ))
                                 }
                             </TableRow>
                         </TableBody>
