@@ -24,7 +24,8 @@ import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 import { useNavigate, useParams } from "react-router-dom"
 import { useLogout } from "../../hooks/useLogout"
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import Link from "@mui/material/Link"
 
 const theme = createTheme()
 
@@ -61,6 +62,17 @@ const StudentProjectPage = () => {
             ...prevProps,
             [name]: value,
         }))
+    }
+
+    const fetchName = async () => {
+        const response = await fetch(serverURL + `/student/${email}`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${user.token}` },
+        })
+        const json = await response.json()
+        if (response.ok) {
+            setName(json.name)
+        }
     }
 
     const fetchTitles = async (id) => {
@@ -130,6 +142,7 @@ const StudentProjectPage = () => {
         fetchTitles(id)
         fetchGrades(id)
         fetchSubmission(id)
+        fetchName()
     }
 
     return (
@@ -164,7 +177,7 @@ const StudentProjectPage = () => {
                                 noWrap
                                 sx={{ flexGrow: 1 }}
                             >
-                                {JSON.parse(localStorage.getItem("user")).email}
+                                {name}
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleLogout}>
                                 <Button color="inherit" size="large" startIcon={<LogoutIcon />} type="submit">
@@ -262,15 +275,17 @@ const StudentProjectPage = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
                                 {!submissionLink.length ?
-                                    (<TableCell>Not Available</TableCell>)
+                                    (<TableRow>Not Available</TableRow>)
                                     :
-                                    (submissionLink.map(submission => (
-                                        <TableCell>{submission}</TableCell>)
-                                    ))
+                                (submissionLink.map(submission => (
+                                    <TableRow align="center">
+                                        <Link href={submission} target="_blank" rel="noopener">
+                                            {submission}
+                                        </Link>
+                                    </TableRow>
+                                )))
                                 }
-                            </TableRow>
                         </TableBody>
                     </Table>
 
