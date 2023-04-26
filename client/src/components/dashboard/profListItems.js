@@ -60,6 +60,12 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="My Profile" />
             </ListItemButton>
+            <ListItemButton button onClick={() => handleListItemClick("projects")}>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="My Projects" />
+            </ListItemButton>
         </React.Fragment>
     )
 }
