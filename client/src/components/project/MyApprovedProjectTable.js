@@ -75,11 +75,11 @@ export default function NewProjectTable() {
                                 No Projects Taken in this Semester
                             </Typography>
                         </CardContent>
-                        : projects && projects.map(project => (
+                        : projects.map(project => (
                             <Grid item xs={1} sm={6} md={4}>
                                 <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
                                     <Button onClick={() => handleApply(project._id)}>
-                                        <CardContent sx={{ flexGrow: 1 }} key={project._id}>
+                                        <CardContent sx={{ flexGrow: 1 }}>
                                             <Typography gutterBottom variant="h5" component="h2">{project.title}</Typography>
                                             <Typography>{project.description}</Typography>
                                         </CardContent>
