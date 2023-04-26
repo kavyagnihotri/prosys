@@ -2,14 +2,15 @@ const submissionState = require("../models/SubmissionModel")
 
 const getOneSubmission = async (req, res) => {
     // get grade of a student in the given project
-    const { studentEmail, projectID } = req.body
+    const { studentemail, projectID } = req.body
     try {
-        const gradeDoc = await submissionState.findOne({ studentemail: studentEmail, projectID: projectID })
+        const gradeDoc = await submissionState.findOne({ studentemail: studentemail, projectID: projectID })
         res.status(200).json(gradeDoc)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
+
 const getAllProjectSubmissions = async (req, res) => {
     // get all grades of the given project
     const { projectID } = req.body
@@ -20,11 +21,12 @@ const getAllProjectSubmissions = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 }
+
 const getAllStudentSubmission = async (req, res) => {
     // get all grades of the given project
-    const { studentEmail } = req.body
+    const { studentemail } = req.body
     try {
-        const gradeDoc = await submissionState.findOne({ studentemail: studentEmail })
+        const gradeDoc = await submissionState.findOne({ studentemail: studentemail })
         res.status(200).json(gradeDoc)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -32,13 +34,19 @@ const getAllStudentSubmission = async (req, res) => {
 }
 
 const createSubmission = async (req, res) => {
-    const { studentEmail, projectID, link } = req.body
+    const { studentemail, projectID, submissionLink } = req.body
     try {
-        const gradeDoc = await submissionState.create({
-            studentemail: studentEmail,
-            projectID: projectID,
-            submissionLink: link,
-        })
+        let gradeDoc = await submissionState.findOne({ studentemail: studentemail, projectID: projectID })
+        if (!gradeDoc) {    
+            gradeDoc = await submissionState.create({
+                studentemail: studentemail,
+                projectID: projectID,
+                submissionLink: submissionLink,
+            })
+        } else {
+            gradeDoc.submissionLink = submissionLink
+            gradeDoc.save()
+        }
         res.status(200).json(gradeDoc)
     } catch (error) {
         res.status(400).json({ error: error.message })
