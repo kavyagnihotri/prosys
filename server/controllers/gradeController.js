@@ -24,7 +24,7 @@ const getAllProjectGrade = async (req, res) => {
 
 const getAllStudentGrade = async (req, res) => {
     // get all grades of the given project
-    const { studentEmail } = req.body
+    const { studentemail } = req.body
     try {
         const gradeDoc = await gradeState.findOne({ studentemail: studentEmail })
         res.status(200).json(gradeDoc)
@@ -34,9 +34,9 @@ const getAllStudentGrade = async (req, res) => {
 }
 
 const updateMidsemGrade = async (req, res) => {
-    const { studentEmail, projectID, midsemGrade } = req.body
+    const { studentemail, projectID, midsemGrade } = req.body
     try {
-        const gradeDoc = await gradeState.findOne({ studentemail: studentEmail, projectID: projectID })
+        const gradeDoc = await gradeState.findOne({ studentemail: studentemail, projectID: projectID })
         gradeDoc.midsemGrade = midsemGrade
         gradeDoc.save()
         res.status(200).json(gradeDoc)
@@ -46,9 +46,9 @@ const updateMidsemGrade = async (req, res) => {
 }
 
 const updateCompreGrade = async (req, res) => {
-    const { studentEmail, projectID, compreGrade } = req.body
+    const { studentemail, projectID, compreGrade } = req.body
     try {
-        const gradeDoc = await gradeState.findOne({ studentemail: studentEmail, projectID: projectID })
+        const gradeDoc = await gradeState.findOne({ studentemail: studentemail, projectID: projectID })
         gradeDoc.compreGrade = compreGrade
         gradeDoc.save()
         res.status(200).json(gradeDoc)
