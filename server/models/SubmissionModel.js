@@ -11,7 +11,7 @@ const submissionSchema = new Schema({
         required: true,
     },
     submissionLink: {
-        type: String,
+        type: String
     },
 })
 
