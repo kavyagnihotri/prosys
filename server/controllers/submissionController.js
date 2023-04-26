@@ -41,10 +41,10 @@ const createSubmission = async (req, res) => {
             gradeDoc = await submissionState.create({
                 studentemail: studentemail,
                 projectID: projectID,
-                submissionLink: submissionLink,
+                submissionLink: [submissionLink],
             })
         } else {
-            gradeDoc.submissionLink = submissionLink
+            gradeDoc.submissionLink.push(submissionLink)
             gradeDoc.save()
         }
         res.status(200).json(gradeDoc)
