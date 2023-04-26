@@ -49,6 +49,10 @@ const grades = [
     },
     {
         value: "C",
+        label: "C",
+    },
+    {
+        value: "C-",
         label: "C-",
     },
     {
