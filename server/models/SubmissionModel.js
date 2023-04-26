@@ -10,9 +10,11 @@ const submissionSchema = new Schema({
         type: String,
         required: true,
     },
-    submissionLink: {
-        type: String
-    },
+    submissionLink: [
+        {
+            type: String
+        },
+    ]
 })
 
 module.exports = mongoose.model("submissions", submissionSchema)
