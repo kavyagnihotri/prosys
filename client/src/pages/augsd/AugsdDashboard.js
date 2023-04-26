@@ -153,7 +153,8 @@ function DashboardContent() {
                         </Button>
                     </List>
                     <List>
-                        <Applications></Applications>
+                        <label>Allow Applications</label>
+                        <Applications />
                     </List>
                 </Drawer>
 
