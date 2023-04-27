@@ -70,6 +70,7 @@ export default function ListItems({ onListItemClick }) {
             <ListItemText primary="Set Application Status" sx={{ pl: 6 }}></ListItemText>
             <ListItemButton>
                 <ListItemIcon sx={{ pl: 4 }}>
+                <label>Allow Applications</label>
                     <Applications />
                 </ListItemIcon>
             </ListItemButton>
