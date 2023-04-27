@@ -10,9 +10,10 @@ import Divider from "@mui/material/Divider"
 import AssignmentIcon from "@mui/icons-material/Assignment"
 import Link from "@mui/material/Link"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn"
+import LayersIcon from "@mui/icons-material/Layers"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useNavigate } from "react-router-dom"
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn"
 import { serverURL } from "../../utils/constants"
 import { useEffect } from "react"
 import { useProfContext } from "../../hooks/useProfContext"
@@ -53,16 +54,22 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
             </ListItemButton>
-            {/* <ListItemButton button onClick={() => handleListItemClick("allApplications")}>
+            <ListItemButton button onClick={() => goChat()}>
                 <ListItemIcon>
-                    <LayersIcon />
+                    <MarkChatReadIcon />
                 </ListItemIcon>
-                <ListItemText primary="View All Applications" />
-            </ListItemButton> */}
+                <ListItemText primary="Chat Portal" />
+            </ListItemButton>
             <Divider sx={{ my: 1 }} />
             <ListSubheader component="div" inset>
                 Personal
             </ListSubheader>
+            <ListItemButton button onClick={() => handleListItemClick("projects")}>
+                <ListItemIcon>
+                    <LayersIcon />
+                </ListItemIcon>
+                <ListItemText primary="Projects" />
+            </ListItemButton>
             <ListItemButton component={Link} to="/prof/project/add">
                 <ListItemIcon>
                     <AssignmentIcon />
@@ -80,23 +87,11 @@ export default function ListItems({ onListItemClick }) {
                     />
                 </ListItemButton>
             )}
-            <ListItemButton button onClick={() => goChat()}>
-                <ListItemIcon>
-                    <MarkChatReadIcon />
-                </ListItemIcon>
-                <ListItemText primary="Chat Portal" />
-            </ListItemButton>
             <ListItemButton button onClick={() => handleListItemClick("profile")}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="My Profile" />
-            </ListItemButton>
-            <ListItemButton button onClick={() => handleListItemClick("projects")}>
-                <ListItemIcon>
-                    <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary="My Projects" />
+                <ListItemText primary="Profile" />
             </ListItemButton>
         </React.Fragment>
     )

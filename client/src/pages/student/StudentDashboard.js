@@ -148,7 +148,7 @@ function DashboardContent() {
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
-                                {selectedContent !== "profDetails" && (
+                                {selectedContent !== "profDetails" && selectedContent !== "projects" && (
                                     <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                                         {selectedContent === "dashboard" && (
                                             <Projects onViewProfDetailsClick={handleViewProfDetails} />
@@ -157,10 +157,10 @@ function DashboardContent() {
                                             <Applications onViewProfDetailsClick={handleViewProfDetails} />
                                         )}
                                         {selectedContent === "studentprofile" && <StudentProfile />}
-                                        {selectedContent === "projects" && <Project />}
                                     </Paper>
                                 )}
                                 {selectedContent === "profDetails" && <ProfessorDetails profEmail={profEmail} />}
+                                {selectedContent === "projects" && <Project />}
                             </Grid>
                         </Grid>
                     </Container>

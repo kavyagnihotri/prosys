@@ -1,36 +1,31 @@
 import * as React from "react"
-import { Container } from "@mui/material"
+import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Card from "@mui/material/Card"
-import CardContent from "@mui/material/CardContent"
-import CardActions from "@mui/material/CardActions"
-import CardMedia from "@mui/material/CardMedia"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import LogoutIcon from "@mui/icons-material/Logout"
 import Toolbar from "@mui/material/Toolbar"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos"
+import Link from "@mui/material/Link"
 import { AppBar } from "../../components/dashboard/Objects"
-import { useState, useEffect, } from "react"
-import { useProjectsContext } from "../../hooks/useProjectsContext"
+import { useState } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 import { useNavigate, useParams } from "react-router-dom"
 import { useLogout } from "../../hooks/useLogout"
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import Link from "@mui/material/Link"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 
 const theme = createTheme()
 
 const StudentProjectPage = () => {
-
     const navigate = useNavigate()
     const [project, setProject] = useState({})
     const [midsemGrade, setMidsemGrade] = useState()
@@ -91,9 +86,9 @@ const StudentProjectPage = () => {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${user.token}`,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ studentemail: email, projectID: id })
+            body: JSON.stringify({ studentemail: email, projectID: id }),
         })
         const json = await response.json()
         if (response.ok) {
@@ -107,9 +102,9 @@ const StudentProjectPage = () => {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${user.token}`,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ studentemail: email, projectID: id })
+            body: JSON.stringify({ studentemail: email, projectID: id }),
         })
         const json = await response.json()
         if (response.ok) {
@@ -122,9 +117,9 @@ const StudentProjectPage = () => {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${user.token}`,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ studentemail: email, projectID: id, submissionLink: submission })
+            body: JSON.stringify({ studentemail: email, projectID: id, submissionLink: submission }),
         })
         const json = await response.json()
         console.log(json)
@@ -156,7 +151,7 @@ const StudentProjectPage = () => {
                         alignItems: "center",
                     }}
                 >
-                    <AppBar position="absolute">
+                    <AppBar position="absolute" sx={{ bgcolor: "#0e5ec7" }}>
                         <Toolbar sx={{ pr: "24px" }}>
                             <Button
                                 onClick={handleHome}
@@ -165,7 +160,7 @@ const StudentProjectPage = () => {
                                 noWrap
                                 color="inherit"
                                 size="large"
-                                startIcon={<ArrowBackIosIcon/>}
+                                startIcon={<ArrowBackIosIcon />}
                             >
                                 ProSys - Student
                             </Button>
@@ -242,7 +237,6 @@ const StudentProjectPage = () => {
                                 <Typography gutterBottom>{project.acceptedStudents}</Typography>
                             </Grid>
                         </Grid>
-
                     </Grid>
 
                     <Table size="small">
@@ -254,16 +248,16 @@ const StudentProjectPage = () => {
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                {midsemGrade ?
-                                    (<TableCell>{midsemGrade}</TableCell>)
-                                    :
-                                    (<TableCell>Not Available</TableCell>)
-                                }
-                                {compreGrade ?
-                                    (<TableCell>{compreGrade}</TableCell>)
-                                    :
-                                    (<TableCell>Not Available</TableCell>)
-                                }
+                                {midsemGrade ? (
+                                    <TableCell>{midsemGrade}</TableCell>
+                                ) : (
+                                    <TableCell>Not Available</TableCell>
+                                )}
+                                {compreGrade ? (
+                                    <TableCell>{compreGrade}</TableCell>
+                                ) : (
+                                    <TableCell>Not Available</TableCell>
+                                )}
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -275,17 +269,17 @@ const StudentProjectPage = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                                {!submissionLink.length ?
-                                    (<TableRow>Not Available</TableRow>)
-                                    :
-                                (submissionLink.map(submission => (
+                            {!submissionLink.length ? (
+                                <TableRow>Not Available</TableRow>
+                            ) : (
+                                submissionLink.map((submission) => (
                                     <TableRow align="center">
                                         <Link href={submission} target="_blank" rel="noopener">
                                             {submission}
                                         </Link>
                                     </TableRow>
-                                )))
-                                }
+                                ))
+                            )}
                         </TableBody>
                     </Table>
 

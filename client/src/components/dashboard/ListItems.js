@@ -6,6 +6,7 @@ import ListItemText from "@mui/material/ListItemText"
 import ListSubheader from "@mui/material/ListSubheader"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 import PeopleIcon from "@mui/icons-material/People"
+import LayerIcon from "@mui/icons-material/Layers"
 import Divider from "@mui/material/Divider"
 import AssignmentIcon from "@mui/icons-material/Assignment"
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead"
@@ -31,35 +32,36 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
             </ListItemButton>
-            {/* <ListItemButton><ListItemIcon><LayersIcon /></ListItemIcon><ListItemText primary="Projects" /></ListItemButton> */}
-            <Divider sx={{ my: 1 }} />
-            <ListSubheader component="div" inset>
-                Personal
-            </ListSubheader>
-            <ListItemButton button onClick={() => handleListItemClick("applications")}>
-                <ListItemIcon>
-                    <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary="My Applications" />
-            </ListItemButton>
-
             <ListItemButton button onClick={() => goChat()}>
                 <ListItemIcon>
                     <MarkChatReadIcon />
                 </ListItemIcon>
                 <ListItemText primary="Chat Portal" />
             </ListItemButton>
+            <Divider sx={{ my: 1 }} />
+            <ListSubheader component="div" inset>
+                Personal
+            </ListSubheader>
+
+            <ListItemButton button onClick={() => handleListItemClick("applications")}>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Applications" />
+            </ListItemButton>
+
+            <ListItemButton button onClick={() => handleListItemClick("projects")}>
+                <ListItemIcon>
+                    <LayerIcon />
+                </ListItemIcon>
+                <ListItemText primary="Projects" />
+            </ListItemButton>
+
             <ListItemButton button onClick={() => handleListItemClick("studentprofile")}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="My Profile" />
-            </ListItemButton>
-            <ListItemButton button onClick={() => handleListItemClick("projects")}>
-                <ListItemIcon>
-                    <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary="My Projects" />
+                <ListItemText primary="Profile" />
             </ListItemButton>
         </React.Fragment>
     )
