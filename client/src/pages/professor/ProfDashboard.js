@@ -12,6 +12,7 @@ import LogoutIcon from "@mui/icons-material/Logout"
 import Button from "@mui/material/Button"
 import ListItems from "../../components/dashboard/profListItems"
 import Projects from "../../components/project/ProfProjects"
+import Project from "../../components/project/MyAcceptedStudentTable"
 import ViewApplications from "../../components/application/ViewApplications"
 import HoDApproval from "../../components/application/HoDApproval"
 import Profile from "../../components/profile/ProfProfile"
@@ -155,6 +156,7 @@ function DashboardContent() {
                         )}
                         {selectedContent === "profile" && <Profile />}
                         {selectedContent === "approve" && <HoDApproval />}
+                        {selectedContent === "projects" && <Project />}
                     </TableContainer>
                 </Box>
             </Box>

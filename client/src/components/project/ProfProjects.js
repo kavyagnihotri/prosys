@@ -63,10 +63,10 @@ export default function Orders({ onViewApplicationClick }) {
                                                 {table === 1 && (
                                                     <TableCell align="center">
                                                         Delete Project
-                                                        <em> and all applications</em>
+                                                        <em> and all Applications</em>
                                                     </TableCell>
                                                 )}
-                                                {(table === 0 || table == -1) && (
+                                                {(table === 0 || table === -1) && (
                                                     <TableCell align="center">Delete Project</TableCell>
                                                 )}
                                                 {table === -1 && <TableCell align="center">Recommendations</TableCell>}

@@ -61,13 +61,14 @@ const branches = [
     },
 ]
 
-export default function FormalApplications({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
+export default function InformalApplications({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
     const { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const id = projectID
     const { students, dispatch1 } = useStudentsContext()
     const { profs, dispatch } = useProfContext()
     const NoStudents = numberOfStudents
+    const title = projectTitle
     let count = 0
     const navigate = useNavigate()
 
@@ -121,6 +122,7 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
             fetchApplications()
             fetchStudents()
             fetchProfs()
+            console.log(profs)
         }
     }, [dispatch2, dispatch1, user])
 
@@ -178,7 +180,7 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
                     if (
                         a.profEmail === user.email &&
                         a.projectID === id &&
-                        a.type === 1 &&
+                        a.type === 0 &&
                         a.score != -1 &&
                         count < NoStudents
                     ) {
@@ -191,12 +193,11 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
                                 })
                             }
                         })
-                        // updateStatus(a._id, 1)
                         count += 1
                     } else if (
                         a.profEmail === user.email &&
                         a.projectID === id &&
-                        a.type === 1 &&
+                        a.type === 0 &&
                         a.score != -1 &&
                         count >= NoStudents
                     ) {
@@ -212,7 +213,7 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
 
     return (
         <React.Fragment>
-            <Title>Formal Applicants for {projectTitle} Project</Title>
+            <Title>Informal Applicants for {title} Project</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -232,7 +233,7 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
                             (app) =>
                                 app.profEmail === user.email &&
                                 app.projectID === id &&
-                                app.type === 1 &&
+                                app.type === 0 &&
                                 students &&
                                 students.map(
                                     (stud) =>
