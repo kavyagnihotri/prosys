@@ -10,7 +10,12 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import MenuItem from "@mui/material/MenuItem"
 import Title from "../Title"
-import { useEffect } from "react"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
+import { useEffect, useState } from "react"
 import { useApplicationsContext } from "../../hooks/useApplicationsContext"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useStudentsContext } from "../../hooks/useStudentsContext"
@@ -19,57 +24,30 @@ import { useProfContext } from "../../hooks/useProfContext"
 import { serverURL } from "../../utils/constants"
 
 const branches = [
-    {
-        value: 1,
-        label: "1",
-    },
-    {
-        value: 2,
-        label: "2",
-    },
-    {
-        value: 3,
-        label: "3",
-    },
-    {
-        value: 4,
-        label: "4",
-    },
-    {
-        value: 5,
-        label: "5",
-    },
-    {
-        value: 6,
-        label: "6",
-    },
-    {
-        value: 7,
-        label: "7",
-    },
-    {
-        value: 8,
-        label: "8",
-    },
-    {
-        value: 9,
-        label: "9",
-    },
-    {
-        value: 10,
-        label: "10",
-    },
+    { value: 1, label: "1" },
+    { value: 2, label: "2" },
+    { value: 3, label: "3" },
+    { value: 4, label: "4" },
+    { value: 5, label: "5" },
+    { value: 6, label: "6" },
+    { value: 7, label: "7" },
+    { value: 8, label: "8" },
+    { value: 9, label: "9" },
+    { value: 10, label: "10" },
 ]
 
-export default function FormalApplications({ projectID, numberOfStudents, projectTitle, onListItemClick }) {
+export default function Applications({ projectID, projectTitle, scoreReleased, applicationType }) {
+    const navigate = useNavigate()
+    const tableTitle = applicationType.charAt(0).toUpperCase() + applicationType.slice(1)
     const { applications, dispatch2 } = useApplicationsContext()
-    const { user } = useAuthContext()
-    const id = projectID
     const { students, dispatch1 } = useStudentsContext()
     const { profs, dispatch } = useProfContext()
-    const NoStudents = numberOfStudents
-    let count = 0
-    const navigate = useNavigate()
+    const { user } = useAuthContext()
+    const [open, setopen] = useState(false)
+    var applicationTypeNum = 0
+    if (applicationType === "formal") {
+        applicationTypeNum = 1
+    }
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -143,76 +121,36 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
         }
     }
 
-    const updateStatus = async (appId, appStatus) => {
-        console.log(appId, appStatus)
-        try {
-            const response = await fetch(serverURL + "/student/status", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.token}`,
-                },
-                body: JSON.stringify({ appId: appId, status: appStatus }),
-            })
-            const json = await response.json()
-            if (response.ok) {
-                dispatch2({ type: "SET_APPLICATIONS", payload: json })
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
     const changeStatus = async () => {
         try {
-            const response = await fetch(serverURL + "/student/rank", {
-                method: "GET",
+            const response = await fetch(serverURL + "/projects/" + applicationType + "/" + projectID, {
+                method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
-
-            if (response.ok) {
-                dispatch2({ type: "SET_APPLICATIONS", payload: json })
-                const applications = json
-                applications.forEach(async (a) => {
-                    if (
-                        a.profEmail === user.email &&
-                        a.projectID === id &&
-                        a.type === 1 &&
-                        a.score != -1 &&
-                        count < NoStudents
-                    ) {
-                        students.forEach(async (s) => {
-                            if (s.email === a.studentEmail) {
-                                profs.forEach(async (prof) => {
-                                    if (prof.email === user.email && prof.dept === s.dept) await updateStatus(a._id, 1)
-                                    else if (prof.email === user.email && prof.dept !== s.dept)
-                                        await updateStatus(a._id, 3)
-                                })
-                            }
-                        })
-                        // updateStatus(a._id, 1)
-                        count += 1
-                    } else if (
-                        a.profEmail === user.email &&
-                        a.projectID === id &&
-                        a.type === 1 &&
-                        a.score != -1 &&
-                        count >= NoStudents
-                    ) {
-                        await updateStatus(a._id, 2)
-                    }
-                })
-                navigate(0)
+            if (json.ok) {
+                console.log("Project Closed")
             }
         } catch (error) {
             console.error(error)
         }
+
+        navigate(0)
+    }
+
+    const handleClickOpen = () => {
+        setopen(true)
+    }
+
+    const handleClose = () => {
+        setopen(false)
     }
 
     return (
         <React.Fragment>
-            <Title>Formal Applicants for {projectTitle} Project</Title>
+            <Title>
+                {tableTitle} Applicants for {projectTitle} Project
+            </Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -231,8 +169,8 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
                         applications.map(
                             (app) =>
                                 app.profEmail === user.email &&
-                                app.projectID === id &&
-                                app.type === 1 &&
+                                app.projectID === projectID &&
+                                app.type === applicationTypeNum &&
                                 students &&
                                 students.map(
                                     (stud) =>
@@ -295,9 +233,35 @@ export default function FormalApplications({ projectID, numberOfStudents, projec
                         )}
                 </TableBody>
             </Table>
-            <Button color="inherit" size="large" type="submit" variant="outlined" onClick={changeStatus}>
-                Approve Score
-            </Button>
+            {scoreReleased == 0 && (
+                <Button
+                    color="inherit"
+                    size="large"
+                    type="submit"
+                    variant="outlined"
+                    onClick={(e) => handleClickOpen()}
+                >
+                    Release Score
+                </Button>
+            )}
+            {scoreReleased == 1 && (
+                <Button color="inherit" size="large" type="submit" variant="outlined" disabled>
+                    Released!
+                </Button>
+            )}
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Warning!</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        You can only approve the score ONCE. Are you sure you want to continue?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={changeStatus}>Release Score</Button>
+                </DialogActions>
+            </Dialog>
         </React.Fragment>
     )
 }
