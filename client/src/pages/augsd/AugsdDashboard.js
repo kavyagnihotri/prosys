@@ -14,6 +14,7 @@ import ListItems from "../../components/dashboard/AugsdListItems"
 import MarkHoD from "../../components/profile/MarkHoD"
 import CustomContainer from "../../components/CustomContainer"
 import ProjectTable from "../../components/project/ProjectTable"
+import Chart from "../../components/dashboard/Chart"
 import { useState } from "react"
 import { AppBar, Drawer } from "../../components/dashboard/Objects"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -112,6 +113,7 @@ function DashboardContent() {
                         </Box>
                     )}
                     {selectedContent === "markHoD" && <MarkHoD />}
+                    {selectedContent === "analytics" && <Chart />}
                 </Box>
             </Box>
         </ThemeProvider>
