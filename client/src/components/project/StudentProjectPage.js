@@ -15,6 +15,7 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos"
 import Link from "@mui/material/Link"
+import { Paper } from "@mui/material"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useState } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -182,7 +183,7 @@ const StudentProjectPage = () => {
                         </Toolbar>
                     </AppBar>
                 </Box>
-                <Card sx={{ height: "100%", display: "flex", flexDirection: "column", column: "100%" }}>
+                <Paper maxWidth="lg" sx={{ p: 4, display: "flex", flexDirection: "column" }}>
                     <Grid item container direction="row">
                         <Grid container>
                             <Grid item xs={6} sx={{ flexBasis: "100%", color: "#363a40" }}>
@@ -234,7 +235,15 @@ const StudentProjectPage = () => {
                                 <Typography gutterBottom>Accepted Students </Typography>
                             </Grid>
                             <Grid item xs={6} sx={{ flexBasis: "100%" }}>
-                                <Typography gutterBottom>{project.acceptedStudents}</Typography>
+                                <Typography gutterBottom>
+                                    {project.acceptedStudents &&
+                                        project.acceptedStudents.split("\n").map((item, index) => (
+                                            <Typography key={index} component="div" sx={{ display: "block" }}>
+                                                {item}
+                                            </Typography>
+                                        ))}
+                                </Typography>
+                                {/* <Typography gutterBottom>{project.acceptedStudents}</Typography> */}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -302,7 +311,7 @@ const StudentProjectPage = () => {
                             Submit Link
                         </Button>
                     </Box>
-                </Card>
+                </Paper>
             </Container>
         </ThemeProvider>
     )

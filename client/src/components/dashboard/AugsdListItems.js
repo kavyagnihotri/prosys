@@ -6,9 +6,9 @@ import DashboardIcon from "@mui/icons-material/Dashboard"
 import PeopleIcon from "@mui/icons-material/People"
 import HowToRegIcon from "@mui/icons-material/HowToReg"
 import Applications from "../../components/dashboard/Toggle.js"
+import BarChartIcon from "@mui/icons-material/BarChart"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
-import ToggleOnIcon from "@mui/icons-material/ToggleOn"
 
 export default function ListItems({ onListItemClick }) {
     const { user } = useAuthContext()
@@ -55,23 +55,29 @@ export default function ListItems({ onListItemClick }) {
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
             </ListItemButton>
+            <ListItemText primary="Set Application Status" sx={{ pl: 6 }}></ListItemText>
+            <ListItemButton>
+                <ListItemIcon sx={{ pl: 4 }}>
+                    <Applications />
+                </ListItemIcon>
+            </ListItemButton>
             <ListItemButton button onClick={() => handleListItemClick("markHoD")}>
                 <ListItemIcon>
                     <HowToRegIcon />
                 </ListItemIcon>
                 <ListItemText primary="Mark HoD" />
             </ListItemButton>
+            <ListItemButton button onClick={() => handleListItemClick("analytics")}>
+                <ListItemIcon>
+                    <BarChartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Analytics" />
+            </ListItemButton>
             <ListItemButton button onClick={notifyall}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
                 <ListItemText primary="Notify To Update" />
-            </ListItemButton>
-            <ListItemText primary="Set Application Status" sx={{ pl: 6 }}></ListItemText>
-            <ListItemButton>
-                <ListItemIcon sx={{ pl: 4 }}>
-                    <Applications />
-                </ListItemIcon>
             </ListItemButton>
         </React.Fragment>
     )
