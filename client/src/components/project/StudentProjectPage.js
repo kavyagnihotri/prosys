@@ -15,6 +15,7 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos"
 import Link from "@mui/material/Link"
+import { Paper } from "@mui/material"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useState } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -205,7 +206,7 @@ const StudentProjectPage = () => {
                         </Toolbar>
                     </AppBar>
                 </Box>
-                <Card sx={{ height: "100%", display: "flex", flexDirection: "column", column: "100%" }} style={{ padding: "1rem" }}>
+                <Card sx={{ height: "100%", display: "flex", flexDirection: "column", column: "100%" }} style={{ padding: "1rem" }}>n
                     <Grid item container direction="row">
                         <Grid container>
                             <Grid item xs={6} sx={{ flexBasis: "100%", color: "#363a40" }}>
@@ -327,7 +328,7 @@ const StudentProjectPage = () => {
                             Submit Link
                         </Button>
                     </Box>
-                </Card>
+                </Paper>
             </Container>
         </ThemeProvider>
     )
