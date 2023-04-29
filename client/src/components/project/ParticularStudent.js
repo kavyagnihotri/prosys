@@ -23,47 +23,49 @@ import { useNavigate } from "react-router-dom"
 const grades = [
     {
         value: 'A',
-        label: "A",
+        label: 'A',
     },
     {
         value: 'A-',
-        label: "A-",
+        label: 'A-',
     },
     {
         value: 'B',
-        label: "B",
+        label: 'B',
     },
     {
         value: 'B-',
-        label: "B-",
+        label: 'B-',
     },
     {
         value: 'C',
-        label: "C",
+        label: 'C',
     },
     {
         value: 'C-',
-        label: "C-",
+        label: 'C-',
     },
     {
         value: 'D',
-        label: "D",
+        label: 'D',
     },
     {
         value: 'D-',
-        label: "D-",
+        label: 'D-',
     },
     {
         value: 'E',
-        label: "E",
+        label: 'E',
     },
 ]
 
 const ParticularStudent = ({ student,id }) => {
     const [studentName, setStudentName] = useState()
-    const [grade, setGrade] = useState({})
+    const [midsem, setMidsem] = useState("")
+    const [compre, setCompre] = useState("")
     const [submissionLink, setSubmissionLink] = useState([])
     const { user } = useAuthContext()
+    let midsemGrade="", compreGrade=""
 
     const fetchGrades = async (id) => {
         const response = await fetch(serverURL + `/grade`, {
@@ -77,10 +79,8 @@ const ParticularStudent = ({ student,id }) => {
         const json = await response.json()
         console.log(json)
         if (response.ok) {
-            setGrade(json)
-        }
-        else {
-            setGrade({ studentemail: student, projectID: id, compreGrade: "", midsemGrade: "" })
+            setMidsem(json.midsemGrade)
+            setCompre(json.compreGrade)
         }
     }
 
@@ -141,6 +141,13 @@ const ParticularStudent = ({ student,id }) => {
 
     if (user) {
         fetchGrades(id)
+        console.log(midsem.type)
+        console.log(compre.type)
+
+        midsemGrade = midsem
+        compreGrade = compre
+        console.log(midsem)
+        console.log(compre)
     }
 
     return (
@@ -199,12 +206,12 @@ const ParticularStudent = ({ student,id }) => {
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell>
+                            {midsemGrade==="" && (<TableCell>
                                 <TextField
                                     id="midsemGrade"
                                     name="midsemGrade"
                                     select
-                                    defaultValue={grade.midsemGrade}
+                                    defaultValue=""
                                     onChange={(event) =>
                                         givemidGrades(student, id, event.target.value)
                                     }
@@ -215,13 +222,30 @@ const ParticularStudent = ({ student,id }) => {
                                         </MenuItem>
                                     ))}
                                 </TextField>
-                            </TableCell>
-                            <TableCell>
+                            </TableCell>)}
+                            {midsemGrade!=="" && (<TableCell>
+                                <TextField
+                                    id="midsemGrade"
+                                    name="midsemGrade"
+                                    select
+                                    defaultValue={midsemGrade}
+                                    onChange={(event) =>
+                                        givemidGrades(student, id, event.target.value)
+                                    }
+                                >
+                                    {grades.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </TableCell>)}
+                            {compreGrade==="" && (<TableCell>
                                 <TextField
                                     id="compreGrade"
                                     name="compreGrade"
                                     select
-                                    defaultValue={grade.compreGrade}
+                                    defaultValue=""
                                     onChange={(event) =>
                                         givecompreGrades(student, id, event.target.value)
                                     }
@@ -232,7 +256,24 @@ const ParticularStudent = ({ student,id }) => {
                                         </MenuItem>
                                     ))}
                                 </TextField>
-                            </TableCell>
+                            </TableCell>)}
+                            {compreGrade!=="" && (<TableCell>
+                                <TextField
+                                    id="compreGrade"
+                                    name="compreGrade"
+                                    select
+                                    defaultValue={compreGrade}
+                                    onChange={(event) =>
+                                        givecompreGrades(student, id, event.target.value)
+                                    }
+                                >
+                                    {grades.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </TableCell>)}
                         </TableRow>
                     </TableBody>
                 </Table>
