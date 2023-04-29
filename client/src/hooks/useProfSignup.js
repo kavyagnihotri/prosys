@@ -10,7 +10,7 @@ export const useProfSignup = () => {
     const signup = async (email, password, name, dept, chamber, researchInterest, websites, hod) => {
         setIsLoading(true)
         setError(null)
-        hod = false // by default
+        var hod = false // by default
 
         const response = await fetch(serverURL + "/prof/signup", {
             method: "POST",
