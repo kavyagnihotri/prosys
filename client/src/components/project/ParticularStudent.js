@@ -22,50 +22,51 @@ import { useNavigate } from "react-router-dom"
 
 const grades = [
     {
-        value: 'A',
-        label: 'A',
+        value: "A",
+        label: "A",
     },
     {
-        value: 'A-',
-        label: 'A-',
+        value: "A-",
+        label: "A-",
     },
     {
-        value: 'B',
-        label: 'B',
+        value: "B",
+        label: "B",
     },
     {
-        value: 'B-',
-        label: 'B-',
+        value: "B-",
+        label: "B-",
     },
     {
-        value: 'C',
-        label: 'C',
+        value: "C",
+        label: "C",
     },
     {
-        value: 'C-',
-        label: 'C-',
+        value: "C-",
+        label: "C-",
     },
     {
-        value: 'D',
-        label: 'D',
+        value: "D",
+        label: "D",
     },
     {
-        value: 'D-',
-        label: 'D-',
+        value: "D-",
+        label: "D-",
     },
     {
-        value: 'E',
-        label: 'E',
+        value: "E",
+        label: "E",
     },
 ]
 
-const ParticularStudent = ({ student,id }) => {
+const ParticularStudent = ({ student, id }) => {
     const [studentName, setStudentName] = useState()
     const [midsem, setMidsem] = useState("")
     const [compre, setCompre] = useState("")
     const [submissionLink, setSubmissionLink] = useState([])
     const { user } = useAuthContext()
-    let midsemGrade="", compreGrade=""
+    let midsemGrade = "",
+        compreGrade = ""
 
     const fetchGrades = async (id) => {
         const response = await fetch(serverURL + `/grade`, {
@@ -141,13 +142,8 @@ const ParticularStudent = ({ student,id }) => {
 
     if (user) {
         fetchGrades(id)
-        console.log(midsem.type)
-        console.log(compre.type)
-
         midsemGrade = midsem
         compreGrade = compre
-        console.log(midsem)
-        console.log(compre)
     }
 
     return (
@@ -159,19 +155,15 @@ const ParticularStudent = ({ student,id }) => {
                 column: "100%",
             }}
             style={{
-                margin: '1rem'
+                margin: "1rem",
             }}
         >
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} style={{margin:'1rem'}}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} style={{ margin: "1rem" }}>
                 <Typography>
                     <Avatar sx={{ m: 1, bgcolor: "#0e5ec7" }}>
                         <PersonIcon />
                     </Avatar>
-                    <Title
-                        align="center"
-                        startIcon={<PersonIcon />}
-                        onChange={fetchStudentName(student)}
-                    >
+                    <Title align="center" startIcon={<PersonIcon />} onChange={fetchStudentName(student)}>
                         {studentName} ({student})
                     </Title>
                 </Typography>
@@ -206,74 +198,74 @@ const ParticularStudent = ({ student,id }) => {
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            {midsemGrade==="" && (<TableCell>
-                                <TextField
-                                    id="midsemGrade"
-                                    name="midsemGrade"
-                                    select
-                                    defaultValue=""
-                                    onChange={(event) =>
-                                        givemidGrades(student, id, event.target.value)
-                                    }
-                                >
-                                    {grades.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </TableCell>)}
-                            {midsemGrade!=="" && (<TableCell>
-                                <TextField
-                                    id="midsemGrade"
-                                    name="midsemGrade"
-                                    select
-                                    defaultValue={midsemGrade}
-                                    onChange={(event) =>
-                                        givemidGrades(student, id, event.target.value)
-                                    }
-                                >
-                                    {grades.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </TableCell>)}
-                            {compreGrade==="" && (<TableCell>
-                                <TextField
-                                    id="compreGrade"
-                                    name="compreGrade"
-                                    select
-                                    defaultValue=""
-                                    onChange={(event) =>
-                                        givecompreGrades(student, id, event.target.value)
-                                    }
-                                >
-                                    {grades.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </TableCell>)}
-                            {compreGrade!=="" && (<TableCell>
-                                <TextField
-                                    id="compreGrade"
-                                    name="compreGrade"
-                                    select
-                                    defaultValue={compreGrade}
-                                    onChange={(event) =>
-                                        givecompreGrades(student, id, event.target.value)
-                                    }
-                                >
-                                    {grades.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </TableCell>)}
+                            {midsemGrade === "" && (
+                                <TableCell>
+                                    <TextField
+                                        id="midsemGrade"
+                                        name="midsemGrade"
+                                        select
+                                        defaultValue=""
+                                        onChange={(event) => givemidGrades(student, id, event.target.value)}
+                                    >
+                                        {grades.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </TableCell>
+                            )}
+                            {midsemGrade !== "" && (
+                                <TableCell>
+                                    <TextField
+                                        id="midsemGrade"
+                                        name="midsemGrade"
+                                        select
+                                        defaultValue={midsemGrade}
+                                        onChange={(event) => givemidGrades(student, id, event.target.value)}
+                                    >
+                                        {grades.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </TableCell>
+                            )}
+                            {compreGrade === "" && (
+                                <TableCell>
+                                    <TextField
+                                        id="compreGrade"
+                                        name="compreGrade"
+                                        select
+                                        defaultValue=""
+                                        onChange={(event) => givecompreGrades(student, id, event.target.value)}
+                                    >
+                                        {grades.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </TableCell>
+                            )}
+                            {compreGrade !== "" && (
+                                <TableCell>
+                                    <TextField
+                                        id="compreGrade"
+                                        name="compreGrade"
+                                        select
+                                        defaultValue={compreGrade}
+                                        onChange={(event) => givecompreGrades(student, id, event.target.value)}
+                                    >
+                                        {grades.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </TableCell>
+                            )}
                         </TableRow>
                     </TableBody>
                 </Table>
