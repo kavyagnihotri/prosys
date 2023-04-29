@@ -9,7 +9,6 @@ const projectRoutes = require("./routes/projects")
 const studentRoutes = require("./routes/student")
 const augsdRoutes = require("./routes/augsd")
 const profRoutes = require("./routes/prof")
-const fileRoutes = require("./routes/file")
 const globalStatesRoutes = require("./routes/globalStates")
 const gradeRoutes = require("./routes/grade")
 const submissionRoutes = require("./routes/submission")
@@ -29,7 +28,6 @@ app.use("/projects", projectRoutes)
 app.use("/student", studentRoutes)
 app.use("/augsd", augsdRoutes)
 app.use("/prof", profRoutes)
-app.use("/file", fileRoutes)
 app.use("/globals", globalStatesRoutes)
 app.use("/grade", gradeRoutes)
 app.use("/submission", submissionRoutes)
@@ -57,7 +55,7 @@ app.post("/authenticate", async (req, res) => {
         const r = await axios.put(
             "https://api.chatengine.io/users/",
             { username: username, secret: username, first_name: username },
-            { headers: { "Private-Key": "66fb706d-7c8c-4c26-8edc-49dd33ea1038" } }
+            { headers: { "Private-Key": "1654474a-a136-4def-951d-c8c0670bd2b8" } }
         )
         return res.status(r.status).json(r.data)
     } catch (e) {

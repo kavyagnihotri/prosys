@@ -15,7 +15,7 @@ import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 
 export default function Orders({ onViewProfDetails, status }) {
-    const { applications, dispatch } = useApplicationsContext()
+    const { applications, dispatch2 } = useApplicationsContext()
     const { user } = useAuthContext()
     const [professors, setProfessors] = useState({})
 
@@ -28,7 +28,7 @@ export default function Orders({ onViewProfDetails, status }) {
             const json = await response.json()
 
             if (response.ok) {
-                dispatch({ type: "SET_APPLICATIONS", payload: json })
+                dispatch2({ type: "SET_APPLICATIONS", payload: json })
             }
         }
 
@@ -55,7 +55,7 @@ export default function Orders({ onViewProfDetails, status }) {
             fetchApplications()
             fetchProfessors()
         }
-    }, [dispatch, user])
+    }, [dispatch2, user])
 
     const getProfessorName = (email) => {
         return professors[email] || ""
@@ -71,6 +71,7 @@ export default function Orders({ onViewProfDetails, status }) {
             headers: { Authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
             body: JSON.stringify({ id: id }),
         })
+        // window.location.reload()
         window.location.reload()
     }
 

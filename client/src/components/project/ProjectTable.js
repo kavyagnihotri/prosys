@@ -122,6 +122,7 @@ export default function ProjectTable({ type }) {
                         <TableCell>Description</TableCell>
                         <TableCell>Pre-requisites</TableCell>
                         <TableCell>No. of Students</TableCell>
+                        {type === -1 && <TableCell>Recommendations</TableCell>}
                         {type === 0 && <TableCell>Operations</TableCell>}
                     </TableRow>
                 </TableHead>
@@ -137,6 +138,12 @@ export default function ProjectTable({ type }) {
                                         <TableCell>{project.description}</TableCell>
                                         <TableCell>{project.prerequisite}</TableCell>
                                         <TableCell>{project.numberOfStudents}</TableCell>
+                                        {type === -1 && project.recommendation !== "" && (
+                                            <TableCell>{project.recommendation}</TableCell>
+                                        )}
+                                        {type === -1 && project.recommendation === "" && (
+                                            <TableCell>No recommendation</TableCell>
+                                        )}
                                         {type === 0 && (
                                             <TableCell>
                                                 <Button
