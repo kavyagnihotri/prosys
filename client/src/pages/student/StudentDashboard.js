@@ -164,7 +164,6 @@ function DashboardContent() {
                             </Grid>
                         </Grid>
                     </Container>
-                    {/* {selectedContent === "applications" && <Applications />} */}
                 </Box>
             </Box>
         </ThemeProvider>

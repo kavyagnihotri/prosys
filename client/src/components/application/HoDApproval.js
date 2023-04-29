@@ -37,7 +37,6 @@ export default function InformalApplications() {
     const { students, dispatch1 } = useStudentsContext()
     const { profs, dispatch } = useProfContext()
     const navigate = useNavigate()
-    const [dept, setDept] = useState(null)
     const [info, setInfo] = useState(null)
 
     const handleLogout = async (e) => {

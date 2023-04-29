@@ -22,7 +22,7 @@ export default function RemainingProfs() {
     const { user } = useAuthContext()
 
     useEffect(() => {
-        const fetchProjects = async () => {
+        const fetchProfs = async () => {
             const response = await fetch(serverURL + "/prof/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
@@ -35,7 +35,7 @@ export default function RemainingProfs() {
         }
 
         if (user) {
-            fetchProjects()
+            fetchProfs()
         }
     }, [dispatch, user])
 
@@ -77,7 +77,7 @@ export default function RemainingProfs() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: project._id }),
             })
-            const fetchProjects = async () => {
+            const fetchProfs = async () => {
                 const response = await fetch(serverURL + "/prof/", {
                     method: "GET",
                     headers: { Authorization: `Bearer ${user.token}` },
@@ -91,7 +91,7 @@ export default function RemainingProfs() {
 
             if (user) {
                 change = -1
-                fetchProjects()
+                fetchProfs()
             }
         } else if (change === 1) {
             await fetch(serverURL + "/prof/appoint", {
@@ -104,7 +104,7 @@ export default function RemainingProfs() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: prof1._id }),
             })
-            const fetchProjects = async () => {
+            const fetchProfs = async () => {
                 const response = await fetch(serverURL + "/prof/", {
                     method: "GET",
                     headers: { Authorization: `Bearer ${user.token}` },
@@ -118,7 +118,7 @@ export default function RemainingProfs() {
 
             if (user) {
                 change = -1
-                fetchProjects()
+                fetchProfs()
             }
         }
     }

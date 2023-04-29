@@ -98,9 +98,6 @@ const ApplicationForm = () => {
             if (response.ok) {
                 setName(json.name)
             }
-            // if (json.notify) {
-            //     setUpdate(1)
-            // }
         }
 
         if (user) {

@@ -40,7 +40,7 @@ export default function CurrentHod() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: id }),
         })
-        const fetchProjects = async () => {
+        const fetchProfs = async () => {
             const response = await fetch(serverURL + "/prof/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
@@ -53,7 +53,7 @@ export default function CurrentHod() {
         }
 
         if (user) {
-            fetchProjects()
+            fetchProfs()
         }
     }
 

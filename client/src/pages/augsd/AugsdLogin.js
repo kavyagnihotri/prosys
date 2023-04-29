@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom"
 const theme = createTheme()
 
 const AugsdLogin = () => {
-    const { login, error, isLoading } = useAugsdLogin()
+    const { login } = useAugsdLogin()
     const navigate = useNavigate()
 
     const handleClick = (event) => {

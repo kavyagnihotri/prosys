@@ -8,7 +8,7 @@ const createToken = (id) => {
 
 const loginAugsd = async (req, res) => {
     const { email, password } = req.body
-    role = "0"
+    let role = "0"
     try {
         const augsd = await Augsd.login(email, password)
         const token = createToken(augsd._id)
@@ -22,7 +22,7 @@ const acceptProject = async (req, res) => {
     const id = req.body.id
 
     try {
-        projectToUpdate = await Project.findById(id)
+        const projectToUpdate = await Project.findById(id)
         projectToUpdate.approved = 1
         projectToUpdate.save()
         res.send("Updated")
@@ -36,7 +36,7 @@ const rejectProject = async (req, res) => {
     const id = req.body.id
     const rec = req.body.recommendation
     try {
-        projectToUpdate = await Project.findById(id)
+        const projectToUpdate = await Project.findById(id)
         projectToUpdate.recommendation = rec
         projectToUpdate.approved = -1
         projectToUpdate.save()

@@ -31,7 +31,7 @@ const getProf = async (req, res) => {
 const dissmissProf = async (req, res) => {
     const id = req.body.id
     try {
-        profToUpdate = await Prof.findById(id)
+        let profToUpdate = await Prof.findById(id)
         profToUpdate.hod = false
         profToUpdate.save()
         res.send("Updated")
@@ -44,7 +44,7 @@ const appointHOD = async (req, res) => {
     const id = req.body.id
 
     try {
-        profToUpdate = await Prof.findById(id)
+        let profToUpdate = await Prof.findById(id)
         profToUpdate.hod = true
         profToUpdate.save()
         res.send("Updated")
@@ -69,7 +69,7 @@ const loginProf = async (req, res) => {
 
 const signupProf = async (req, res) => {
     const { email, password, name, dept, chamber, researchInterest, websites, hod } = req.body
-    role = "1"
+    let role = "1"
     try {
         const prof = await Prof.signup(email, password, name, dept, chamber, researchInterest, websites, hod)
 
@@ -129,7 +129,6 @@ const getHoDApprovalApplications = async (req, res) => {
             sop: application.sop,
         }
     })
-    // console.log(result1)
     const result = result1.map((r) => {
         const prof = profs.find((prof) => prof.email === r.profEmail)
         return {
@@ -146,20 +145,13 @@ const getHoDApprovalApplications = async (req, res) => {
             sop: r.sop,
         }
     })
-    // console.log(result)
     res.status(200).json(result)
 }
 
 const hodAccept = async (req, res) => {
-    // if (req.params.body !== null) console.log("not null")
-
-    // console.log(req.params.body)
-
     const id = req.params.id
     try {
-        // console.log(id)
         const application = await Application.findById(id)
-        // console.log(application)
         application.status = 1
         application.save()
         res.status(200).json({ message: "Updated" })
@@ -169,10 +161,8 @@ const hodAccept = async (req, res) => {
 }
 
 const hodReject = async (req, res) => {
-    // console.log(req.params.body)
     try {
         const id = req.params.id
-        // console.log(id)
         const application = await Application.findById(id)
         application.status = 2
         application.save()
@@ -203,30 +193,6 @@ const hodReject = async (req, res) => {
                 console.log(error)
             }
         }
-        // const pid = application.projectID
-        // const apps = await Application.find({ projectID: pid, type: 1 }).sort({ score: "desc" })
-        // console.log(apps)
-        // var found = 0
-        // var app = null
-        // apps.forEach((a) => {
-        //     if (a === application) {
-        //         console.log("same")
-        //         found = 1
-        //     }
-        //     if (found === 1 && a !== application && a.status === 2) {
-        //         console.log("Matched")
-        //         app = a
-        //     }
-        // })
-        // console.log(a)
-        // const student = await Student.find({ email: app.studentEmail })
-        // const prof = await Prof.find({ email: application.profEmail })
-        // if (student.dept === prof.dept) {
-        //     app.status = 1
-        // } else {
-        //     app.status = 3
-        // }
-        // app.save()
         res.status(200).json({ message: "Updated" })
     } catch (error) {
         res.status(400).json({ error: error.message })
