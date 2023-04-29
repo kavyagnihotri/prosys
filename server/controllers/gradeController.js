@@ -36,9 +36,19 @@ const getAllStudentGrade = async (req, res) => {
 const updateMidsemGrade = async (req, res) => {
     const { studentemail, projectID, midsemGrade } = req.body
     try {
-        const gradeDoc = await gradeState.findOne({ studentemail: studentemail, projectID: projectID })
-        gradeDoc.midsemGrade = midsemGrade
-        gradeDoc.save()
+        let gradeDoc = await gradeState.findOne({ studentemail: studentemail, projectID: projectID })
+        if (!gradeDoc) {
+            gradeDoc = await gradeState.create({
+                studentemail: studentemail,
+                projectID: projectID,
+                midsemGrade: midsemGrade,
+            })
+        }
+        else {
+            gradeDoc.midsemGrade = midsemGrade
+            gradeDoc.save()
+        }
+        console.log(gradeDoc)
         res.status(200).json(gradeDoc)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -48,9 +58,19 @@ const updateMidsemGrade = async (req, res) => {
 const updateCompreGrade = async (req, res) => {
     const { studentemail, projectID, compreGrade } = req.body
     try {
-        const gradeDoc = await gradeState.findOne({ studentemail: studentemail, projectID: projectID })
-        gradeDoc.compreGrade = compreGrade
-        gradeDoc.save()
+        let gradeDoc = await gradeState.findOne({ studentemail: studentemail, projectID: projectID })
+        if (!gradeDoc) {
+            gradeDoc = await gradeState.create({
+                studentemail: studentemail,
+                projectID: projectID,
+                compreGrade: compreGrade,
+            })
+        }
+        else {
+            gradeDoc.compreGrade = compreGrade
+            gradeDoc.save()
+        }
+        console.log(gradeDoc)
         res.status(200).json(gradeDoc)
     } catch (error) {
         res.status(400).json({ error: error.message })
