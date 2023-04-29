@@ -210,7 +210,6 @@ const StudentProjectPage = () => {
                     sx={{ height: "100%", display: "flex", flexDirection: "column", column: "100%" }}
                     style={{ padding: "1rem" }}
                 >
-                    n
                     <Grid item container direction="row">
                         <Grid container>
                             <Grid item xs={6} sx={{ flexBasis: "100%", color: "#363a40" }}>
