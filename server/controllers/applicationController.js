@@ -2,6 +2,8 @@ const Application = require("../models/applicationModel")
 const Student = require("../models/studentModel")
 const Project = require("../models/ProjectModel")
 const Professor = require("../models/profModel")
+const Grade = require("../models/gradeModel")
+const gradeModel = require("../models/gradeModel")
 
 const getApplications = async (req, res) => {
     const applications = await Application.find({}).sort({ createdAt: -1 })
@@ -83,13 +85,16 @@ const acceptApplication = async (req, res) => {
         application.studentStatus = 1
         application.status = 4
         await application.save()
-
         const studentEmail = application["studentEmail"]
         const projectID = application["projectID"]
         const project = await Project.findOne({ _id: projectID })
         const student = await Student.findOne({ email: studentEmail })
         project.acceptedStudents.push(studentEmail)
         student.acceptedProjects.push(project._id)
+        await gradeModel.create({
+            studentemail: studentEmail,
+            projectID: projectID
+        })
 
         // const index = project.applicants.indexOf(studentEmail)
         // project.applicants.splice(index, 1)

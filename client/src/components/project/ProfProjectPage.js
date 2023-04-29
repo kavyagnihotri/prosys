@@ -3,23 +3,11 @@ import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Card from "@mui/material/Card"
 import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import LogoutIcon from "@mui/icons-material/Logout"
 import Toolbar from "@mui/material/Toolbar"
 import Box from "@mui/material/Box"
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell from "@mui/material/TableCell"
-import TableHead from "@mui/material/TableHead"
-import TableRow from "@mui/material/TableRow"
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos"
-import MenuItem from "@mui/material/MenuItem"
-import Title from "../Title"
-import Link from "@mui/material/Link"
-import PersonIcon from "@mui/icons-material/Person"
-import Avatar from "@mui/material/Avatar"
-import Paper from "@mui/material/Paper"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppBar } from "../../components/dashboard/Objects"
 import { useState } from "react"
@@ -27,60 +15,16 @@ import { useAuthContext } from "../../hooks/useAuthContext"
 import { serverURL } from "../../utils/constants"
 import { useNavigate, useParams } from "react-router-dom"
 import { useLogout } from "../../hooks/useLogout"
+import ParticularStudent from "./ParticularStudent"
 
 const theme = createTheme()
-
-const grades = [
-    {
-        value: "A",
-        label: "A",
-    },
-    {
-        value: "A-",
-        label: "A-",
-    },
-    {
-        value: "B",
-        label: "B",
-    },
-    {
-        value: "B-",
-        label: "B-",
-    },
-    {
-        value: "C",
-        label: "C",
-    },
-    {
-        value: "C-",
-        label: "C-",
-    },
-    {
-        value: "D",
-        label: "D",
-    },
-    {
-        value: "D-",
-        label: "D-",
-    },
-    {
-        value: "E",
-        label: "E",
-    },
-]
 
 const ProfProjectPage = () => {
     const navigate = useNavigate()
     const [project, setProject] = useState({})
     const [name, setName] = useState()
-    const [studentName, setStudentName] = useState()
-    const [grade, setGrade] = useState([])
-    const [submissionLink, setSubmissionLink] = useState([])
+    const [studentName, setStudentName] = useState([])
     const [students, setStudents] = useState([])
-    // const [change, setChange] = useState({
-    //     midsemGrade: "",
-    //     compreGrade: "",
-    // })
     const { logout } = useLogout()
     const { id } = useParams()
     const { user } = useAuthContext()
@@ -97,14 +41,6 @@ const ProfProjectPage = () => {
         navigate("/prof/dashboard")
     }
 
-    // const handleInputChange = (event) => {
-    //     const { name, value } = event.target
-    //     setChange((prevProps) => ({
-    //         ...prevProps,
-    //         [name]: value,
-    //     }))
-    // }
-
     const fetchName = async () => {
         const response = await fetch(serverURL + "/prof/" + email)
         const json = response.json()
@@ -113,6 +49,25 @@ const ProfProjectPage = () => {
         }
     }
 
+    const fetchStudentName = async () => {
+        const response = await fetch(serverURL + `/student`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${user.token}` },
+        })
+        const json = await response.json()
+        let s = []
+        if (response.ok) {
+            json.map((j) => (
+                students.forEach((student) => {
+                    if (j.email === student) {
+                        s.push(j.name)
+                    }
+                })
+            ))
+        }
+        setStudentName(s)
+    }
+    
     const fetchTitles = async (id) => {
         const response = await fetch(serverURL + `/projects/${id}`, {
             method: "GET",
@@ -127,79 +82,10 @@ const ProfProjectPage = () => {
         }
     }
 
-    const fetchGrades = async (id) => {
-        const response = await fetch(serverURL + `/grade/project`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ projectID: id }),
-        })
-        const json = await response.json()
-        if (response.ok) {
-            setGrade(json)
-        }
-    }
-
-    const fetchSubmission = async (email, id) => {
-        const response = await fetch(serverURL + `/submission`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ studentemail: email, projectID: id }),
-        })
-        const json = await response.json()
-        if (response.ok) {
-            setSubmissionLink(json.submissionLink)
-        }
-    }
-
-    const givemidGrades = async (email, id, midsemGrade) => {
-        const response = await fetch(serverURL + `/grade/student/midsem`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ studentemail: email, projectID: id, midsemGrade: midsemGrade }),
-        })
-        const json = await response.json()
-    }
-
-    const givecompreGrades = async (email, id, compreGrade) => {
-        const response = await fetch(serverURL + `/grade/student/compre`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ studentemail: email, projectID: id, compreGrade: compreGrade }),
-        })
-        const json = await response.json()
-    }
-
-    const fetchStudentName = async (student) => {
-        const response = await fetch(serverURL + `/student/${student}`, {
-            method: "GET",
-            headers: { Authorization: `Bearer ${user.token}` },
-        })
-        const json = await response.json()
-        if (response.ok) {
-            setStudentName(json.name)
-        }
-    }
-
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-    }
-
     if (user) {
         fetchTitles(id)
-        fetchGrades(id)
         fetchName()
+        fetchStudentName()
     }
 
     return (
@@ -249,7 +135,10 @@ const ProfProjectPage = () => {
                         height: "100%",
                         display: "flex",
                         flexDirection: "column",
-                        column: "100%",
+                        column: "100%"
+                    }}
+                    style={{
+                        padding: "1rem"
                     }}
                 >
                     <Grid item container direction="row">
@@ -303,105 +192,15 @@ const ProfProjectPage = () => {
                                 <Typography gutterBottom>Accepted Students </Typography>
                             </Grid>
                             <Grid item xs={6} sx={{ flexBasis: "100%" }}>
-                                <Typography gutterBottom>{project.acceptedStudents}</Typography>
+                                {studentName.map((student) => (
+                                    <Typography gutterBottom>{student}</Typography>
+                                ))}
                             </Grid>
                         </Grid>
                     </Grid>
 
                     {students.map((student) => (
-                        <Card
-                            sx={{
-                                height: "100%",
-                                display: "flex",
-                                flexDirection: "column",
-                                column: "100%",
-                            }}
-                        >
-                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                                <Typography>
-                                    <Avatar sx={{ m: 1, bgcolor: "#0e5ec7" }}>
-                                        <PersonIcon />
-                                    </Avatar>
-                                    <Title
-                                        align="center"
-                                        startIcon={<PersonIcon />}
-                                        onChange={fetchStudentName(student)}
-                                    >
-                                        {studentName} ({student})
-                                    </Title>
-                                </Typography>
-                                <Table size="small">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Student Submission(s)</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow onChange={fetchSubmission(student, id)} align="center">
-                                            {submissionLink.length ? (
-                                                submissionLink.map((submission) => (
-                                                    <TableRow align="center">
-                                                        <Link href={submission} target="_blank" rel="noopener">
-                                                            {submission}
-                                                        </Link>
-                                                    </TableRow>
-                                                ))
-                                            ) : (
-                                                <TableCell>Not Available</TableCell>
-                                            )}
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                                <Table size="small">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell name="midsemGrade">Midsem Grade</TableCell>
-                                            <TableCell name="compreGrade">Compre Grade</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell>
-                                                <TextField
-                                                    id="midsemGrade"
-                                                    name="midsemGrade"
-                                                    select
-                                                    defaultValue={grade.midsemGrade}
-                                                    onChange={(event) => givemidGrades(student, id, event.target.value)}
-                                                >
-                                                    {grades.map((option) => (
-                                                        <MenuItem key={option.value} value={option.value}>
-                                                            {option.label}
-                                                        </MenuItem>
-                                                    ))}
-                                                </TextField>
-                                            </TableCell>
-                                            <TableCell>
-                                                <TextField
-                                                    id="compreGrade"
-                                                    name="compreGrade"
-                                                    select
-                                                    defaultValue={grade.compreGrade}
-                                                    onChange={(event) =>
-                                                        givecompreGrades(student, id, event.target.value)
-                                                    }
-                                                >
-                                                    {grades.map((option) => (
-                                                        <MenuItem key={option.value} value={option.value}>
-                                                            {option.label}
-                                                        </MenuItem>
-                                                    ))}
-                                                </TextField>
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-
-                                <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                                    Submit Grade
-                                </Button>
-                            </Box>
-                        </Card>
+                        <ParticularStudent student={student} id={id} />
                     ))}
                 </Card>
             </Container>

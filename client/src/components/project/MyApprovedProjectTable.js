@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom"
 export default function NewProjectTable() {
     const navigate = useNavigate()
     const { user } = useAuthContext()
-    const [student_projects, setStudent_projects] = useState([])
     const [projects, setProjects] = useState([])
 
     const handleApply = async (id) => {
@@ -23,38 +22,28 @@ export default function NewProjectTable() {
     }
 
     useEffect(() => {
-        const fetchTitles = async (id) => {
-            const response = await fetch(serverURL + `/projects/${id}`, {
+        const fetchTitles = async () => {
+            const response = await fetch(serverURL + `/projects`, {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
             })
             const json = await response.json()
-            if (!projects.includes(json)) {
-                projects.push(json)
-            }
-        }
-
-        const fetchProjects = async () => {
-            const response = await fetch(serverURL + `/student/${user.email}`, {
-                method: "GET",
-                headers: { Authorization: `Bearer ${user.token}` },
+            let p = []
+            json.forEach((j) => {
+                let students = j.acceptedStudents
+                students.forEach((student) => {
+                    if (student === user.email) {
+                        p.push(j)
+                    }
+                })
             })
-            const json = await response.json()
-            setStudent_projects(json.acceptedProjects)
-        }
-
-        const traversal = async (arr) => {
-            let t = arr.length
-            for (let i = 0; i < t; i++) {
-                fetchTitles(arr[i])
-            }
+            setProjects(p)
         }
 
         if (user) {
-            fetchProjects()
-            traversal(student_projects)
+            fetchTitles()
         }
-    }, [user, student_projects, projects])
+    }, [user, projects])
 
     return (
         <React.Fragment>
@@ -77,7 +66,7 @@ export default function NewProjectTable() {
                                     </CardContent>
                                 </Paper>
                             </Grid>
-                        ) : (
+                        ) : 
                             projects.map((project) => (
                                 <Grid item xs={1} sm={6} md={4}>
                                     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -91,8 +80,7 @@ export default function NewProjectTable() {
                                         </Button>
                                     </Card>
                                 </Grid>
-                            ))
-                        )}
+                            ))}
                     </Grid>
                 </Container>
             </Box>
