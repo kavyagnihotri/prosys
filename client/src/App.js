@@ -22,10 +22,6 @@ import ProfProjectPage from "./components/project/ProfProjectPage"
 function App() {
     const { user } = useAuthContext()
 
-    // localstorage fetch
-    // const data = window.localStorage
-    //
-
     if (user != null) {
         console.log("ROLE " + user.role)
     }
@@ -36,7 +32,7 @@ function App() {
                 <div className="pages">
                     <Routes>
                         <Route path="/" element={<HomePage />} />
-                        <Route path=""/>
+                        <Route path="" />
                         <Route
                             path="/augsd/login"
                             element={!user || user.role !== "0" ? <AugsdLogin /> : <Navigate to="/augsd/dashboard" />}
@@ -69,8 +65,8 @@ function App() {
                         <Route path="/student/createApplication/:id" element={<ApplicationForm />} />
 
                         <Route path="/student/project/:id" element={<StudentProjectPage />} />
-                        
-                        <Route path="/prof/project/:id" element={<ProfProjectPage/> } />
+
+                        <Route path="/prof/project/:id" element={<ProfProjectPage />} />
 
                         <Route
                             path="/prof/login"
@@ -87,10 +83,6 @@ function App() {
                             element={user && user.role === "1" ? <ProfDashboard /> : <Navigate to="/prof/login" />}
                         />
                         <Route path="/prof/project/add" element={<ProjectForm />} />
-                        {/* <Route
-                            path="/prof/profile/update"
-                            element= {<ProfUpdate />}
-                        /> */}
                         <Route path="/chatPage" element={<ChatPage></ChatPage>} />
 
                         <Route path="/prof/project/approve" element={<HoDApproval />} />

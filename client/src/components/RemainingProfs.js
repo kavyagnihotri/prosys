@@ -40,8 +40,8 @@ export default function RemainingProfs() {
     }, [dispatch, user])
 
     const [open, setOpen] = React.useState(true)
-    var change = -1
-    var disAl = -1
+    let change = -1
+    let disAl = -1
 
     const handleNo = () => {
         change = -1
@@ -57,8 +57,8 @@ export default function RemainingProfs() {
         setOpen(false)
     }
 
-    var prof1 = null
-    var prof2 = null
+    let prof1 = null
+    let prof2 = null
     const Appoint = async (project) => {
         change = 0
         projects.map((p) => {

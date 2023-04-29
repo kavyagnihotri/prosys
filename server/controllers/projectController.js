@@ -121,7 +121,7 @@ const updateFormalProjectStatus = async (req, res) => {
     const pEmail = project.professorEmail
     const prof = await Professor.find({ email: pEmail })
     const pDept = prof.dept
-    var count = 0
+    let count = 0
 
     while (applications.length > 0 && count < studNo) {
         const currApplication = applications[count]
@@ -168,7 +168,7 @@ const updateInformalProjectStatus = async (req, res) => {
         createdAt: -1,
     })
     const studNo = project.numberOfStudents
-    var count = 0
+    let count = 0
     console.log(applications)
     while (applications.length > 0 && count < studNo) {
         const currApplication = applications[count]

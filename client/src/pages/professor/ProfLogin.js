@@ -30,12 +30,12 @@ const ProfLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        var id = ""
-        var email = ""
-        var password = ""
+        let id = ""
+        let email = ""
+        let password = ""
 
         const data = new FormData(e.currentTarget)
-        for (var p of data) {
+        for (let p of data) {
             id = p[0]
             if (id === "password") password = p[1]
             if (id === "email") email = p[1]

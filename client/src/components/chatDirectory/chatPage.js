@@ -23,7 +23,7 @@ const ChatsPage = (props) => {
     const [name, setName] = useState(null)
     const { logout } = useLogout()
     const navigate = useNavigate()
-    var title = ""
+    let title = ""
     if (user.role === "1") {
         title = "Professor Chat Portal"
     }
