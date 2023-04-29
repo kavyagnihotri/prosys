@@ -31,6 +31,8 @@ const StudentProjectPage = () => {
     const [midsemGrade, setMidsemGrade] = useState()
     const [compreGrade, setCompreGrade] = useState()
     const [submissionLink, setSubmissionLink] = useState([])
+    const [students, setStudents] = useState([])
+    const [studentName, setStudentName] = useState([])
     const [change, setChange] = useState({
         submissionLink: "",
     })
@@ -78,6 +80,7 @@ const StudentProjectPage = () => {
         const json = await response.json()
         if (response.ok) {
             setProject(json)
+            setStudents(json.acceptedStudents)
         }
     }
 
@@ -125,6 +128,25 @@ const StudentProjectPage = () => {
         console.log(json)
     }
 
+    const fetchStudentName = async () => {
+        const response = await fetch(serverURL + `/student`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${user.token}` },
+        })
+        const json = await response.json()
+        let s = []
+        if (response.ok) {
+            json.map((j) => (
+                students.forEach((student) => {
+                    if (j.email === student) {
+                        s.push(j.name)
+                    }
+                })
+            ))
+        }
+        setStudentName(s)
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault()
         if (change.submissionLink === "") {
@@ -138,6 +160,7 @@ const StudentProjectPage = () => {
         fetchGrades(id)
         fetchSubmission(id)
         fetchName()
+        fetchStudentName()
     }
 
     return (
@@ -182,7 +205,7 @@ const StudentProjectPage = () => {
                         </Toolbar>
                     </AppBar>
                 </Box>
-                <Card sx={{ height: "100%", display: "flex", flexDirection: "column", column: "100%" }}>
+                <Card sx={{ height: "100%", display: "flex", flexDirection: "column", column: "100%" }} style={{ padding: "1rem" }}>
                     <Grid item container direction="row">
                         <Grid container>
                             <Grid item xs={6} sx={{ flexBasis: "100%", color: "#363a40" }}>
@@ -234,7 +257,9 @@ const StudentProjectPage = () => {
                                 <Typography gutterBottom>Accepted Students </Typography>
                             </Grid>
                             <Grid item xs={6} sx={{ flexBasis: "100%" }}>
-                                <Typography gutterBottom>{project.acceptedStudents}</Typography>
+                                {studentName.map((student) => (
+                                    <Typography gutterBottom>{student}</Typography>
+                                ))}
                             </Grid>
                         </Grid>
                     </Grid>
