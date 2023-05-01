@@ -26,7 +26,7 @@ const getAllStudentGrade = async (req, res) => {
     // get all grades of the given project
     const { studentemail } = req.body
     try {
-        const gradeDoc = await gradeState.findOne({ studentemail: studentemail })
+        const gradeDoc = await gradeState.findOne({ studentemail: studentEmail })
         res.status(200).json(gradeDoc)
     } catch (error) {
         res.status(400).json({ error: error.message })

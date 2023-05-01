@@ -142,8 +142,13 @@ const ParticularStudent = ({ student, id }) => {
 
     if (user) {
         fetchGrades(id)
+        console.log(midsem.type)
+        console.log(compre.type)
+
         midsemGrade = midsem
         compreGrade = compre
+        console.log(midsem)
+        console.log(compre)
     }
 
     return (

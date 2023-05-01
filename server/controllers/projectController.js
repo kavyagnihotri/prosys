@@ -120,12 +120,14 @@ const updateFormalProjectStatus = async (req, res) => {
     const studNo = project.numberOfStudents
     const pEmail = project.professorEmail
     const prof = await Professor.find({ email: pEmail })
-    let count = 0
+    const pDept = prof.dept
+    var count = 0
 
     while (applications.length > 0 && count < studNo) {
         const currApplication = applications[count]
         const { studentEmail } = currApplication
         const student = await Student.find({ email: studentEmail })
+        const sDept = student.dept
         if (student[0].dept !== prof[0].dept) {
             currApplication.status = 3
             await currApplication.save()
@@ -166,7 +168,8 @@ const updateInformalProjectStatus = async (req, res) => {
         createdAt: -1,
     })
     const studNo = project.numberOfStudents
-    let count = 0
+    var count = 0
+    console.log(applications)
     while (applications.length > 0 && count < studNo) {
         const currApplication = applications[count]
         currApplication.status = 1
@@ -183,6 +186,7 @@ const updateInformalProjectStatus = async (req, res) => {
     if (!project) {
         return res.status(404).json({ error: "No such project" })
     }
+    console.log("done")
     res.status(200).json(project)
 }
 
