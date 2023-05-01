@@ -44,7 +44,7 @@ export default function Applications({ projectID, projectTitle, scoreReleased, a
     const { profs, dispatch } = useProfContext()
     const { user } = useAuthContext()
     const [open, setopen] = useState(false)
-    let applicationTypeNum = 0
+    var applicationTypeNum = 0
     if (applicationType === "formal") {
         applicationTypeNum = 1
     }

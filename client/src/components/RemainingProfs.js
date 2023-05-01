@@ -22,7 +22,7 @@ export default function RemainingProfs() {
     const { user } = useAuthContext()
 
     useEffect(() => {
-        const fetchProfs = async () => {
+        const fetchProjects = async () => {
             const response = await fetch(serverURL + "/prof/", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${user.token}` },
@@ -35,13 +35,13 @@ export default function RemainingProfs() {
         }
 
         if (user) {
-            fetchProfs()
+            fetchProjects()
         }
     }, [dispatch, user])
 
     const [open, setOpen] = React.useState(true)
-    let change = -1
-    let disAl = -1
+    var change = -1
+    var disAl = -1
 
     const handleNo = () => {
         change = -1
@@ -57,8 +57,8 @@ export default function RemainingProfs() {
         setOpen(false)
     }
 
-    let prof1 = null
-    let prof2 = null
+    var prof1 = null
+    var prof2 = null
     const Appoint = async (project) => {
         change = 0
         projects.map((p) => {
@@ -77,7 +77,7 @@ export default function RemainingProfs() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: project._id }),
             })
-            const fetchProfs = async () => {
+            const fetchProjects = async () => {
                 const response = await fetch(serverURL + "/prof/", {
                     method: "GET",
                     headers: { Authorization: `Bearer ${user.token}` },
@@ -91,7 +91,7 @@ export default function RemainingProfs() {
 
             if (user) {
                 change = -1
-                fetchProfs()
+                fetchProjects()
             }
         } else if (change === 1) {
             await fetch(serverURL + "/prof/appoint", {
@@ -104,7 +104,7 @@ export default function RemainingProfs() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: prof1._id }),
             })
-            const fetchProfs = async () => {
+            const fetchProjects = async () => {
                 const response = await fetch(serverURL + "/prof/", {
                     method: "GET",
                     headers: { Authorization: `Bearer ${user.token}` },
@@ -118,7 +118,7 @@ export default function RemainingProfs() {
 
             if (user) {
                 change = -1
-                fetchProfs()
+                fetchProjects()
             }
         }
     }

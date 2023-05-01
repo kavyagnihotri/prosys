@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom"
 const theme = createTheme()
 
 const AugsdLogin = () => {
-    const { login } = useAugsdLogin()
+    const { login, error, isLoading } = useAugsdLogin()
     const navigate = useNavigate()
 
     const handleClick = (event) => {
@@ -28,12 +28,12 @@ const AugsdLogin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let id = ""
-        let email = ""
-        let password = ""
+        var id = ""
+        var email = ""
+        var password = ""
 
         const data = new FormData(e.currentTarget)
-        for (let p of data) {
+        for (var p of data) {
             id = p[0]
             if (id === "password") password = p[1]
             if (id === "email") email = p[1]
