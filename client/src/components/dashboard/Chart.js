@@ -3,7 +3,7 @@ import Title from "../Title"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Container from "@mui/material/Container"
-import { PieChart, Pie, Legend, Cell, ResponsiveContainer, Label } from "recharts"
+import { PieChart, Pie, Legend, Cell, ResponsiveContainer, Label, BarChart, Bar, XAxis, YAxis } from "recharts"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useState, useEffect } from "react"
 import { serverURL } from "../../utils/constants"
@@ -60,6 +60,28 @@ export default function Chart() {
         return acc
     }, [])
 
+    const statusCounts = {
+        rejected: 0,
+        pending: 0,
+        accepted: 0,
+    }
+    projects.forEach((project) => {
+        if (project.approved === -1) {
+            statusCounts["rejected"]++
+        } else if (project.approved === 0) {
+            statusCounts["pending"]++
+        } else if (project.approved === 1) {
+            statusCounts["accepted"]++
+        }
+    })
+    console.log(statusCounts)
+
+    const chartData = [
+        { department: "Rejected", amount: statusCounts["rejected"], color: "#F65C78" },
+        { department: "Pending", amount: statusCounts["pending"], color: "#36A2EB" },
+        { department: "Accepted", amount: statusCounts["accepted"], color: "#96CD39" },
+    ]
+
     return (
         <React.Fragment>
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -90,6 +112,27 @@ export default function Chart() {
                                         }
                                     />
                                 </PieChart>
+                            </ResponsiveContainer>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </Container>
+
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                <Grid container justifyContent="center" spacing={3}>
+                    <Grid item xs={12} md={8} lg={9}>
+                        <Paper sx={{ p: 2, display: "flex", flexDirection: "column", height: 550 }}>
+                            <Title>Projects Status</Title>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart width={600} height={400} data={chartData}>
+                                    <XAxis dataKey="department" />
+                                    <YAxis />
+                                    <Bar dataKey="amount">
+                                        {chartData.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={entry.color} />
+                                        ))}
+                                    </Bar>
+                                </BarChart>
                             </ResponsiveContainer>
                         </Paper>
                     </Grid>
