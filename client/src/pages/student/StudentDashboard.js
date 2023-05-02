@@ -63,9 +63,11 @@ function DashboardContent() {
             const json = await response.json()
             if (response.ok) {
                 setName(json.name)
-            }
-            if (json.notify) {
-                setUpdate(1)
+                if (json.notify === 1) {
+                    setUpdate(1)
+                } else {
+                    setUpdate(0)
+                }
             }
         }
 
